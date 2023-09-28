@@ -1,0 +1,11 @@
+football:
+  instanceId: ${random.uuid}
+server:
+  port: 0
+spring:
+  application:
+    name: FootballServer
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
