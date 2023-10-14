@@ -16,7 +16,6 @@
 	<description>Demo project for Spring Boot 3 Cookbook</description>
 	<properties>
 		<java.version>17</java.version>
-		<jackson-module-jakarta-xmlbind-annotation>2.15.3</jackson-module-jakarta-xmlbind-annotation>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -36,18 +35,6 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>io.hypersistence</groupId>
-			<artifactId>hypersistence-utils-hibernate-62</artifactId>
-			<version>3.6.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
-			<version>${jackson-module-jakarta-xmlbind-annotation}</version>
 		</dependency>
 
 		<dependency>

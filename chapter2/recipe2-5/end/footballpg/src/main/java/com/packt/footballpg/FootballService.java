@@ -182,44 +182,29 @@ public class FootballService {
         }
 
         public List<MatchEvent> getMatchWithPlayerEvents(Integer matchId, Integer playerId) {
-                // MatchEntity match = matchRepository.findPlayerTimeline(matchId,
-                // playerId).orElse(null);
-                // if (match != null) {
-                // return new Match(match.getId(), match.getTeam1().getName(),
-                // match.getTeam2().getName(),
-                // match.getTeam1Goals(), match.getTeam2Goals(), match.getMatchDate(),
-                // match.getEvents()
-                // .stream()
-                // .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
-                // .toList());
-                // } else {
-                // return null;
-                // }
-                List<MatchEventEntity> matchEvents = matchRepository.findPlayerTimeline(matchId, playerId);
+                List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayer(matchId, playerId);
 
                 return matchEvents.stream()
-                                .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
-                                .toList();
-
-        }
-
-        public List<MatchEvent> getPlayerMatchEvents(Integer playerId) {
-                return matchRepository.findByPlayerId(playerId).stream()
                                 .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
                                 .toList();
         }
 
         public List<MatchEvent> getMatchEventsOfType(Integer matchId, Integer eventType) {
-                return matchRepository.findByIdIncludeEventsOfType(matchId, eventType).stream()
+                return matchEventRepository.findByIdIncludeEventsOfType(matchId, eventType).stream()
                                 .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
                                 .toList();
         }
 
-        public List<MatchEvent> getEvent(Integer matchId, Integer playerId) {
-                return matchEventRepository.findByIdNative(matchId, playerId)
-                                .stream()
+        public Integer getTotalPlayersWithMoreThanNMatches(int num_matches) {
+                return playerRepository.getTotalPlayersWithMoreThanNMatches(num_matches);
+        }
+
+        public List<MatchEvent> getMatchWithPlayerEventsError(Integer matchId, Integer playerId) {
+                List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayerError(matchId, playerId);
+
+                return matchEvents.stream()
                                 .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
                                 .toList();
-        }
+        } 
 
 }

@@ -3,12 +3,9 @@ package com.packt.footballpg;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import io.hypersistence.utils.hibernate.type.json.JsonType;
+// import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,12 +26,8 @@ public class MatchEventEntity {
     @Column(name = "event_time")
     private LocalDateTime time;
 
-    // @JdbcTypeCode(SqlTypes.JSON)
-    // private MatchEventDetails details;
-    @Type(JsonType.class)
-    @Column(columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private MatchEventDetails details;
-    
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "match_id", nullable = false)

@@ -114,14 +114,13 @@ public class FootballController {
         return footballService.getMatchEventsOfType(id, type);
     }
 
-    @GetMapping("/players/{id}/events")
-    public List<MatchEvent> getPlayerEvents(@PathVariable Integer id) {
-        return footballService.getPlayerMatchEvents(id);
+    @GetMapping("/players/matches/{numMatches}")
+    public Integer getTotalPlayersWithMoreThanNMatches(@PathVariable Integer numMatches) {
+        return footballService.getTotalPlayersWithMoreThanNMatches(numMatches);
     }
 
-    @GetMapping("/events/{matchId}/{playerId}")
-    public List<MatchEvent> getEvent(@PathVariable Integer matchId, @PathVariable Integer playerId) {
-        return footballService.getEvent(matchId, playerId);
+    @GetMapping("/matches/{id}/timeline/{playerId}/error")
+    public List<MatchEvent> getMatchWithTimelineError(@PathVariable Integer id, @PathVariable Integer playerId) {
+        return footballService.getMatchWithPlayerEventsError(id, playerId);
     }
-
 }
