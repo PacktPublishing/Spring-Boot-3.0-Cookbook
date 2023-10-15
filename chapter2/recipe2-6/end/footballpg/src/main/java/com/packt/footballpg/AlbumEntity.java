@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -24,6 +26,10 @@ public class AlbumEntity {
 
     @OneToMany
     private List<CardEntity> cards;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private UserEntity owner;
 
     public Integer getId() {
         return id;
@@ -55,5 +61,13 @@ public class AlbumEntity {
 
     public void setCards(List<CardEntity> cards) {
         this.cards = cards;
+    }
+
+    public UserEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserEntity owner) {
+        this.owner = owner;
     }    
 }
