@@ -91,14 +91,18 @@ public class DynamicQueriesService {
     }
 
     public void deleteEventRange(Integer matchId, LocalDateTime start, LocalDateTime end) {
-        em.getTransaction().begin();
-        Query query = em.createQuery(
-                "DELETE FROM MatchEventEntity e WHERE e.match.id=:matchId AND e.time BETWEEN :start AND :end");
-        query.setParameter("matchId", matchId);
-        query.setParameter("start", start);
-        query.setParameter("end", end);
-        query.executeUpdate();
-        em.getTransaction().commit();
+        try {
+            em.getTransaction().begin();
+            Query query = em.createQuery(
+                    "DELETE FROM MatchEventEntity e WHERE e.match.id=:matchId AND e.time BETWEEN :start AND :end");
+            query.setParameter("matchId", matchId);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+            query.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public List<PlayerEntity> searchUserMissingPlayers(Integer userId) {
