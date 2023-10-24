@@ -58,8 +58,8 @@
 				<version>9.22.2</version>
 				<configuration>
 					<url>jdbc:postgresql://localhost:5432/football3</url>
-					<user>packtd</user>
-					<password>packtd</password>
+					<user>packt</user>
+					<password>packt</password>
 				</configuration>
 			</plugin>
 		</plugins>

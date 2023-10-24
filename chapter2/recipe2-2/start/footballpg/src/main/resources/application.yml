@@ -4,5 +4,5 @@ spring:
         open-in-view: false
     datasource:
         url: jdbc:postgresql://localhost:5432/football
-        username: packtd
-        password: packtd
+        username: packt
+        password: packt

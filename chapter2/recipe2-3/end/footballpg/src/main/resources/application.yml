@@ -8,5 +8,5 @@ spring:
     #         mode: always
     datasource:
         url: jdbc:postgresql://localhost:5432/football3
-        username: packtd
-        password: packtd
+        username: packt
+        password: packt
