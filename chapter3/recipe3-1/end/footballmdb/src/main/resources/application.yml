@@ -1,0 +1,12 @@
+spring:
+    data:
+        mongodb:
+            uri: mongodb://packt:packt@0.0.0.0:27017/football?authSource=admin
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
