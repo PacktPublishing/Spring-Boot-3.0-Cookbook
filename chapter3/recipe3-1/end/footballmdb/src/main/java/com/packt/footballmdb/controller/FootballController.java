@@ -1,4 +1,4 @@
-package com.packt.footballmdb.controllers;
+package com.packt.footballmdb.controller;
 
 import java.util.List;
 
