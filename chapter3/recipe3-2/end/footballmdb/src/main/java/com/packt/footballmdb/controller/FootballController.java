@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.packt.footballmdb.repository.MatchEvent;
 import com.packt.footballmdb.repository.Player;
 import com.packt.footballmdb.repository.Team;
 import com.packt.footballmdb.service.FootballService;
@@ -64,5 +65,15 @@ public class FootballController {
     public void updateTeamName(@PathVariable String id, @RequestParam String name) {
         footballService.updateTeamName(id, name);
     }   
+
+    @GetMapping("/match/{id}/events")
+    public List<MatchEvent> getMatchEvents(@PathVariable String id) {
+        return footballService.getMatchEvents(id);
+    }
+
+    @GetMapping("/match/{matchId}/{playerId}/events")
+    public List<MatchEvent> getPlayerEvents(@PathVariable String matchId, @PathVariable String playerId) {
+        return footballService.getPlayerEvents(matchId, playerId);
+    }
 
 }
