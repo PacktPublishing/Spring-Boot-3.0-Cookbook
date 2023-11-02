@@ -1,7 +1,7 @@
 spring:
     data:
         mongodb:
-            uri: mongodb://packt:packt@0.0.0.0:27017/football?authSource=admin
+            uri: mongodb://127.0.0.1:27017/?directConnection=true
 logging:
   level:
     org:
