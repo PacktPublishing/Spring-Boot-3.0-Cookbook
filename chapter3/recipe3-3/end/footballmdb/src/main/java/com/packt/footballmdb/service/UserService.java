@@ -1,30 +1,18 @@
 package com.packt.footballmdb.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.mongodb.MongoTransactionManager;
-import org.springframework.data.mongodb.SessionSynchronization;
-import org.springframework.data.mongodb.UncategorizedMongoDbException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.retry.annotation.Retryable;
-import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import com.mongodb.MongoCommandException;
-import com.mongodb.MongoWriteException;
 import com.mongodb.client.result.UpdateResult;
 import com.packt.footballmdb.repository.Card;
 import com.packt.footballmdb.repository.CardRepository;
