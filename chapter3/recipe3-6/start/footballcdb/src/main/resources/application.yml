@@ -1,0 +1,7 @@
+spring:
+    cassandra:
+        keyspace-name: footballKeyspace
+        schema-action: CREATE_IF_NOT_EXISTS
+        contact-points: localhost
+        local-datacenter: datacenter1
+        port: 9042
