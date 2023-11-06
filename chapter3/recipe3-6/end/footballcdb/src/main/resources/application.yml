@@ -4,4 +4,14 @@ spring:
         schema-action: CREATE_IF_NOT_EXISTS
         contact-points: localhost
         local-datacenter: datacenter1
+        session-name: cassandraSession
         port: 9042
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          cassandra:
+            core:
+              cql:
+                CqlTemplate: DEBUG
