@@ -31,6 +31,7 @@ public class CommentService {
         comment.setTargetId(commentPost.targetId());
         comment.setContent(commentPost.commentContent());
         comment.setDate(LocalDateTime.now());
+        comment.setLabels(commentPost.labels());
         return commentRepository.save(comment);
     }
 
