@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,11 @@ public class CommentController {
             @RequestParam Optional<String> userId, @RequestParam Optional<LocalDateTime> start,
             @RequestParam Optional<LocalDateTime> end, @RequestParam Optional<Set<String>> label) {
         return commentService.getCommentsString(targetType, targetId, userId, start, end, label);
+    }
+
+    @PutMapping("{commentId}/upvote")
+    public Comment upvoteComment(@PathVariable String commentId) {
+        return commentService.upvoteComment(commentId);
     }
 
 }

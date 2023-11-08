@@ -19,6 +19,15 @@ public class Comment {
     private String content;
     private LocalDateTime date;
     public Set<String> labels = new HashSet<>();
+    private Integer upvotes;
+
+    public Integer getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(Integer upvotes) {
+        this.upvotes = upvotes;
+    }
 
     public String getCommentId() {
         return commentId;

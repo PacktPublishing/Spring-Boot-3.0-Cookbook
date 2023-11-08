@@ -3,10 +3,17 @@ package com.packt.footballcdb.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.EntityWriteResult;
+import org.springframework.data.cassandra.core.UpdateOptions;
+import org.springframework.data.cassandra.core.query.ColumnName;
+import org.springframework.data.cassandra.core.query.Criteria;
+import org.springframework.data.cassandra.core.query.CriteriaDefinition;
+import org.springframework.data.cassandra.core.query.CriteriaDefinitions;
 import org.springframework.stereotype.Service;
 
 import com.datastax.oss.driver.api.querybuilder.QueryBuilder;
@@ -88,6 +95,35 @@ public class CommentService {
 
         query += " ALLOW FILTERING";
         return cassandraTemplate.select(query, Comment.class);
+    }
+
+    public Comment upvoteComment(String commentId) {
+        Random rnd = new Random();
+        // let's retry up to 3 times
+        for (int i = 0; i < 3; i++) {
+            Comment comment = commentRepository.findByCommentId(commentId).get();
+            Integer currentVotes = comment.getUpvotes();
+            if (currentVotes == null) {
+                comment.setUpvotes(1);    
+            } else {
+                comment.setUpvotes(currentVotes + 1);
+            }            
+            CriteriaDefinition ifCriteria = Criteria.where(ColumnName.from("upvotes")).is(currentVotes);
+            EntityWriteResult<Comment> result = cassandraTemplate.update(comment,
+                    UpdateOptions.builder().ifCondition(ifCriteria).build());
+            if (result.wasApplied()) {
+                return result.getEntity();
+            } else {
+                try {
+                    Thread.sleep(rnd.nextInt(5, 100));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } // wait between 5 and 100 ms before retrying
+            }
+        }
+        throw new IllegalStateException("comment " + commentId
+                + " was updated concurrently and could not be upvoted. Wait few moments and try again.");
+
     }
 
 }

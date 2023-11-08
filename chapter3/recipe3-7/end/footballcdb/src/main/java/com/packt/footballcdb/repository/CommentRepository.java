@@ -2,10 +2,10 @@ package com.packt.footballcdb.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
-import java.util.Set;
 
 
 public interface CommentRepository extends CassandraRepository<Comment, String>{
@@ -18,5 +18,7 @@ public interface CommentRepository extends CassandraRepository<Comment, String>{
 
     @AllowFiltering
     List<Comment> findByLabelsContains(String label);
+
+    Optional<Comment> findByCommentId(String commentId);
     
 }
