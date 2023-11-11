@@ -7,6 +7,11 @@ logging:
 
 spring:
   security:
+    user:
+      name: "user"
+      password: "password"
+      roles:
+      - "ADMIN"
     oauth2:
       authorizationserver:
         client:            
@@ -20,14 +25,5 @@ spring:
                 - "client_credentials"
               scopes:
                 - "football:read"
-          football2:
-            registration:
-              client-id: "football2"
-              client-secret: "{noop}SuperSecret2"
-              client-authentication-methods:
-                - "client_secret_post"
-              authorization-grant-types:
-                - "client_credentials"
-              scopes:
-                - "football:read"
+                - "football:admin"
         
