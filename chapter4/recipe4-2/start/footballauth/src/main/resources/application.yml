@@ -9,14 +9,15 @@ spring:
   security:
     oauth2:
       authorizationserver:
-        client:
-          basic-client:
+        client:            
+          football:
             registration:
-              client-id: "basic-client"
+              client-id: "football"
               client-secret: "{noop}SuperSecret"
               client-authentication-methods:
                 - "client_secret_post"
               authorization-grant-types:
                 - "client_credentials"
               scopes:
-                - "profile"
+                - "football:read"
+        
