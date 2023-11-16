@@ -5,4 +5,5 @@ spring:
         jwt:
           audiences:
           - football
+          - football-ui
           issuer-uri: http://localhost:9000
