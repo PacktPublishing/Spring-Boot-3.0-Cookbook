@@ -1,0 +1,22 @@
+server:
+  port: 9080
+spring:   
+  security:
+    oauth2:
+      client:
+        registration: 
+          football-ui: 
+            client-id: "football-ui"
+            client-secret: "TheSecretSauce"
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope: openid,profile,football:read,football:admin
+        provider:
+          football-ui:
+            issuer-uri: http://localhost:9000
+  thymeleaf:
+    cache: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
