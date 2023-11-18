@@ -1,9 +1,35 @@
+logging.level.org.springframework.security: DEBUG
+    
+
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          audiences:
-          - football
-          - football-ui
-          issuer-uri: http://localhost:9000
+  cloud:
+    azure:
+# Properties like spring.cloud.azure.credential.client-id are global properties.
+# Properties like spring.cloud.azure.active-directory.credential.client-id are Microsoft Entra ID properties.
+# If Microsoft Entra ID properties is not configured, global properties will be used.
+#      credential:
+#        client-id:
+#        client-secret:
+#      profile:
+#        tenant-id:
+      active-directory:
+        b2c:
+          enabled: true
+          profile:
+            tenant-id: b2b8f451-385b-4b9d-9268-244a8f05b32f
+          # app-id-uri: aa71b816-3d6e-4ee1-876b-83d5a60c4d84         # If you are using v1.0 token, please configure app-id-uri for `aud` verification
+          credential:
+            client-id: aa71b816-3d6e-4ee1-876b-83d5a60c4d84           # If you are using v2.0 token, please configure client-id for `aud` verification
+          base-uri: https://sb3cookbook.b2clogin.com             # Such as: https://xxxxb2c.b2clogin.com
+          user-flows:
+            sign-up-or-sign-in: B2C_1_SISU
+# spring:
+#   security:
+#     oauth2:
+#       resourceserver:
+#         jwt:
+#           audiences:
+#           - football
+#           - football-ui
+#           - aa71b816-3d6e-4ee1-876b-83d5a60c4d84
+#           issuer-uri: http://localhost:9000
