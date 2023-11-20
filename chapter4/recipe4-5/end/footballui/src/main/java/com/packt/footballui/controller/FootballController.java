@@ -70,7 +70,7 @@ public class FootballController {
     // }
 
     @GetMapping("/teams")
-    public String teams(@RegisteredOAuth2AuthorizedClient("football") OAuth2AuthorizedClient authorizedClient,
+    public String teams(@RegisteredOAuth2AuthorizedClient("football-api") OAuth2AuthorizedClient authorizedClient,
             Model model) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
