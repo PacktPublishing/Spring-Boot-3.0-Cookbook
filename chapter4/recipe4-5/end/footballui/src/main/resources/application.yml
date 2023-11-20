@@ -1,23 +1,7 @@
 server:
   port: 9080
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          football:
-            scope: openid,football.read
-            client-id: aa71b816-3d6e-4ee1-876b-83d5a60c4d84
-            client-secret: 'rKV8Q~m.4Orge1FCSCNS9Aetjql5Ns_TqbosNcqh'
   
-  # security:
-  #   oauth2:
-  #     authorizationserver:
-  #       client:            
-  #         pepe:
-  #           registration:
-  #             client-id: aa71b816-3d6e-4ee1-876b-83d5a60c4d84
-  #             client-secret: 'rKV8Q~m.4Orge1FCSCNS9Aetjql5Ns_TqbosNcqh'
   cloud:
     azure:
       profile:
@@ -30,53 +14,18 @@ spring:
           base-uri: https://sb3cookbook.b2clogin.com/sb3cookbook.onmicrosoft.com/
           credential:
             client-id: aa71b816-3d6e-4ee1-876b-83d5a60c4d84
-            client-secret: 'rKV8Q~m.4Orge1FCSCNS9Aetjql5Ns_TqbosNcqh'
+            client-secret: 'edited-put-your-secret-here'
           login-flow: sign-up-or-sign-in
           logout-success-url: http://localhost:9080
           user-flows:
             sign-up-or-sign-in: B2C_1_SUSI
           user-name-attribute-name: given_name
+          authenticate-additional-parameters:
+            scope: openid https://sb3cookbook.onmicrosoft.com/football-api/football.read2
           authorization-clients:
-            football:
-              # scopes: aa71b816-3d6e-4ee1-876b-83d5a60c4d84/.default
-              tenant-id: sb3cookbook.onmicrosoft.com
+            football-api:
+              scopes: https://sb3cookbook.onmicrosoft.com/football-api/.default
               authorization-grant-type: client_credentials
-              client-authentication-method: post
-              client-name: Azure AD B2C
-              provider: azure-b2c
-              # client-alias: graph-api
-              # client-configuration-metadata:
-              #   authorizationGrantType:
-              #     type: java.lang.String
-              #     defaultValue: authorization_code
-              #     description: Authorization Grant Type
-              #     enumValues: authorization_code, implicit, client_credentials, password
-              #   clientAuthenticationMethod:
-              #     type: java.lang.String
-              #     defaultValue: post
-              #     description: Client Authentication Method
-              #     enumValues: basic, post
-              #   scope:
-              #     type: java.lang.String
-              #     defaultValue: openid
-              #     description: Scopes
-              #   redirectUriTemplate:
-              #     type: java.lang.String
-              #     defaultValue: "{baseUrl}/login/oauth2/code/{registrationId}"
-              #     description: Redirect URI Template
-              #   clientName:
-              #     type: java.lang.String
-              #     defaultValue: Azure AD B2C
-              #     description: Client Name
-              #   clientAlias:
-              #     type: java.lang.String
-              #     defaultValue: graph-api
-              #     description: Client Alias
-              #   provider:
-              #     type: java.lang.String
-              #     defaultValue: azure-b2c
-              #     description: Provider
-              #   clientConfigurationMeta
   data:
     redis:
       host: localhost

@@ -13,28 +13,30 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadJwtGrantedAuthoritiesConverter;
+
 @Configuration
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/football/teams/**").hasAnyRole("football.read", "football.admin")
-                        .requestMatchers(HttpMethod.POST, "/football/teams/**").hasRole("football.admin")
+                        .requestMatchers(HttpMethod.GET, "/football/teams/**").hasAnyAuthority("APPROLE_football.read", "APPROLE_football.admin")
+                        .requestMatchers(HttpMethod.POST, "/football/teams/**").hasAnyAuthority("APPROLE_football.admin")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .build();
     }
 
     @Bean
-    public Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter() {
+    public Converter<Jwt, Collection<GrantedAuthority>> aadJwtGrantedAuthoritiesConverter() {
         return new AadJwtGrantedAuthoritiesConverter();
     }
 
     @Bean
-    public JwtAuthenticationConverter customJwtAuthenticationConverter() {
+    public JwtAuthenticationConverter aadJwtAuthenticationConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter());
+        converter.setJwtGrantedAuthoritiesConverter(aadJwtGrantedAuthoritiesConverter());
         return converter;
     }
 }
