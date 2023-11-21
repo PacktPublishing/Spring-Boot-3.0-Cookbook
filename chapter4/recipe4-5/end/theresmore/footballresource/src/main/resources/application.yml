@@ -20,7 +20,7 @@ spring:
           profile:
             tenant-id: b2b8f451-385b-4b9d-9268-244a8f05b32f
           credential:
-            client-id: aa71b816-3d6e-4ee1-876b-83d5a60c4d84
-          base-uri: https://sb3cookbook.b2clogin.com             
+            client-id: fdc345e8-d545-49af-aa1a-04a087364c8b
+          base-uri: https://sb3cookbook.b2clogin.com             # Such as: https://xxxxb2c.b2clogin.com
           user-flows:
             sign-up-or-sign-in: B2C_1_SISU

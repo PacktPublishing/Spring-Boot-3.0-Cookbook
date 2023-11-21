@@ -21,22 +21,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorize -> authorize
-                        // .requestMatchers(HttpMethod.GET, "/football/teams/**").hasAnyAuthority("APPROLE_football.read", "APPROLE_football.admin")
-                        // .requestMatchers(HttpMethod.POST, "/football/teams/**").hasAnyAuthority("APPROLE_football.admin")
+                        .requestMatchers(HttpMethod.GET, "/football/teams/**").hasAnyAuthority("APPROLE_football.read", "APPROLE_football.admin")
+                        .requestMatchers(HttpMethod.POST, "/football/teams/**").hasAnyAuthority("APPROLE_football.admin")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .build();
     }
 
-    // @Bean
-    // public Converter<Jwt, Collection<GrantedAuthority>> aadJwtGrantedAuthoritiesConverter() {
-    //     return new AadJwtGrantedAuthoritiesConverter();
-    // }
+    @Bean
+    public Converter<Jwt, Collection<GrantedAuthority>> aadJwtGrantedAuthoritiesConverter() {
+        return new AadJwtGrantedAuthoritiesConverter();
+    }
 
-    // @Bean
-    // public JwtAuthenticationConverter aadJwtAuthenticationConverter() {
-    //     JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-    //     converter.setJwtGrantedAuthoritiesConverter(aadJwtGrantedAuthoritiesConverter());
-    //     return converter;
-    // }
+    @Bean
+    public JwtAuthenticationConverter aadJwtAuthenticationConverter() {
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(aadJwtGrantedAuthoritiesConverter());
+        return converter;
+    }
 }

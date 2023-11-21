@@ -22,7 +22,7 @@ spring:
           user-name-attribute-name: given_name
           authorization-clients:
             football-api:
-              scopes: https://sb3cookbook.onmicrosoft.com/footballapp/.default
+              scopes: https://sb3cookbook.onmicrosoft.com/football-api/.default
               authorization-grant-type: client_credentials
   data:
     redis:
