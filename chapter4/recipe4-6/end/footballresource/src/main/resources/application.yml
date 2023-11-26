@@ -1,4 +1,10 @@
+
+server:
+  port: 0
+
 spring:
+  application:
+    name: football-api
   security:
     oauth2:
       resourceserver:
@@ -7,3 +13,7 @@ spring:
           - football
           - football-ui
           issuer-uri: http://localhost:9000
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
