@@ -1,0 +1,9 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          audiences:
+          - football
+          - football-ui
+          issuer-uri: http://localhost:9000

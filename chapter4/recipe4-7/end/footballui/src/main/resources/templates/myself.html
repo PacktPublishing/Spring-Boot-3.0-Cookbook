@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>The great Football site</title>
+	<meta charset="utf-8" />
+</head>
+
+<body>
+
+	<h1>This is what we can see in your OpenId data</h1>
+	<p>Your username <span style="font-weight:bold" th:text="${userName}" />! </p>
+	<p>Audience <span style="font-weight:bold" th:text="${audience}" />.</p>
+	<p>Expires at <span style="font-weight:bold" th:text="${expiresAt}" />.</p>
+	</div>
+	<h2>Here all the claims</h2>
+	<table>
+		<tr th:each="claim: ${claims}">
+			<td th:text="${claim.key}" />
+			<td th:text="${claim.value}" />
+		</tr>
+	</table>
+	<h2>Let's try to use your rights</h2>
+	<a href="/teams">Teams</a>
+</body>
+
+</html>
