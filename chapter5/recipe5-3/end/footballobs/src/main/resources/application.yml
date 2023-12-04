@@ -1,0 +1,7 @@
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,env,metrics,beans,loggers,football
+football:
+    folder: teams
