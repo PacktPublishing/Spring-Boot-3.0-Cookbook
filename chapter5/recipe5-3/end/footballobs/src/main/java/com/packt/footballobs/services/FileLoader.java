@@ -1,4 +1,4 @@
-package com.packt.footballobs;
+package com.packt.footballobs.services;
 
 import java.io.File;
 import java.io.IOException;
