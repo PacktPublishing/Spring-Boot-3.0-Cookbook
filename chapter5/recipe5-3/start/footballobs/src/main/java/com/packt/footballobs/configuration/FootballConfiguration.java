@@ -1,10 +1,13 @@
-package com.packt.footballobs;
+package com.packt.footballobs.configuration;
 
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.packt.footballobs.actuator.FootballCustomEndpoint;
+import com.packt.footballobs.service.FileLoader;
 
 @Configuration
 public class FootballConfiguration {
