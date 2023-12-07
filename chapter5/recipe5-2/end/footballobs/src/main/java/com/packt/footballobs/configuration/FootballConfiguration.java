@@ -17,9 +17,7 @@ public class FootballConfiguration {
 
     @Bean
     public FileLoader fileLoader() throws IOException{        
-        FileLoader fileLoader = new FileLoader(folder);
-        fileLoader.loadFile();        
-        return fileLoader;
+        return new FileLoader(folder);
     }
 
     @Bean
