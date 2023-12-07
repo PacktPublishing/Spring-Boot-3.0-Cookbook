@@ -1,4 +1,4 @@
-(readOnly = true)package com.packt.footballpg;
+package com.packt.footballpg;
 
 import java.time.LocalDate;
 import java.util.List;
