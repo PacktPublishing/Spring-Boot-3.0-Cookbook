@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.packt.footballobs.services.FileLoader;
-import com.packt.footballobs.services.TradingService;
+import com.packt.footballobs.service.FileLoader;
+import com.packt.footballobs.service.TradingService;
 
 
 

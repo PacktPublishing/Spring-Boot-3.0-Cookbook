@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.packt.footballobs.actuator.FootballCustomEndpoint;
-import com.packt.footballobs.services.FileLoader;
+import com.packt.footballobs.service.FileLoader;
 
 @Configuration
 public class FootballConfiguration {

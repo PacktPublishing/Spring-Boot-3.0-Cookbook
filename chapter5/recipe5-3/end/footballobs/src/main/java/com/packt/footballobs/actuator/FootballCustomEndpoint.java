@@ -4,7 +4,7 @@ import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.boot.actuate.endpoint.annotation.WriteOperation;
 
-import com.packt.footballobs.services.FileLoader;
+import com.packt.footballobs.service.FileLoader;
 
 @Endpoint(id = "football")
 public class FootballCustomEndpoint {

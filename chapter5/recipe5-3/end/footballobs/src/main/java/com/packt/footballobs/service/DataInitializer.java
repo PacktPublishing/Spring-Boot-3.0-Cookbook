@@ -1,4 +1,4 @@
-package com.packt.footballobs.services;
+package com.packt.footballobs.service;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

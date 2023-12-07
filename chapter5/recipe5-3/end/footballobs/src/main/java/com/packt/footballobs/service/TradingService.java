@@ -1,4 +1,4 @@
-package com.packt.footballobs.services;
+package com.packt.footballobs.service;
 
 import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.boot.availability.LivenessState;
