@@ -11,17 +11,17 @@ public class FootballCustomEndpoint {
 
     private FileLoader fileLoader;
 
-    public FootballCustomEndpoint(FileLoader fileLoader){
+    public FootballCustomEndpoint(FileLoader fileLoader) {
         this.fileLoader = fileLoader;
     }
-    
+
     @ReadOperation
-    public String getFileVersion(){
+    public String getFileVersion() {
         return fileLoader.getFileName();
     }
 
     @WriteOperation
-    public void refreshFile(){
+    public void refreshFile() {
         try {
             fileLoader.loadFile();
         } catch (Exception e) {

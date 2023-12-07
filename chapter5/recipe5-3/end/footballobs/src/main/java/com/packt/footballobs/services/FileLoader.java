@@ -23,6 +23,11 @@ public class FileLoader {
     }
 
     public void loadFile() throws IOException {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Files.list(Paths.get(folder))
                 .filter(Files::isRegularFile)
                 .findFirst()

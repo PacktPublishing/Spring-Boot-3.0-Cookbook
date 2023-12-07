@@ -11,19 +11,17 @@ import com.packt.footballobs.services.FileLoader;
 
 @Configuration
 public class FootballConfiguration {
-    
+
     @Value("${football.folder}")
     private String folder;
 
     @Bean
-    public FileLoader fileLoader() throws IOException{        
-        FileLoader fileLoader = new FileLoader(folder);
-        fileLoader.loadFile();        
-        return fileLoader;
+    public FileLoader fileLoader() throws IOException {
+        return new FileLoader(folder);
     }
 
     @Bean
-    public FootballCustomEndpoint footballCustomEndpoint(FileLoader fileLoader){
+    public FootballCustomEndpoint footballCustomEndpoint(FileLoader fileLoader) {
         return new FootballCustomEndpoint(fileLoader);
     }
 }

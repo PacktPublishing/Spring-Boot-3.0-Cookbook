@@ -3,27 +3,28 @@ package com.packt.footballobs.health;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.health.Status;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import com.packt.footballobs.services.TradingService;
-
 
 @Component
 public class FootballHealthIndicator implements HealthIndicator {
 
-    private TradingService tradingService;
+    private JdbcTemplate template;
 
-    public FootballHealthIndicator(TradingService tradingService) {
-        this.tradingService = tradingService;
+    public FootballHealthIndicator(JdbcTemplate template) {
+        this.template = template;
     }
 
     @Override
     public Health health() {
-        if (tradingService.getPendingOrders() > 90) {
-            return Health.status(Status.DOWN).withDetail("Error Code", "Pending orders is greater than 90").build();
-        } else {
-            return Health.status(Status.UP).build();
+        try {
+            template.execute("SELECT 1");
+            return Health.up().build();
+        } catch (DataAccessException e) {
+            return Health.down().withDetail("Cannot connect to database", e).build();
         }
+
     }
 
 }
