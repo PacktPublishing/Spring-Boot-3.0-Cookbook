@@ -9,7 +9,7 @@ management:
                 include: health,env,metrics,beans,loggers,football
     tracing:
         sampling:
-            probability: 1.0
+            probability: 1.0            
 football:
     folder: teams
 spring:

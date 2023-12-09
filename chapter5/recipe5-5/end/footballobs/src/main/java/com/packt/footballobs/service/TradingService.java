@@ -10,7 +10,7 @@ import java.util.Random;
 public class TradingService {
 
     private ApplicationEventPublisher applicationEventPublisher;
-
+    
     public TradingService(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
