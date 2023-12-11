@@ -1,28 +1,19 @@
 package com.packt.footballobs.service;
 
+import java.util.Random;
+
 import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.boot.availability.LivenessState;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.Meter;
-import io.micrometer.core.instrument.MeterRegistry;
-
-import java.util.Random;
-
 @Service
 public class TradingService {
 
     private ApplicationEventPublisher applicationEventPublisher;
-    private MeterRegistry meterRegistry;
-    private Counter ordersTradedCounter;
-    
-    public TradingService(ApplicationEventPublisher applicationEventPublisher, MeterRegistry meterRegistry) {
+
+    public TradingService(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
-        this.meterRegistry = meterRegistry;
-        this.ordersTradedCounter = meterRegistry.counter("orders_traded");
-        this.meterRegistry.gauge("pending_orders", this, TradingService::getPendingOrders);
     }
 
     public int getPendingOrders() {
@@ -38,7 +29,6 @@ public class TradingService {
             AvailabilityChangeEvent.publish(applicationEventPublisher,
                     new Exception("working fine"), LivenessState.CORRECT);
         }
-        ordersTradedCounter.increment(orders);
         return orders;
     }
 }

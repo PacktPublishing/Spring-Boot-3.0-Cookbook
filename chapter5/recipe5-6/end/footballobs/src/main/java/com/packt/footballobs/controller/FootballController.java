@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.packt.footballobs.service.AuctionService;
 import com.packt.footballobs.service.DataService;
 import com.packt.footballobs.service.FileLoader;
 import com.packt.footballobs.service.TradingService;
@@ -30,13 +31,15 @@ public class FootballController {
     private static final Logger logger = LoggerFactory.getLogger(FootballController.class);
     private static Random random = new Random();
     private DataService dataService;
+    private AuctionService auctionService;
 
     public FootballController(FileLoader fileLoader, TradingService tradingService,
-            ObservationRegistry observationRegistry, DataService dataService) {
+            ObservationRegistry observationRegistry, DataService dataService, AuctionService auctionService) {
         this.fileLoader = fileLoader;
         this.tradingService = tradingService;
         this.observationRegistry = observationRegistry;
         this.dataService = dataService;
+        this.auctionService = auctionService;
     }
 
     @GetMapping
@@ -83,6 +86,11 @@ public class FootballController {
     @GetMapping("/stats/{player}")
     public String getPlayerStats(@PathVariable String player){
         return dataService.getPlayerStats(player);
+    }
+
+    @PostMapping("/bid/{player}")
+    public void addBid(@PathVariable String player, @RequestBody String bid) {
+        auctionService.addBidAOP(player, bid);
     }
 
 }
