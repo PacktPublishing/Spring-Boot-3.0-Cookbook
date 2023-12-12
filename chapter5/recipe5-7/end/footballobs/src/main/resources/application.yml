@@ -3,10 +3,12 @@ management:
         health:
             probes:
                 enabled: true
+        prometheus:
+            enabled: true
     endpoints:
         web:
             exposure:
-                include: health,env,metrics,beans,loggers,football
+                include: health,env,metrics,beans,loggers,football,prometheus
     tracing:
         sampling:
             probability: 1.0            
@@ -17,6 +19,6 @@ spring:
         name: trading-service
     datasource:
         url: jdbc:postgresql://localhost:5432/football
-        username: packtd
-        password: packtd
+        username: packt
+        password: packt
 
