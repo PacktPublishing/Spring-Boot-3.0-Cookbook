@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: admin-server
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      label: distributed-tracing

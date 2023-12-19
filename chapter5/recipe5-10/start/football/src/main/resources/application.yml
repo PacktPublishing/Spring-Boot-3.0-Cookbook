@@ -1,0 +1,10 @@
+football:
+  instanceId: ${random.uuid}
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      label: distributed-tracing
+  application:
+    name: FootballServer
