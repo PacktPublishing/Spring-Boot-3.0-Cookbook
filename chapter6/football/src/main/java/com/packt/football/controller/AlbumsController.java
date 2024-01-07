@@ -35,8 +35,8 @@ public class AlbumsController {
         return albumsService.buyCards(userId, count);
     }
 
-    @GetMapping("users/{userId}")
-    public TradingUser getUserWithCardsAndAlbums(@PathVariable Integer userId) {
+    @GetMapping("/users/{userId}")
+    public Optional<TradingUser> getUserWithCardsAndAlbums(@PathVariable Integer userId) {
         return albumsService.getUserWithCardsAndAlbums(userId);
     }
 

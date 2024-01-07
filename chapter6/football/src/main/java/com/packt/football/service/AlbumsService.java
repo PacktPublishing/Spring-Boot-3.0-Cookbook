@@ -18,6 +18,7 @@ import com.packt.football.domain.Card;
 import com.packt.football.domain.Player;
 import com.packt.football.domain.TradingUser;
 import com.packt.football.domain.User;
+import com.packt.football.mapper.PlayerMapper;
 import com.packt.football.repo.AlbumEntity;
 import com.packt.football.repo.AlbumRepository;
 import com.packt.football.repo.CardEntity;
@@ -27,21 +28,21 @@ import com.packt.football.repo.PlayerRepository;
 import com.packt.football.repo.UserEntity;
 import com.packt.football.repo.UserRepository;
 
-
-
 @Service
 public class AlbumsService {
     private AlbumRepository albumsRepository;
     private UserRepository usersRepository;
     private PlayerRepository playersRepository;
     private CardRepository cardsRepository;
+    private PlayerMapper playerMapper;
 
     public AlbumsService(AlbumRepository albumsRepository, UserRepository usersRepository,
-            PlayerRepository playersRepository, CardRepository cardsRepository) {
+            PlayerRepository playersRepository, CardRepository cardsRepository, PlayerMapper playerMapper) {
         this.albumsRepository = albumsRepository;
         this.usersRepository = usersRepository;
         this.playersRepository = playersRepository;
         this.cardsRepository = cardsRepository;
+        this.playerMapper = playerMapper;
     }
 
     public Album buyAlbum(Integer userId, String title) {
@@ -66,8 +67,7 @@ public class AlbumsService {
         return cardsRepository.saveAll(cards)
                 .stream()
                 .map(card -> new Card(card.getId(), card.getOwner().getId(), Optional.empty(),
-                        new Player(card.getPlayer().getName(), card.getPlayer().getJerseyNumber(),
-                                card.getPlayer().getPosition(), card.getPlayer().getDateOfBirth())))
+                        playerMapper.map(card.getPlayer())))
                 .collect(Collectors.toList());
     }
 
@@ -77,8 +77,7 @@ public class AlbumsService {
         card.setAlbum(album);
         card = cardsRepository.save(card);
         return new Card(card.getId(), card.getOwner().getId(), Optional.of(card.getAlbum().getId()),
-                new Player(card.getPlayer().getName(), card.getPlayer().getJerseyNumber(),
-                        card.getPlayer().getPosition(), card.getPlayer().getDateOfBirth()));
+                playerMapper.map(card.getPlayer()));
 
     }
 
@@ -95,9 +94,9 @@ public class AlbumsService {
         // cardsRepository.saveAll(cards);
         return cardsRepository.assignCardsToUserAlbums(userId)
                 .stream()
-                .map(c -> new Card(c.getId(), c.getOwner().getId(), Optional.of(c.getAlbum().getId()),
-                        new Player(c.getPlayer().getName(), c.getPlayer().getJerseyNumber(),
-                                c.getPlayer().getPosition(), c.getPlayer().getDateOfBirth())))
+                .map(c -> new Card(c.getId(), c.getOwner().getId(),
+                        c.getAlbum() == null ? Optional.empty() : Optional.of(c.getAlbum().getId()),
+                        playerMapper.map(c.getPlayer())))
                 .toList();
 
     }
@@ -111,8 +110,7 @@ public class AlbumsService {
             CardEntity card = cardsRepository.findById(cardId).orElseThrow();
             return Optional.of(new Card(card.getId(), card.getOwner().getId(),
                     card.getAlbum() == null ? Optional.empty() : Optional.of(card.getAlbum().getId()),
-                    new Player(card.getPlayer().getName(), card.getPlayer().getJerseyNumber(),
-                            card.getPlayer().getPosition(), card.getPlayer().getDateOfBirth())));
+                    playerMapper.map(card.getPlayer())));
         }
     }
 
@@ -131,8 +129,7 @@ public class AlbumsService {
             return Stream.concat(result1.stream(), result2.stream())
                     .map(c -> new Card(c.getId(), c.getOwner().getId(),
                             c.getAlbum() == null ? Optional.empty() : Optional.of(c.getAlbum().getId()),
-                            new Player(c.getPlayer().getName(), c.getPlayer().getJerseyNumber(),
-                                    c.getPlayer().getPosition(), c.getPlayer().getDateOfBirth())))
+                            playerMapper.map(c.getPlayer())))
                     .toList();
         } else {
             return List.of();
@@ -144,20 +141,23 @@ public class AlbumsService {
         return playersRepository.findAll();
     }
 
-    public TradingUser getUserWithCardsAndAlbums(Integer userId) {
-        UserEntity user = usersRepository.findByIdWithCardsAndAlbums(userId);
-        return new TradingUser(new User(user.getId(), user.getUsername()),
-                user.getOwnedCards()
-                        .stream()
-                        .map(c -> new Card(c.getId(), user.getId(),
-                                c.getAlbum() == null ? Optional.empty() : Optional.of(c.getAlbum().getId()),
-                                new Player(c.getPlayer().getName(), c.getPlayer().getJerseyNumber(),
-                                        c.getPlayer().getPosition(), c.getPlayer().getDateOfBirth())))
-                        .toList(),
-                user.getOwnedAlbums()
-                        .stream()
-                        .map(a -> new Album(a.getId(), a.getTitle(), user.getId()))
-                        .toList());
-
+    public Optional<TradingUser> getUserWithCardsAndAlbums(Integer userId) {
+        Optional<UserEntity> user = usersRepository.findByIdWithCardsAndAlbums(userId);
+        if (user.isPresent()) {
+            UserEntity u = user.get();
+            return Optional.of(new TradingUser(new User(u.getId(), u.getUsername()),
+                    u.getOwnedCards()
+                            .stream()
+                            .map(c -> new Card(c.getId(), u.getId(),
+                                    c.getAlbum() == null ? Optional.empty() : Optional.of(c.getAlbum().getId()),
+                                    playerMapper.map(c.getPlayer())))
+                            .toList(),
+                    u.getOwnedAlbums()
+                            .stream()
+                            .map(a -> new Album(a.getId(), a.getTitle(), u.getId()))
+                            .toList()));
+        } else {
+            return Optional.empty();
+        }
     }
 }

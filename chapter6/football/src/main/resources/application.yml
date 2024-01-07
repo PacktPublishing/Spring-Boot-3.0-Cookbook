@@ -11,7 +11,7 @@ management:
                 include: health,env,metrics,beans,loggers,prometheus
     tracing:
         sampling:
-            probability: 1.0 
+            probability: 0.01 
 spring:
     application:
         name: football

@@ -2,7 +2,9 @@ package com.packt.football.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,6 +14,7 @@ import com.packt.football.domain.Match;
 import com.packt.football.domain.MatchEvent;
 import com.packt.football.domain.Player;
 import com.packt.football.domain.Team;
+import com.packt.football.mapper.PlayerMapper;
 import com.packt.football.repo.AlbumRepository;
 import com.packt.football.repo.MatchEntity;
 import com.packt.football.repo.MatchEventEntity;
@@ -30,17 +33,20 @@ public class FootballService {
         private MatchRepository matchRepository;
         private AlbumRepository albumRepository;
         private MatchEventRepository matchEventRepository;
+        private PlayerMapper playerMapper;
 
         public FootballService(PlayerRepository playerRepository,
                         TeamRepository teamRepository,
                         MatchRepository matchRepository,
                         AlbumRepository albumRepository,
-                        MatchEventRepository matchEventRepository) {
+                        MatchEventRepository matchEventRepository,
+                        PlayerMapper playerMapper) {
                 this.playerRepository = playerRepository;
                 this.teamRepository = teamRepository;
                 this.matchRepository = matchRepository;
                 this.albumRepository = albumRepository;
                 this.matchEventRepository = matchEventRepository;
+                this.playerMapper = playerMapper;
         }
 
         // @Transactional(readOnly = true)
@@ -53,9 +59,7 @@ public class FootballService {
                                         team.getName(),
                                         team.getPlayers()
                                                         .stream()
-                                                        .map(player -> new Player(player.getName(),
-                                                                        player.getJerseyNumber(), player.getPosition(),
-                                                                        player.getDateOfBirth()))
+                                                        .map(player -> playerMapper.map(player))
                                                         .toList());
                 }
         }
@@ -63,27 +67,21 @@ public class FootballService {
         public List<Player> searchPlayers(String name) {
                 return playerRepository.findByNameContaining(name)
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> searchPlayersStartingWith(String nameStarting) {
                 return playerRepository.findByNameStartingWith(nameStarting)
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> searchPlayersByBirthDate(LocalDate date) {
                 return playerRepository.findByDateOfBirth(date)
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
@@ -101,44 +99,35 @@ public class FootballService {
                 } else {
                         player.setPosition(position);
                         player = playerRepository.save(player);
-                        return new Player(player.getName(), player.getJerseyNumber(), player.getPosition(),
-                                        player.getDateOfBirth());
+                        return playerMapper.map(player);
                 }
         }
 
         public List<Player> getPlayersByMatch(Integer id) {
                 return matchRepository.findPlayersByMatchId(id)
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> getAlbumMissingPlayers(Integer id) {
                 return albumRepository.findByIdMissingPlayers(id)
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> getAlbumPlayers(Integer id) {
                 return albumRepository.findByIdPlayers(id, Pageable.ofSize(10).withPage(0))
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> getAlbumPlayersByTeam(Integer albumId, Integer teamId) {
                 return albumRepository.findByIdAndTeam(albumId, teamId)
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
@@ -146,35 +135,27 @@ public class FootballService {
                 // return playerRepository.findListOfPlayers(players)
                 return playerRepository.findByIdIn(players)
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> searchPlayersLike(String q) {
                 return playerRepository.findByNameLike("%" + q + "%")
                                 .stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> getTeamPlayers(Integer id) {
                 return playerRepository.findByTeamId(id, Sort.by("name").ascending()).stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
         public List<Player> getAllPlayersPaged(int pageNumber, int size) {
                 Page<PlayerEntity> page = playerRepository.findAll(Pageable.ofSize(size).withPage(pageNumber));
                 return page.stream()
-                                .map(player -> new Player(player.getName(), player.getJerseyNumber(),
-                                                player.getPosition(),
-                                                player.getDateOfBirth()))
+                                .map(player -> playerMapper.map(player))
                                 .toList();
         }
 
@@ -215,11 +196,21 @@ public class FootballService {
         }
 
         public List<MatchEvent> getMatchWithPlayerEventsError(Integer matchId, Integer playerId) {
-                List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayerError(matchId, playerId);
+                List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayerError(matchId,
+                                playerId);
 
                 return matchEvents.stream()
                                 .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
                                 .toList();
-        } 
+        }
+
+        public List<Team> getTeams() {
+                return StreamSupport.stream(teamRepository.findAll().spliterator(), false)
+                                .map(t -> new Team(t.getId(), t.getName(), List.of())).toList();
+        }
+
+        public Player getPlayer(Integer id) {
+                return playerRepository.findById(id).map(p -> playerMapper.map(p)).orElse(null);
+        }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.packt.football.domain.MatchEvent;
 import com.packt.football.domain.Player;
+import com.packt.football.mapper.PlayerMapper;
 import com.packt.football.repo.MatchEventEntity;
 import com.packt.football.repo.PlayerEntity;
 
@@ -24,9 +25,11 @@ import jakarta.persistence.criteria.Root;
 public class DynamicQueriesService {
 
     private EntityManager em;
+    private PlayerMapper playerMapper;
 
-    public DynamicQueriesService(EntityManager em) {
+    public DynamicQueriesService(EntityManager em, PlayerMapper playerMapper) {
         this.em = em;
+        this.playerMapper = playerMapper;
     }
 
     public List<PlayerEntity> searchTeamPlayers(Integer teamId, Optional<String> name, Optional<Integer> minHeight,
@@ -62,7 +65,7 @@ public class DynamicQueriesService {
             Optional<Integer> minWeight, Optional<Integer> maxWeight) {
         return searchTeamPlayers(teamId, name, minHeight, maxHeight, minWeight, maxWeight)
                 .stream()
-                .map(p -> new Player(p.getName(), p.getJerseyNumber(), p.getPosition(), p.getDateOfBirth()))
+                .map(p -> playerMapper.map(p))
                 .toList();
     }
 
@@ -121,7 +124,7 @@ public class DynamicQueriesService {
     public List<Player> searchUserMissingPlayersAndMap(Integer userId) {
         return searchUserMissingPlayers(userId)
                 .stream()
-                .map(p -> new Player(p.getName(), p.getJerseyNumber(), p.getPosition(), p.getDateOfBirth()))
+                .map(p -> playerMapper.map(p))
                 .toList();
     }
 }
