@@ -1,0 +1,66 @@
+#
+# Copyright 2015-2023 The OpenZipkin Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License. You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under the License
+# is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+# or implied. See the License for the specific language governing permissions and limitations under
+# the License.
+#
+
+# This file uses the version 2 docker-compose file format, described here:
+# https://docs.docker.com/compose/compose-file/#version-2
+#
+# It extends the default configuration from docker-compose.yml to run the
+# zipkin-cassandra container instead of the zipkin-mysql container.
+
+version: '2.4'
+
+services:
+  zipkin_storage:
+    image: ghcr.io/openzipkin/zipkin-mysql:${TAG:-latest}
+    container_name: mysql
+
+  # Use Cassandra instead of in-memory storage
+  zipkin:
+    # slim doesn't include Cassandra support, so switch to the larger image
+    image: ghcr.io/openzipkin/zipkin:${TAG:-latest}
+    environment:
+      - STORAGE_TYPE=mysql
+      - MYSQL_HOST=zipkin_storage
+      # Add the baked-in username and password for the zipkin-mysql image
+      - MYSQL_USER=zipkin
+      - MYSQL_PASS=zipkin
+      - JAVA_OPTS=-Xms2g -Xmx2g -XX:+ExitOnOutOfMemoryError
+    ports:
+      - 9411:9411
+    # Uncomment to enable request logging (TRACE shows query values)
+    # command: --logging.level.com.datastax.oss.driver.internal.core.tracker.RequestLogger=TRACE
+    depends_on:
+      zipkin_storage:
+        condition: service_healthy
+  postgresql:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=packt
+      - POSTGRES_PASSWORD=packt
+    ports:
+      - 5432:5432
+  
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
