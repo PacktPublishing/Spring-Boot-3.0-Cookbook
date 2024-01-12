@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -92,6 +93,7 @@ public class FootballService {
                 return new Team(team.getId(), team.getName(), List.of());
         }
 
+        @CacheEvict(value = "players", key = "#id")
         public Player updatePlayerPosition(Integer id, String position) {
                 PlayerEntity player = playerRepository.findById(id).orElse(null);
                 if (player == null) {
@@ -209,7 +211,7 @@ public class FootballService {
                                 .map(t -> new Team(t.getId(), t.getName(), List.of())).toList();
         }
 
-        // @Cacheable(value = "players")
+        @Cacheable(value = "players")
         public Player getPlayer(Integer id) {
                 return playerRepository.findById(id).map(p -> playerMapper.map(p)).orElse(null);
         }
