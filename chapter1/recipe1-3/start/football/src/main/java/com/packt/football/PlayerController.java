@@ -45,14 +45,4 @@ public class PlayerController {
         footballService.deletePlayer(id);
     }
 
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Not found")
-    @ExceptionHandler(NotFoundException.class)
-    public void notFoundHandler() {
-    }
-
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Already exists")
-    @ExceptionHandler(AlreadyExistsException.class)
-    public void alreadyExistsHandler() {
-    }
-
 }

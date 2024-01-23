@@ -27,7 +27,7 @@ import com.packt.football.model.Player;
 import com.packt.football.services.FootballService;
 
 @WebMvcTest(value = PlayerController.class)
-public class PlayerControllerTest {
+public class PlayerControllerTests {
 
     @Autowired
     private MockMvc mvc;
