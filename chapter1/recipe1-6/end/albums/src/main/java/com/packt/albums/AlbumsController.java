@@ -20,8 +20,4 @@ public class AlbumsController {
         return footballClient.getPlayers();
     }
 
-    @GetMapping("/serviceinfo")
-    public String getServiceInfo() {
-        return footballClient.getServiceInfo();
-    }
 }

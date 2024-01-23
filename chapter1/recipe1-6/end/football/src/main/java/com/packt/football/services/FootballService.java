@@ -3,6 +3,7 @@ package com.packt.football.services;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.packt.football.model.Player;
 
 @Service
 public class FootballService {
-    private final Map<String, Player> players = Map.ofEntries(
+    private final Map<String, Player> players = new HashMap<>(Map.ofEntries(
             Map.entry("1884823", new Player("1884823", 5, "Ivana ANDRES", "Defender", LocalDate.of(1994, 07, 13))),
             Map.entry("325636", new Player("325636", 11, "Alexia PUTELLAS", "Midfielder", LocalDate.of(1994, 02, 04))),
             Map.entry("396930", new Player("396930", 2, "Ona BATLLE", "Defender", LocalDate.of(1999, 06, 10))),
@@ -38,7 +39,7 @@ public class FootballService {
             Map.entry("413016", new Player("413016", 19, "Olga CARMONA", "Defender", LocalDate.of(2000, 06, 12))),
             Map.entry("398088", new Player("398088", 17, "Alba REDONDO", "Forward", LocalDate.of(1996, 8, 27))),
             Map.entry("413022", new Player("413022", 3, "Teresa ABELLEIRA", "Midfielder", LocalDate.of(2000, 01, 9))),
-            Map.entry("415396", new Player("415396", 13, "Enith SALON", "Goalkeeper", LocalDate.of(2001, 9, 24))));
+            Map.entry("415396", new Player("415396", 13, "Enith SALON", "Goalkeeper", LocalDate.of(2001, 9, 24)))));
 
     public List<Player> listPlayers() {
         return players.values().stream().collect(Collectors.toList());
