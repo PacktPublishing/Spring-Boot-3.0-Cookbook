@@ -1,0 +1,11 @@
+server:
+  port: 0
+spring:
+  application:
+    name: FootballServer
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

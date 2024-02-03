@@ -1,0 +1,44 @@
+version: "3.0"
+
+services:
+  eureka:
+    image: registry:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    # network_mode: "host"
+    networks:
+      - eureka-net
+  football:
+    image: football:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    # network_mode: "host"
+    networks:
+      - eureka-net
+    environment:
+      - server.port=8080
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+    depends_on:
+      - eureka
+networks:
+  eureka-net:
+    driver: bridge
+
+# services:
+#   eureka-server:
+#     image: registry:0.0.1-SNAPSHOT
+#     ports:
+#     - "8761:8761"
+#     # expose:
+#     # - "8761"
+#   user-registration:
+#     image: football:0.0.1-SNAPSHOT
+#     container_name: football
+#     ports:
+#     - "8080:8080"
+#     environment:
+#       server.port: 8080
+#       eureka.client.enabled: 'true'
+#       eureka.host: eureka-server
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+#       eureka.instance.preferIpAddress: 'true'

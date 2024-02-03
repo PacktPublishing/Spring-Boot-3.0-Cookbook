@@ -1,0 +1,54 @@
+{
+    "applications": {
+        "versions__delta": "1",
+        "apps__hashcode": "UP_1_",
+        "application": [
+            {
+                "name": "FOOTBALLSERVER",
+                "instance": [
+                    {
+                        "instanceId": "localhost:FootballServer:0",
+                        "hostName": "localhost",
+                        "app": "FOOTBALLSERVER",
+                        "ipAddr": "172.26.109.186",
+                        "status": "UP",
+                        "overriddenStatus": "UNKNOWN",
+                        "port": {
+                            "$": 34357,
+                            "@enabled": "true"
+                        },
+                        "securePort": {
+                            "$": 443,
+                            "@enabled": "false"
+                        },
+                        "countryId": 1,
+                        "dataCenterInfo": {
+                            "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
+                            "name": "MyOwn"
+                        },
+                        "leaseInfo": {
+                            "renewalIntervalInSecs": 30,
+                            "durationInSecs": 90,
+                            "registrationTimestamp": 1705563902264,
+                            "lastRenewalTimestamp": 1705563902264,
+                            "evictionTimestamp": 0,
+                            "serviceUpTimestamp": 1705563902264
+                        },
+                        "metadata": {
+                            "@class": "java.util.Collections$EmptyMap"
+                        },
+                        "homePageUrl": "http://localhost:34357/",
+                        "statusPageUrl": "http://localhost:34357/actuator/info",
+                        "healthCheckUrl": "http://localhost:34357/actuator/health",
+                        "vipAddress": "FootballServer",
+                        "secureVipAddress": "FootballServer",
+                        "isCoordinatingDiscoveryServer": "false",
+                        "lastUpdatedTimestamp": "1705563902264",
+                        "lastDirtyTimestamp": "1705563902170",
+                        "actionType": "ADDED"
+                    }
+                ]
+            }
+        ]
+    }
+}
