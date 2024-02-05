@@ -1,0 +1,8 @@
+spring:
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        open-in-view: false
+    datasource:
+        url: jdbc:postgresql://localhost:5432/football
+        username: packt
+        password: packt
