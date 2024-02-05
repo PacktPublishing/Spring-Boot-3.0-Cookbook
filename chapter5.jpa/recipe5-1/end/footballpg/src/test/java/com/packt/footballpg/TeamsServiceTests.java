@@ -7,27 +7,27 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.packt.footballpg.service.FootballQueryService;
+import com.packt.footballpg.service.TeamsService;
 
 @SpringBootTest
-public class FootballServiceQueryTests {
+public class TeamsServiceTests {
 
     @Autowired
-    private FootballQueryService footballQueryService;
+    private TeamsService teamsService;
 
     @Test
     public void testGetTeamCount() {
-        int count = footballQueryService.getTeamCount();
+        int count = teamsService.getTeamCount();
         assertTrue(count > 0);
     }
 
     @Test
     public void testGetTeams() {
-        assertTrue(footballQueryService.getTeams().size() > 0);
+        assertTrue(teamsService.getTeams().size() > 0);
     }
 
     @Test
     public void testGetTeam() {
-        assertEquals("Argentina", footballQueryService.getTeam(1884881).getName());
+        assertEquals("Argentina", teamsService.getTeam(1884881).getName());
     }
 }

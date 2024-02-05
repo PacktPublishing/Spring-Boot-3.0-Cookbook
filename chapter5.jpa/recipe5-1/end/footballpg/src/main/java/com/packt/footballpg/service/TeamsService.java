@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import com.packt.footballpg.entities.Team;
 
 @Service
-public class FootballQueryService {
+public class TeamsService {
 
     private JdbcTemplate jdbcTemplate;
 
-    public FootballQueryService(JdbcTemplate jdbcTemplate) {
+    public TeamsService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
