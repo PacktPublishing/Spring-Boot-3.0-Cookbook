@@ -14,10 +14,10 @@ import com.packt.footballpg.service.TeamsService;
 
 @RestController
 @RequestMapping("/teams")
-public class TemsController {
+public class TeamsController {
     private TeamsService teamsService;
 
-    public TemsController(TeamsService teamsService) {
+    public TeamsController(TeamsService teamsService) {
         this.teamsService = teamsService;
     }
     
