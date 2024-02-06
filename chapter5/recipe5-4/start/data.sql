@@ -1,8 +1,3 @@
-\c football
-INSERT INTO albums
-    (title, description, expire_date)
-    VALUES('FIFA WWC 2023', 'FIFA Women''s World Cup 2023. Australia and New Zealand', '2023-12-31');
-
 INSERT INTO teams(id, name) VALUES (1884881, 'Argentina');
 INSERT INTO players(id, jersey_number, name, "position", date_of_birth, team_id)
 VALUES
