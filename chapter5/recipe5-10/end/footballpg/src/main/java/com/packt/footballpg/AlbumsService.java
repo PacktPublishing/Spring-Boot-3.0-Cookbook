@@ -10,10 +10,8 @@ import java.util.stream.Stream;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
-
+import jakarta.transaction.Transactional;
 
 @Service
 public class AlbumsService {
@@ -102,19 +100,17 @@ public class AlbumsService {
         }
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     public List<Card> tradeAllCards(Integer userId1, Integer userId2) {
         Integer potentialUser1ToUser2 = cardsRepository.countMatchBetweenUsers(userId1, userId2);
         Integer potentialUser2ToUser1 = cardsRepository.countMatchBetweenUsers(userId2, userId1);
         Integer count = Math.min(potentialUser1ToUser2, potentialUser2ToUser1);
         if (count > 0) {
-            ArrayList<CardEntity> result1 = new ArrayList<>(
+            ArrayList<CardEntity> result = new ArrayList<>(
                     cardsRepository.tradeCardsBetweenUsers(userId1, userId2, count));
             useAllCardAvailable(userId2);
-            ArrayList<CardEntity> result2 = new ArrayList<>(
-                    cardsRepository.tradeCardsBetweenUsers(userId2, userId1, count));
+            result.addAll(cardsRepository.tradeCardsBetweenUsers(userId2, userId1, count));
             useAllCardAvailable(userId1);
-            return Stream.concat(result1.stream(), result2.stream())
+            return result.stream()
                     .map(c -> new Card(c.getId(), c.getOwner().getId(),
                             c.getAlbum() == null ? Optional.empty() : Optional.of(c.getAlbum().getId()),
                             new Player(c.getPlayer().getName(), c.getPlayer().getJerseyNumber(),

@@ -16,6 +16,4 @@ public interface AlbumRepository extends JpaRepository<AlbumEntity, Integer> {
 
     @Query("SELECT p FROM PlayerEntity p JOIN p.cards c WHERE c.album.id = :id AND p.team.id = :teamId")
     public List<PlayerEntity> findByIdAndTeam(Integer id, Integer teamId);
-
-    public List<AlbumEntity> findAllByOwner(UserEntity user);
 }

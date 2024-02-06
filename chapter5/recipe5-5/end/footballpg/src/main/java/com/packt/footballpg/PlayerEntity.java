@@ -25,9 +25,6 @@ public class PlayerEntity {
     @ManyToOne
     @JoinColumn(name = "team_id")
     private TeamEntity team;
-    
-    private Integer height;
-    private Integer weight;
 
     public Integer getId() {
         return id;
@@ -75,22 +72,6 @@ public class PlayerEntity {
 
     public void setTeam(TeamEntity team) {
         this.team = team;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
     }
 
 }

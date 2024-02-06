@@ -19,8 +19,6 @@ public class TeamEntity {
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private List<PlayerEntity> players;
-    @OneToMany
-    private List<MatchEntity> matches;
 
     public Integer getId() {
         return id;

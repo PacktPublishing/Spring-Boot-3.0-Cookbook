@@ -1,17 +1,14 @@
 package com.packt.footballpg;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,9 +32,6 @@ public class MatchEntity {
     private Integer team1Goals;
     @Column(name = "team2_goals", columnDefinition = "integer default 0")
     private Integer team2Goals;
-
-    @OneToMany(mappedBy = "match", fetch = FetchType.LAZY)
-    private List<MatchEventEntity> events;
 
     public Integer getId() {
         return id;
@@ -85,14 +79,6 @@ public class MatchEntity {
 
     public void setTeam2Goals(Integer team2Goals) {
         this.team2Goals = team2Goals;
-    }
-
-    public List<MatchEventEntity> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<MatchEventEntity> events) {
-        this.events = events;
     }
 
 }

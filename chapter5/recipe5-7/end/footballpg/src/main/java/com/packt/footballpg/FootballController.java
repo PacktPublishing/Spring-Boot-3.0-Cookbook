@@ -100,27 +100,4 @@ public class FootballController {
         return footballService.getNumberOfPlayersByPosition(position);
     }
 
-    @GetMapping("/matches/{id}/timeline")
-    public Match getMatchWithTimeline(@PathVariable Integer id) {
-        return footballService.getMatchWithTimeline(id);
-    }
-
-    @GetMapping("/matches/{id}/timeline/{playerId}")
-    public List<MatchEvent> getMatchWithTimeline(@PathVariable Integer id, @PathVariable Integer playerId) {
-        return footballService.getMatchWithPlayerEvents(id, playerId);
-    }
-    @GetMapping("/matches/{id}/timeline/events/{type}")
-    public List<MatchEvent> getMatchWithEventsOfType(@PathVariable Integer id, @PathVariable Integer type) {
-        return footballService.getMatchEventsOfType(id, type);
-    }
-
-    @GetMapping("/players/matches/{numMatches}")
-    public Integer getTotalPlayersWithMoreThanNMatches(@PathVariable Integer numMatches) {
-        return footballService.getTotalPlayersWithMoreThanNMatches(numMatches);
-    }
-
-    @GetMapping("/matches/{id}/timeline/{playerId}/error")
-    public List<MatchEvent> getMatchWithTimelineError(@PathVariable Integer id, @PathVariable Integer playerId) {
-        return footballService.getMatchWithPlayerEventsError(id, playerId);
-    }
 }
