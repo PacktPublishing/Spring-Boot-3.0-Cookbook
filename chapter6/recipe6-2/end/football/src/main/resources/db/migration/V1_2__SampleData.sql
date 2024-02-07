@@ -900,9 +900,9 @@ VALUES
 (400258554, '2023-08-20T10:00:00Z', 1884823, 1883720, 1, 0);
 
 
--- INSERT INTO albums(id, title, expire_date)
+-- INSERT INTO albums(title, expire_date)
 -- VALUES
--- (1, 'WWC FIFA World Cup 2023. Australia and New Zealand', '2024-12-31');
+-- ('WWC FIFA World Cup 2023. Australia and New Zealand', '2024-12-31');
 
 -- Generate 100000 users
 INSERT INTO users (username)
