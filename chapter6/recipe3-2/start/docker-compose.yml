@@ -19,7 +19,3 @@ services:
       - 27019:27017
     command: mongod --replSet rs0 --port 27017 --bind_ip_all
 
-networks:
-  default:
-    external:
-      name: mongoCluster
