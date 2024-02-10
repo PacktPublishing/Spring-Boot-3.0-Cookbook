@@ -32,7 +32,6 @@ class FootballServiceTest {
     @BeforeAll
     static void startContainer() throws IOException, InterruptedException {
         mongoDBContainer.start();
-
         importFile("teams");
     }
 
