@@ -45,10 +45,6 @@ public class FootballService {
         }
     }
 
-    public List<Team> getTeamByNameSQL(String name) {
-        return teamRepository.findByNameSQL(name);
-    }
-
     public Team saveTeam(Team team) {
         return teamRepository.save(team);
     }

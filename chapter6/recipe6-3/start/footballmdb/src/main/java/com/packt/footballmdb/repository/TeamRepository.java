@@ -13,7 +13,4 @@ public interface TeamRepository extends MongoRepository<Team, String> {
 
     @Query(value = "{'players._id': ?0}", fields = "{'players.$': 1}")
     public Team findPlayerById(String id);
-
-    @Query(value = "SELECT T FROM Team T WHERE T.name = ?0")
-    public List<Team> findByNameSQL(String name);
 }

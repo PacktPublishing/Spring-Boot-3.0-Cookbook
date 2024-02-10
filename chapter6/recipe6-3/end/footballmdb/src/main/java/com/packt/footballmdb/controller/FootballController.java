@@ -36,11 +36,6 @@ public class FootballController {
         return footballService.getTeamByName(name);
     }
 
-    @GetMapping("/team/{name}/sql")
-    public List<Team> getTeamByNameSQL(@PathVariable String name) {
-        return footballService.getTeamByNameSQL(name);
-    }
-
     @GetMapping("/team/{name}/contains")
     public List<Team> getTeamsContainingName(@PathVariable String name) {
         return footballService.getTeamsContainingName(name);
