@@ -8,8 +8,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.client.result.UpdateResult;
-import com.packt.footballmdb.repository.Match;
 import com.packt.footballmdb.repository.MatchEvent;
 import com.packt.footballmdb.repository.MatchEventRepository;
 import com.packt.footballmdb.repository.MatchRepository;
@@ -49,10 +47,6 @@ public class FootballService {
 
     public Player getPlayer(String id) {
         return playerRepository.findById(id).orElse(null);
-    }
-
-    public List<Team> getTeamByNameSQL(String name) {
-        return teamRepository.findByNameSQL(name);
     }
 
     public Team saveTeam(Team team) {
