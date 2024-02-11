@@ -112,6 +112,15 @@ class FootballServiceTest {
 
     @Test
     void updateTeamName() {
+        // ARRANGE
+        Team t = new Team();
+        t.setName("Veneçuela");
+        Team savedTeam = footballService.saveTeam(t);
+        // ACT
+        footballService.updateTeamName(savedTeam.getId(), "Venezuela");
+        // ASSERT
+        Team updatedTeam = footballService.getTeam(savedTeam.getId());
+        assertThat(updatedTeam.getName(), is("Venezuela"));
     }
 
 

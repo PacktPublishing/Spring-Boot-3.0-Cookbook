@@ -1,5 +1,7 @@
 package com.packt.footballmdb.service;
 
+import com.packt.footballmdb.repository.Match;
+import com.packt.footballmdb.repository.MatchEvent;
 import com.packt.footballmdb.repository.Player;
 import com.packt.footballmdb.repository.Team;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,30 +29,32 @@ import static org.junit.Assert.assertNull;
 class FootballServiceTest {
 
     static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo")
+            .withSharding()
             .withCopyFileToContainer(MountableFile.forClasspathResource("mongo/teams.json"), "teams.json")
             .withCopyFileToContainer(MountableFile.forClasspathResource("mongo/players.json"), "players.json")
             .withCopyFileToContainer(MountableFile.forClasspathResource("mongo/matches.json"), "matches.json")
-            .withCopyFileToContainer(MountableFile.forClasspathResource("mongo/events.json"), "events.json");
+            .withCopyFileToContainer(MountableFile.forClasspathResource("mongo/match_events.json"), "match_events.json");
 
     @BeforeAll
     static void startContainer() throws IOException, InterruptedException {
         mongoDBContainer.start();
-        importFile("teams");
-        importFile("players");
-        importFile("matches");
-        importFile("events");
+        importFile(mongoDBContainer, "matches");
+        importFile(mongoDBContainer, "match_events");
+        importFile(mongoDBContainer, "teams");
+        importFile(mongoDBContainer, "players");
     }
 
-    static void importFile(String fileName) throws IOException, InterruptedException {
-        Container.ExecResult res = mongoDBContainer.execInContainer("mongoimport", "--db=football", "--collection=" + fileName, "--jsonArray", fileName + ".json");
-        if (res.getExitCode() > 0){
+    static void importFile(MongoDBContainer container, String fileName) throws IOException, InterruptedException {
+        String uri = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000";
+        Container.ExecResult res = container.execInContainer("mongoimport", "--uri=" + uri, "--db=football", "--collection=" + fileName, "--jsonArray", fileName + ".json");
+        if (res.getExitCode() > 0) {
             throw new RuntimeException("MongoDB not properly initialized");
         }
     }
 
     @DynamicPropertySource
     static void setMongoDbProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
+        registry.add("spring.data.mongodb.uri", () -> mongoDBContainer.getReplicaSetUrl("football"));
     }
 
     @Autowired
@@ -118,7 +122,27 @@ class FootballServiceTest {
 
     @Test
     void updateTeamName() {
+        // ARRANGE
+        Team t = new Team();
+        t.setName("Veneçuela");
+        Team savedTeam = footballService.saveTeam(t);
+        // ACT
+        footballService.updateTeamName(savedTeam.getId(), "Venezuela");
+        // ASSERT
+        Team updatedTeam = footballService.getTeam(savedTeam.getId());
+        assertThat(updatedTeam.getName(), is("Venezuela"));
     }
 
+    @Test
+    void getMatchEvents() throws IOException, InterruptedException {
+        List<MatchEvent> events = footballService.getMatchEvents("400222852");
+        assertThat(events, not(empty()));
+    }
+
+    @Test
+    void getPlayerEvents() {
+        List<MatchEvent> playerEvents = footballService.getPlayerEvents("400222844", "413022");
+        assertThat(playerEvents, not(empty()));
+    }
 
 }
