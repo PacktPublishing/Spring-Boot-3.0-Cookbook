@@ -76,8 +76,8 @@ class UserServiceTest {
                 })
                 """;
         mongoDBContainer1.start();
-        mongoDBContainer2.start();
-        mongoDBContainer3.start();
+        mongoDBContainer2.dependsOn(mongoDBContainer1).start();
+        mongoDBContainer3.dependsOn(mongoDBContainer2).start();
         for (int i = 0; i < 5; i++) {
             Container.ExecResult res = mongoDBContainer1.execInContainer(buildMongoEvalCommand(initCluster));
             if (res.getExitCode() > 0) {
