@@ -34,7 +34,7 @@ public class CommentService {
     }
 
     public List<Comment> getComments(String targetType, String targetId) {
-        return commentRepository.findByTargetTypeAndTargetId(targetId, targetType);
+        return commentRepository.findByTargetTypeAndTargetId(targetType, targetId);
     }
 
     public Comment postComment(CommentPost commentPost) {
