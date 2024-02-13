@@ -1,0 +1,1026 @@
+[
+    {
+        "_id": "400222852",
+        "matchDate": "2023-07-20",
+        "team1": {
+            "$id": "1883725",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882882",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222851",
+        "matchDate": "2023-07-20",
+        "team1": {
+            "$id": "1882891",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884884",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222848",
+        "matchDate": "2023-07-21",
+        "team1": {
+            "$id": "1882893",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883718",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222854",
+        "matchDate": "2023-07-21",
+        "team1": {
+            "$id": "1885027",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884203",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 2
+    },
+    {
+        "_id": "400222844",
+        "matchDate": "2023-07-21",
+        "team1": {
+            "$id": "1884823",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884880",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 3,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222864",
+        "matchDate": "2023-07-22",
+        "team1": {
+            "$id": "1882884",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1886308",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 3,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222842",
+        "matchDate": "2023-07-22",
+        "team1": {
+            "$id": "1885017",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883723",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 5
+    },
+    {
+        "_id": "400222836",
+        "matchDate": "2023-07-22",
+        "team1": {
+            "$id": "1883720",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885012",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222837",
+        "matchDate": "2023-07-22",
+        "team1": {
+            "$id": "1883719",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882892",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222873",
+        "matchDate": "2023-07-23",
+        "team1": {
+            "$id": "1882883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885031",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222866",
+        "matchDate": "2023-07-23",
+        "team1": {
+            "$id": "1884883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884822",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222862",
+        "matchDate": "2023-07-23",
+        "team1": {
+            "$id": "1884761",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885011",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222870",
+        "matchDate": "2023-07-24",
+        "team1": {
+            "$id": "1883722",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884881",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222878",
+        "matchDate": "2023-07-24",
+        "team1": {
+            "$id": "1882879",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884821",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 6,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222858",
+        "matchDate": "2023-07-24",
+        "team1": {
+            "$id": "1882881",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1889512",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 4,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222880",
+        "matchDate": "2023-07-25",
+        "team1": {
+            "$id": "1885035",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885010",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222857",
+        "matchDate": "2023-07-25",
+        "team1": {
+            "$id": "1883725",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885027",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222856",
+        "matchDate": "2023-07-25",
+        "team1": {
+            "$id": "1884203",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882882",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222841",
+        "matchDate": "2023-07-26",
+        "team1": {
+            "$id": "1883723",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884880",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222840",
+        "matchDate": "2023-07-26",
+        "team1": {
+            "$id": "1884823",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885017",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 5,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222850",
+        "matchDate": "2023-07-26",
+        "team1": {
+            "$id": "1883718",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884884",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222869",
+        "matchDate": "2023-07-27",
+        "team1": {
+            "$id": "1882884",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222868",
+        "matchDate": "2023-07-27",
+        "team1": {
+            "$id": "1884822",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1886308",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222846",
+        "matchDate": "2023-07-27",
+        "team1": {
+            "$id": "1882891",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882893",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 3
+    },
+    {
+        "_id": "400222871",
+        "matchDate": "2023-07-28",
+        "team1": {
+            "$id": "1884881",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885031",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 2
+    },
+    {
+        "_id": "400222839",
+        "matchDate": "2023-07-28",
+        "team1": {
+            "$id": "1883720",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883719",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222834",
+        "matchDate": "2023-07-28",
+        "team1": {
+            "$id": "1882892",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885012",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222874",
+        "matchDate": "2023-07-29",
+        "team1": {
+            "$id": "1882883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883722",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 5,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222859",
+        "matchDate": "2023-07-29",
+        "team1": {
+            "$id": "1884761",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882881",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222861",
+        "matchDate": "2023-07-29",
+        "team1": {
+            "$id": "1889512",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885011",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222876",
+        "matchDate": "2023-07-30",
+        "team1": {
+            "$id": "1885010",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884821",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222853",
+        "matchDate": "2023-07-30",
+        "team1": {
+            "$id": "1882882",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885027",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 6,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222855",
+        "matchDate": "2023-07-30",
+        "team1": {
+            "$id": "1884203",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883725",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222881",
+        "matchDate": "2023-07-30",
+        "team1": {
+            "$id": "1882879",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885035",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 2
+    },
+    {
+        "_id": "400222843",
+        "matchDate": "2023-07-31",
+        "team1": {
+            "$id": "1884880",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885017",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 3
+    },
+    {
+        "_id": "400222845",
+        "matchDate": "2023-07-31",
+        "team1": {
+            "$id": "1883723",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884823",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 4,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222847",
+        "matchDate": "2023-07-31",
+        "team1": {
+            "$id": "1884884",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882893",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222849",
+        "matchDate": "2023-07-31",
+        "team1": {
+            "$id": "1883718",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882891",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 4
+    },
+    {
+        "_id": "400222867",
+        "matchDate": "2023-08-01",
+        "team1": {
+            "$id": "1886308",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 7
+    },
+    {
+        "_id": "400222865",
+        "matchDate": "2023-08-01",
+        "team1": {
+            "$id": "1884822",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882884",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222838",
+        "matchDate": "2023-08-01",
+        "team1": {
+            "$id": "1885012",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883719",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 2
+    },
+    {
+        "_id": "400222835",
+        "matchDate": "2023-08-01",
+        "team1": {
+            "$id": "1882892",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883720",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 6
+    },
+    {
+        "_id": "400222875",
+        "matchDate": "2023-08-02",
+        "team1": {
+            "$id": "1885031",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883722",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 3,
+        "team2Goals": 2
+    },
+    {
+        "_id": "400222872",
+        "matchDate": "2023-08-02",
+        "team1": {
+            "$id": "1884881",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 2
+    },
+    {
+        "_id": "400222860",
+        "matchDate": "2023-08-02",
+        "team1": {
+            "$id": "1885011",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882881",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222863",
+        "matchDate": "2023-08-02",
+        "team1": {
+            "$id": "1889512",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884761",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 3,
+        "team2Goals": 6
+    },
+    {
+        "_id": "400222877",
+        "matchDate": "2023-08-03",
+        "team1": {
+            "$id": "1885010",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882879",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222879",
+        "matchDate": "2023-08-03",
+        "team1": {
+            "$id": "1884821",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885035",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222832",
+        "matchDate": "2023-08-05",
+        "team1": {
+            "$id": "1884203",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884823",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 5
+    },
+    {
+        "_id": "400222833",
+        "matchDate": "2023-08-05",
+        "team1": {
+            "$id": "1883723",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882882",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 3,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400222831",
+        "matchDate": "2023-08-06",
+        "team1": {
+            "$id": "1884883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885031",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222828",
+        "matchDate": "2023-08-06",
+        "team1": {
+            "$id": "1882883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882884",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222827",
+        "matchDate": "2023-08-07",
+        "team1": {
+            "$id": "1883720",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882893",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222830",
+        "matchDate": "2023-08-07",
+        "team1": {
+            "$id": "1882891",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883719",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222829",
+        "matchDate": "2023-08-08",
+        "team1": {
+            "$id": "1885035",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885011",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400222826",
+        "matchDate": "2023-08-08",
+        "team1": {
+            "$id": "1884761",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884821",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 4,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400258561",
+        "matchDate": "2023-08-11",
+        "team1": {
+            "$id": "1884823",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400258560",
+        "matchDate": "2023-08-11",
+        "team1": {
+            "$id": "1883723",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 2
+    },
+    {
+        "_id": "400258558",
+        "matchDate": "2023-08-12",
+        "team1": {
+            "$id": "1882891",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1884761",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 0,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400258559",
+        "matchDate": "2023-08-12",
+        "team1": {
+            "$id": "1883720",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1885035",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400258557",
+        "matchDate": "2023-08-15",
+        "team1": {
+            "$id": "1884823",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 1
+    },
+    {
+        "_id": "400258556",
+        "matchDate": "2023-08-16",
+        "team1": {
+            "$id": "1882891",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883720",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 3
+    },
+    {
+        "_id": "400258555",
+        "matchDate": "2023-08-19",
+        "team1": {
+            "$id": "1882883",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1882891",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 2,
+        "team2Goals": 0
+    },
+    {
+        "_id": "400258554",
+        "matchDate": "2023-08-20",
+        "team1": {
+            "$id": "1884823",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team2": {
+            "$id": "1883720",
+            "$ref": "teams",
+            "$db": "football"
+        },
+        "team1Goals": 1,
+        "team2Goals": 0
+    }
+]

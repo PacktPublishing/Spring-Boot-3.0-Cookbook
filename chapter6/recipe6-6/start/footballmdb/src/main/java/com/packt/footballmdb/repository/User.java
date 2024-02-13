@@ -2,7 +2,6 @@ package com.packt.footballmdb.repository;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "users")
 public class User {
@@ -11,7 +10,6 @@ public class User {
 
     private String username;
 
-    @Field()
     private Integer tokens;
 
     public Integer getTokens() {
