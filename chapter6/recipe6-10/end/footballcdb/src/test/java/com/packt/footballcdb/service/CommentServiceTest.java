@@ -22,9 +22,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.random.RandomGenerator;
 
+import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Testcontainers
@@ -62,7 +62,7 @@ class CommentServiceTest {
     @Test
     void getPlayerCommentsTest() {
         // ARRANGE
-        String playerId = "player" +random.nextInt();
+        String playerId = "player" + random.nextInt();
         CommentPost comment = new CommentPost("user1", "player", playerId, "The best!", Set.of("label1", "label2"));
         Comment result = commentService.postComment(comment);
         // ACT
@@ -131,7 +131,6 @@ class CommentServiceTest {
     void getCommentsString_open_search() {
         // ARRANGE
         LocalDateTime now = LocalDateTime.now();
-        Random random = new Random();
         String playerId = "player" + random.nextInt(100000);
         CommentPost comment = new CommentPost("user1", "player", playerId, "The best!", Set.of("label1", "label2"));
         Comment resultUser1 = commentService.postComment(comment);
@@ -168,5 +167,17 @@ class CommentServiceTest {
         // ASSERT
         assertThat(comments, hasSize(1));
         assertTrue(comments.stream().anyMatch(c -> c.getCommentId().equals(resultUser2.getCommentId())));
+    }
+
+    @Test
+    void upvoteCommentTest() {
+        // ARRANGE
+        LocalDateTime now = LocalDateTime.now();
+        String playerId = "player" + random.nextInt(100000);
+        CommentPost comment = new CommentPost("user1", "player", playerId, "The best!", Set.of("label1", "label2"));
+        Comment resultUser1 = commentService.postComment(comment);
+        assertThat(resultUser1.getUpvotes(), nullValue());
+        Comment upvotedComment = commentService.upvoteComment(resultUser1.getCommentId());
+        assertEquals(1, upvotedComment.getUpvotes());
     }
 }
