@@ -1,0 +1,101 @@
+version: '3.1'
+name: cassandra
+services:
+# The first node and config in the first datacenter.
+    node1:
+        # image: datastax/dse-server:6.8.16-ubi7
+        image: cassandra:latest
+        container_name: cassandra_node1
+        hostname: node1
+        # use static ip address
+        networks:
+            dc1ring:
+                ipv4_address: 172.30.0.2
+        environment:
+            - SEEDS=node1
+            - START_RPC=false
+            - CLUSTER_NAME=sb3_cluster
+            - NUM_TOKENS=3
+            - DC=DC1
+            - RACK=RAC1
+        # Exposing ports for inter cluster communication
+        expose:
+            # Intra-node communication
+            - 7000
+            # TLS intra-node communication
+            - 7001
+            # JMX
+            - 7199
+            # CQL
+            - 9042
+            # CQL SSL
+            - 9142
+        ports:
+            - 9042:9042
+        ulimits:
+            memlock: -1
+            nproc: 32768
+            nofile: 100000
+    node2:
+        image: cassandra:latest
+        container_name: cassandra_node2
+        hostname: node2
+        networks:
+            dc1ring:
+                ipv4_address: 172.30.0.3
+        environment:
+            - SEEDS=node1
+            - START_RPC=false
+            - CLUSTER_NAME=sb3_cluster
+            - NUM_TOKENS=3
+            - DC=DC2
+            - RACK=RAC1
+        expose:
+            - 7000
+            - 7001
+            - 7199
+            - 9042
+            - 9142
+        ports:
+            - 9043:9042
+        ulimits:
+            memlock: -1
+            nproc: 32768
+            nofile: 100000
+        depends_on:
+            - node1
+    node3:
+        image: cassandra:latest
+        container_name: cassandra_node3
+        hostname: node3
+        networks:
+            dc1ring:
+                ipv4_address: 172.30.0.4
+        environment:
+            - SEEDS=node1
+            - START_RPC=false
+            - CLUSTER_NAME=sb3_cluster
+            - NUM_TOKENS=3
+            - DC=DC1
+            - RACK=RAC1
+        expose:
+            - 7000
+            - 7001
+            - 7199
+            - 9042
+            - 9142
+        ports:
+            - 9044:9042
+        ulimits:
+            memlock: -1
+            nproc: 32768
+            nofile: 100000
+        depends_on:
+            - node1
+networks:
+    dc1ring:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.30.0.0/16
+        
