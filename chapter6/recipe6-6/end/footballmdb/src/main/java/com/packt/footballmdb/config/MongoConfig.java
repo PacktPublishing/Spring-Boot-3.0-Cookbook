@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.ReadConcern;
-import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 

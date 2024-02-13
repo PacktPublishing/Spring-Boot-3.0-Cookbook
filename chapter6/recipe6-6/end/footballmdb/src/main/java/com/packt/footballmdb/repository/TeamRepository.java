@@ -11,6 +11,4 @@ public interface TeamRepository extends MongoRepository<Team, String> {
 
     public List<Team> findByNameContaining(String name);
 
-    @Query(value = "SELECT T FROM Team T WHERE T.name = ?0")
-    public List<Team> findByNameSQL(String name);
 }

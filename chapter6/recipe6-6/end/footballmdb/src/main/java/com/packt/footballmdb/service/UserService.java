@@ -1,28 +1,18 @@
 package com.packt.footballmdb.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.mongodb.MongoTransactionManager;
-import org.springframework.data.mongodb.SessionSynchronization;
-import org.springframework.data.mongodb.UncategorizedMongoDbException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import com.mongodb.MongoCommandException;
-import com.mongodb.MongoWriteException;
 import com.mongodb.client.result.UpdateResult;
 import com.packt.footballmdb.repository.Card;
 import com.packt.footballmdb.repository.CardRepository;
@@ -55,7 +45,7 @@ public class UserService {
         return (int) result.getModifiedCount();
     }
 
-    @Transactional
+    @Transactional()
     public Integer buyCards(String userId, Integer count) {
         Optional<User> userOpt = userRepository.findById(userId);
         if (userOpt.isPresent()) {
@@ -87,6 +77,14 @@ public class UserService {
 
     public User createUser(User user) {
         return userRepository.save(user);
+    }
+
+    public Optional<User> getUser(String id){
+        return userRepository.findById(id);
+    }
+
+    public List<Card> getUserCards(String id){
+        return cardsRepository.findByOwnerId(id);
     }
 
 }
