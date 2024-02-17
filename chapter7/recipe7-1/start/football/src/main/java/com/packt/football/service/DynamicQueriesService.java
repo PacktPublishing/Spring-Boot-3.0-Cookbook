@@ -1,34 +1,33 @@
 package com.packt.football.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.packt.football.domain.MatchEvent;
 import com.packt.football.domain.Player;
 import com.packt.football.mapper.PlayerMapper;
 import com.packt.football.repo.MatchEventEntity;
 import com.packt.football.repo.PlayerEntity;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DynamicQueriesService {
 
-    private EntityManager em;
-    private PlayerMapper playerMapper;
+    private final EntityManager em;
+    private final PlayerMapper playerMapper;
 
-    public DynamicQueriesService(EntityManager em, PlayerMapper playerMapper) {
-        this.em = em;
+    public DynamicQueriesService(EntityManagerFactory emFactory, PlayerMapper playerMapper) {
+        this.em = emFactory.createEntityManager();
         this.playerMapper = playerMapper;
     }
 
@@ -82,7 +81,7 @@ public class DynamicQueriesService {
         TypedQuery<MatchEventEntity> query = em.createQuery(command, MatchEventEntity.class);
         query.setParameter("matchId", matchId);
         if (minTime.isPresent()) {
-            query.setParameter("minTime", minTime.get());
+            query.setParameter( "minTime", minTime.get());
         }
         if (maxTime.isPresent()) {
             query.setParameter("maxTime", maxTime.get());
@@ -100,6 +99,7 @@ public class DynamicQueriesService {
 
     public void deleteEventRange(Integer matchId, LocalDateTime start, LocalDateTime end) {
         try {
+            em.clear();
             em.getTransaction().begin();
             Query query = em.createQuery(
                     "DELETE FROM MatchEventEntity e WHERE e.match.id=:matchId AND e.time BETWEEN :start AND :end");
@@ -110,6 +110,7 @@ public class DynamicQueriesService {
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
+            throw e;
         }
     }
 
@@ -124,7 +125,7 @@ public class DynamicQueriesService {
     public List<Player> searchUserMissingPlayersAndMap(Integer userId) {
         return searchUserMissingPlayers(userId)
                 .stream()
-                .map(p -> playerMapper.map(p))
+                .map(playerMapper::map)
                 .toList();
     }
 }
