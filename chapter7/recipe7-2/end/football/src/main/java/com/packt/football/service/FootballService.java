@@ -1,8 +1,11 @@
 package com.packt.football.service;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.StreamSupport;
+import com.packt.football.domain.Match;
+import com.packt.football.domain.MatchEvent;
+import com.packt.football.domain.Player;
+import com.packt.football.domain.Team;
+import com.packt.football.mapper.PlayerMapper;
+import com.packt.football.repo.*;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,30 +14,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.packt.football.domain.Match;
-import com.packt.football.domain.MatchEvent;
-import com.packt.football.domain.Player;
-import com.packt.football.domain.Team;
-import com.packt.football.mapper.PlayerMapper;
-import com.packt.football.repo.AlbumRepository;
-import com.packt.football.repo.MatchEntity;
-import com.packt.football.repo.MatchEventEntity;
-import com.packt.football.repo.MatchEventRepository;
-import com.packt.football.repo.MatchRepository;
-import com.packt.football.repo.PlayerEntity;
-import com.packt.football.repo.PlayerRepository;
-import com.packt.football.repo.TeamEntity;
-import com.packt.football.repo.TeamPlayers;
-import com.packt.football.repo.TeamRepository;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 public class FootballService {
-        private PlayerRepository playerRepository;
-        private TeamRepository teamRepository;
-        private MatchRepository matchRepository;
-        private AlbumRepository albumRepository;
-        private MatchEventRepository matchEventRepository;
-        private PlayerMapper playerMapper;
+        private final PlayerRepository playerRepository;
+        private final TeamRepository teamRepository;
+        private final MatchRepository matchRepository;
+        private final AlbumRepository albumRepository;
+        private final MatchEventRepository matchEventRepository;
+        private final PlayerMapper playerMapper;
 
         public FootballService(PlayerRepository playerRepository,
                         TeamRepository teamRepository,
@@ -93,7 +84,7 @@ public class FootballService {
                 return new Team(team.getId(), team.getName(), List.of());
         }
 
-        @CacheEvict(value = "players", key = "#id")
+        @CacheEvict(value = "players", key="#id")
         public Player updatePlayerPosition(Integer id, String position) {
                 PlayerEntity player = playerRepository.findById(id).orElse(null);
                 if (player == null) {
@@ -211,9 +202,14 @@ public class FootballService {
                                 .map(t -> new Team(t.getId(), t.getName(), List.of())).toList();
         }
 
-        @Cacheable(value = "players")
+//        @Cacheable(value = "players")
         public Player getPlayer(Integer id) {
                 return playerRepository.findById(id).map(p -> playerMapper.map(p)).orElse(null);
+        }
+
+        public Team getPlayerTeam(Integer id) {
+                return playerRepository.findByIdWithTeam(id)
+                                .map(p -> new Team(p.getTeam().getId(), p.getTeam().getName(), List.of())).orElse(null);
         }
 
 }

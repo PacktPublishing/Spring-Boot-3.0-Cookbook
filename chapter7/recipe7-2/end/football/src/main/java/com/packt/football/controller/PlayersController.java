@@ -30,7 +30,7 @@ public class PlayersController {
         return footballService.searchPlayers(search);
     }
 
-    // @Cacheable(value = "players")
+    @Cacheable(value = "players")
     @GetMapping("/{id}")
     public Player getPlayer(@PathVariable Integer id) {
         return footballService.getPlayer(id);

@@ -25,3 +25,4 @@ public class RedisConfig {
                 .serializeValuesWith(SerializationPair.fromSerializer(serializer));
     }
 }
+
