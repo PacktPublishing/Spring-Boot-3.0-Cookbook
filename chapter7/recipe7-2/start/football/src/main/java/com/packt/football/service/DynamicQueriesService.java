@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.stereotype.Service;
 
 import com.packt.football.domain.MatchEvent;
@@ -24,11 +25,11 @@ import jakarta.persistence.criteria.Root;
 @Service
 public class DynamicQueriesService {
 
-    private EntityManager em;
-    private PlayerMapper playerMapper;
+    private final EntityManager em;
+    private final PlayerMapper playerMapper;
 
-    public DynamicQueriesService(EntityManager em, PlayerMapper playerMapper) {
-        this.em = em;
+    public DynamicQueriesService(EntityManagerFactory emFactory, PlayerMapper playerMapper) {
+        this.em = emFactory.createEntityManager();
         this.playerMapper = playerMapper;
     }
 
@@ -100,6 +101,7 @@ public class DynamicQueriesService {
 
     public void deleteEventRange(Integer matchId, LocalDateTime start, LocalDateTime end) {
         try {
+            em.clear();
             em.getTransaction().begin();
             Query query = em.createQuery(
                     "DELETE FROM MatchEventEntity e WHERE e.match.id=:matchId AND e.time BETWEEN :start AND :end");
@@ -110,6 +112,7 @@ public class DynamicQueriesService {
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
+            throw e;
         }
     }
 
@@ -124,7 +127,7 @@ public class DynamicQueriesService {
     public List<Player> searchUserMissingPlayersAndMap(Integer userId) {
         return searchUserMissingPlayers(userId)
                 .stream()
-                .map(p -> playerMapper.map(p))
+                .map(playerMapper::map)
                 .toList();
     }
 }
