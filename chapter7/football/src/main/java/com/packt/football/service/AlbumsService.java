@@ -1,5 +1,16 @@
 package com.packt.football.service;
 
+import com.packt.football.domain.Album;
+import com.packt.football.domain.Card;
+import com.packt.football.domain.TradingUser;
+import com.packt.football.domain.User;
+import com.packt.football.mapper.PlayerMapper;
+import com.packt.football.repo.*;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,33 +19,13 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.packt.football.domain.Album;
-import com.packt.football.domain.Card;
-import com.packt.football.domain.Player;
-import com.packt.football.domain.TradingUser;
-import com.packt.football.domain.User;
-import com.packt.football.mapper.PlayerMapper;
-import com.packt.football.repo.AlbumEntity;
-import com.packt.football.repo.AlbumRepository;
-import com.packt.football.repo.CardEntity;
-import com.packt.football.repo.CardRepository;
-import com.packt.football.repo.PlayerEntity;
-import com.packt.football.repo.PlayerRepository;
-import com.packt.football.repo.UserEntity;
-import com.packt.football.repo.UserRepository;
-
 @Service
 public class AlbumsService {
-    private AlbumRepository albumsRepository;
-    private UserRepository usersRepository;
-    private PlayerRepository playersRepository;
-    private CardRepository cardsRepository;
-    private PlayerMapper playerMapper;
+    private final AlbumRepository albumsRepository;
+    private final UserRepository usersRepository;
+    private final PlayerRepository playersRepository;
+    private final CardRepository cardsRepository;
+    private final PlayerMapper playerMapper;
 
     public AlbumsService(AlbumRepository albumsRepository, UserRepository usersRepository,
             PlayerRepository playersRepository, CardRepository cardsRepository, PlayerMapper playerMapper) {
@@ -108,6 +99,9 @@ public class AlbumsService {
             return Optional.empty();
         } else {
             CardEntity card = cardsRepository.findById(cardId).orElseThrow();
+            if (card.getOwner()==null) {
+                throw new RuntimeException("New owner not found");
+            }
             return Optional.of(new Card(card.getId(), card.getOwner().getId(),
                     card.getAlbum() == null ? Optional.empty() : Optional.of(card.getAlbum().getId()),
                     playerMapper.map(card.getPlayer())));
