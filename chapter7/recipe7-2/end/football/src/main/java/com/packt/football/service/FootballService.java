@@ -202,7 +202,7 @@ public class FootballService {
                                 .map(t -> new Team(t.getId(), t.getName(), List.of())).toList();
         }
 
-//        @Cacheable(value = "players")
+        @Cacheable(value = "players")
         public Player getPlayer(Integer id) {
                 return playerRepository.findById(id).map(p -> playerMapper.map(p)).orElse(null);
         }

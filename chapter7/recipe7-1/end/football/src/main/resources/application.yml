@@ -18,7 +18,7 @@ spring:
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         open-in-view: false
-        show-sql: true
+        # show-sql: true
     datasource:
         url: jdbc:postgresql://localhost:5432/football
         username: packt

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +29,6 @@ public class PlayersController {
         return footballService.searchPlayers(search);
     }
 
-    @Cacheable(value = "players")
     @GetMapping("/{id}")
     public Player getPlayer(@PathVariable Integer id) {
         return footballService.getPlayer(id);
