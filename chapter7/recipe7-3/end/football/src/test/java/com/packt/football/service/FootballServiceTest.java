@@ -45,8 +45,8 @@ class FootballServiceTest {
                             "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
                             "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                             "spring.datasource.password=" + postgreSQLContainer.getPassword(),
-                            "spring.redis.host=" + redisContainer.getHost(),
-                            "spring.redis.port=" + redisContainer.getMappedPort(6379))
+                            "spring.data.redis.host=" + redisContainer.getHost(),
+                            "spring.data.redis.port=" + redisContainer.getMappedPort(6379))
                     .applyTo(configurableApplicationContext.getEnvironment());
         }
     }
