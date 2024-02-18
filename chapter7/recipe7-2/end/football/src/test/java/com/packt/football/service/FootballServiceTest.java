@@ -34,19 +34,13 @@ class FootballServiceTest {
             .withUsername("football")
             .withPassword("football");
 
-    static GenericContainer<?> redisContainer = new GenericContainer<>("redis:latest")
-            .withExposedPorts(6379);
-
-
     static class Initializer
             implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
             TestPropertyValues.of(
                             "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
                             "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                            "spring.datasource.password=" + postgreSQLContainer.getPassword(),
-                            "spring.redis.host=" + redisContainer.getHost(),
-                            "spring.redis.port=" + redisContainer.getMappedPort(6379))
+                            "spring.datasource.password=" + postgreSQLContainer.getPassword())
                     .applyTo(configurableApplicationContext.getEnvironment());
         }
     }
@@ -54,7 +48,6 @@ class FootballServiceTest {
     @BeforeAll
     public static void startContainer() {
         postgreSQLContainer.start();
-        redisContainer.start();
     }
 
     @Autowired
