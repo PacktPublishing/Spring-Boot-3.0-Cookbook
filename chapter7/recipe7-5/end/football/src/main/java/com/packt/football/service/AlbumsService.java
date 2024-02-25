@@ -36,6 +36,7 @@ public class AlbumsService {
         this.playerMapper = playerMapper;
     }
 
+    @Transactional
     public Album buyAlbum(Integer userId, String title) {
         AlbumEntity album = new AlbumEntity();
         album.setTitle(title);
@@ -45,6 +46,7 @@ public class AlbumsService {
         return new Album(album.getId(), album.getTitle(), album.getOwner().getId());
     }
 
+    @Transactional
     public List<Card> buyCards(Integer userId, Integer count) {
         Random rnd = new Random();
         List<PlayerEntity> players = getAvailablePlayers();
@@ -62,6 +64,7 @@ public class AlbumsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Card addCardToAlbum(Integer cardId, Integer albumId) {
         CardEntity card = cardsRepository.findById(cardId).orElseThrow();
         AlbumEntity album = albumsRepository.findById(albumId).orElseThrow();
@@ -75,6 +78,7 @@ public class AlbumsService {
     /*
      * Take all non-used cards of the user and assign to the albums of the user
      */
+    @Transactional
     public List<Card> useAllCardAvailable(Integer userId) {
         // UserEntity user = usersRepository.findById(userId).orElseThrow();
         // List<CardEntity> cards = cardsRepository.findAllByOwnerAndAlbumIsNull(user);
@@ -132,6 +136,7 @@ public class AlbumsService {
         return playersRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Optional<TradingUser> getUserWithCardsAndAlbums(Integer userId) {
         Optional<UserEntity> user = usersRepository.findByIdWithCardsAndAlbums(userId);
         if (user.isPresent()) {
