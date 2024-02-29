@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,7 +42,6 @@ public class FootballService {
                 this.playerMapper = playerMapper;
         }
 
-        // @Transactional(readOnly = true)
         @Transactional(readOnly = true)
         public Team getTeam(Integer id) {
                 TeamEntity team = teamRepository.findByIdWithPlayers(id).orElse(null);

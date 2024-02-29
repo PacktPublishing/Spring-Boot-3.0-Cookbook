@@ -96,7 +96,6 @@ public class AlbumsService {
     }
 
     @Transactional
-    @Transactional
     public Optional<Card> transferCard(Integer cardId, Integer userId) {
         Integer count = cardsRepository.transferCard(cardId, userId);
         if (count == 0) {
