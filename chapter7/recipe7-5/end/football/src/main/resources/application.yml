@@ -23,5 +23,5 @@ spring:
         url: jdbc:postgresql://localhost:5432/football
         username: packt
         password: packt
-    native:
-        image-hints: org.springframework.data.domain.Unpaged
+    # native:
+    #     image-hints: org.springframework.data.domain.Unpaged

@@ -93,7 +93,13 @@
     "interfaces":["org.hibernate.SessionFactory","org.springframework.orm.jpa.EntityManagerFactoryInfo"]
   },
   {
+    "interfaces":["org.hibernate.procedure.spi.ProcedureCallImplementor","org.hibernate.result.spi.ResultContext","org.hibernate.query.spi.QueryImplementor","org.hibernate.query.SelectionQuery","org.hibernate.query.spi.DomainQueryExecutionContext","org.hibernate.query.CommonQueryContract"]
+  },
+  {
     "interfaces":["org.hibernate.query.hql.spi.SqmQueryImplementor","org.hibernate.query.sqm.internal.SqmInterpretationsKey$InterpretationsKeySource","org.hibernate.query.spi.DomainQueryExecutionContext","org.hibernate.query.SelectionQuery","org.hibernate.query.CommonQueryContract"]
+  },
+  {
+    "interfaces":["org.hibernate.query.sql.spi.NativeQueryImplementor","org.hibernate.query.spi.DomainQueryExecutionContext","org.hibernate.query.internal.ResultSetMappingResolutionContext","org.hibernate.query.spi.QueryImplementor","org.hibernate.query.SelectionQuery","org.hibernate.query.CommonQueryContract"]
   },
   {
     "interfaces":["org.springframework.beans.factory.annotation.Qualifier"]

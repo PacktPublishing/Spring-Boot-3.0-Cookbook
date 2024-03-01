@@ -9,3 +9,4 @@ services:
     environment:
       - spring.datasource.url=jdbc:postgresql://postgresql:5432/football
       - spring.data.redis.host=redis
+      - spring.data.redis.port=6379

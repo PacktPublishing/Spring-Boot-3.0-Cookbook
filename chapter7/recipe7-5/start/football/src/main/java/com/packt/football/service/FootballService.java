@@ -42,6 +42,7 @@ public class FootballService {
         }
 
         // @Transactional(readOnly = true)
+        @Transactional(readOnly = true)
         public Team getTeam(Integer id) {
                 TeamEntity team = teamRepository.findByIdWithPlayers(id).orElse(null);
                 if (team == null) {

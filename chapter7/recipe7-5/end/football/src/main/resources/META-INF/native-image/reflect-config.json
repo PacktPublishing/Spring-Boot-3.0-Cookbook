@@ -1230,36 +1230,7 @@
 {
   "name":"io.lettuce.core.event.EventPublisherOptions"
 },
-{
-  "name":"io.lettuce.core.event.connection.JfrConnectEvent",
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.lettuce.core.event.connection.ConnectEvent"] }]
-},
-{
-  "name":"io.lettuce.core.event.connection.JfrConnectedEvent",
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.lettuce.core.event.connection.ConnectionEventSupport"] }]
-},
-{
-  "name":"io.lettuce.core.event.connection.JfrConnectionActivatedEvent",
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.lettuce.core.event.connection.ConnectionEventSupport"] }]
-},
-{
-  "name":"io.lettuce.core.event.connection.JfrConnectionCreatedEvent",
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.lettuce.core.event.connection.ConnectionCreatedEvent"] }]
-},
-{
-  "name":"io.lettuce.core.event.connection.JfrConnectionDeactivatedEvent",
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.lettuce.core.event.connection.ConnectionEventSupport"] }]
-},
-{
-  "name":"io.lettuce.core.event.connection.JfrDisconnectedEvent",
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.lettuce.core.event.connection.ConnectionEventSupport"] }]
-},
+
 {
   "name":"io.lettuce.core.metrics.CommandLatencyRecorder"
 },

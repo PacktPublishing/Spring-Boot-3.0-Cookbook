@@ -1,11 +1,8 @@
 package com.packt.football.service;
 
-import com.packt.football.domain.Match;
-import com.packt.football.domain.MatchEvent;
-import com.packt.football.domain.Player;
-import com.packt.football.domain.Team;
-import com.packt.football.mapper.PlayerMapper;
-import com.packt.football.repo.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,10 +10,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.StreamSupport;
+import com.packt.football.domain.Match;
+import com.packt.football.domain.MatchEvent;
+import com.packt.football.domain.Player;
+import com.packt.football.domain.Team;
+import com.packt.football.mapper.PlayerMapper;
+import com.packt.football.repo.AlbumRepository;
+import com.packt.football.repo.MatchEntity;
+import com.packt.football.repo.MatchEventEntity;
+import com.packt.football.repo.MatchEventRepository;
+import com.packt.football.repo.MatchRepository;
+import com.packt.football.repo.PlayerEntity;
+import com.packt.football.repo.PlayerRepository;
+import com.packt.football.repo.TeamEntity;
+import com.packt.football.repo.TeamPlayers;
+import com.packt.football.repo.TeamRepository;
 
 @Service
 public class FootballService {
@@ -41,7 +51,7 @@ public class FootballService {
                 this.playerMapper = playerMapper;
         }
 
-        // @Transactional(readOnly = true)
+        @Transactional(readOnly = true)
         public Team getTeam(Integer id) {
                 TeamEntity team = teamRepository.findByIdWithPlayers(id).orElse(null);
                 if (team == null) {
