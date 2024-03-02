@@ -1,0 +1,19 @@
+version: '3.7'
+include:
+  - docker-compose-redis.yml
+services:
+  postgresexporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    ports:
+      - "9187:9187"
+    environment:
+      - DATA_SOURCE_NAME=postgresql://packt:packct@postgresql:5432/postgres?sslmode=disable
+  football:
+    image: football:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgresql:5432/football
+      - spring.data.redis.host=redis
+      - spring.data.redis.port=6379
+      - management.zipkin.tracing.endpoint=http://zipkin:9411/api/v2/spans

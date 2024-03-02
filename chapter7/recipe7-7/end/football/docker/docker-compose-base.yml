@@ -1,0 +1,46 @@
+version: '2.4'
+
+services:
+  zipkin_storage:
+    image: ghcr.io/openzipkin/zipkin-mysql:${TAG:-latest}
+    container_name: mysql
+
+  # Use Cassandra instead of in-memory storage
+  zipkin:
+    # slim doesn't include Cassandra support, so switch to the larger image
+    image: ghcr.io/openzipkin/zipkin:${TAG:-latest}
+    environment:
+      - STORAGE_TYPE=mysql
+      - MYSQL_HOST=zipkin_storage
+      # Add the baked-in username and password for the zipkin-mysql image
+      - MYSQL_USER=zipkin
+      - MYSQL_PASS=zipkin
+      - JAVA_OPTS=-Xms2g -Xmx2g -XX:+ExitOnOutOfMemoryError
+    ports:
+      - 9411:9411
+    # Uncomment to enable request logging (TRACE shows query values)
+    # command: --logging.level.com.datastax.oss.driver.internal.core.tracker.RequestLogger=TRACE
+    depends_on:
+      zipkin_storage:
+        condition: service_healthy
+  postgresql:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=packt
+      - POSTGRES_PASSWORD=packt
+    ports:
+      - 5432:5432
+  
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
