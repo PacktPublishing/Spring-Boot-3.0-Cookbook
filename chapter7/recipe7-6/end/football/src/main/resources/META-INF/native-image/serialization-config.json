@@ -1,0 +1,11 @@
+{
+  "types":[
+    {
+      "name":"org.springframework.cache.support.NullValue"
+    }
+  ],
+  "lambdaCapturingTypes":[
+  ],
+  "proxies":[
+  ]
+}
