@@ -4,4 +4,4 @@ scrape_configs:
   - job_name: 'football_trading_app'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['172.26.109.186:8080']
+      - targets: ['172.26.109.186:8080'] # replace the ip with your own. see chapter 3, Integrating your application with Prometheus and Grafana recipe for more details 
