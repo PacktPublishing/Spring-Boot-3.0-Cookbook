@@ -7,7 +7,6 @@ import com.packt.football.domain.Team;
 import com.packt.football.mapper.PlayerMapper;
 import com.packt.football.repo.*;
 
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -85,7 +84,6 @@ public class FootballService {
                 return new Team(team.getId(), team.getName(), List.of());
         }
 
-        @CacheEvict(value = "players", key="#id")
         public Player updatePlayerPosition(Integer id, String position) {
                 PlayerEntity player = playerRepository.findById(id).orElse(null);
                 if (player == null) {

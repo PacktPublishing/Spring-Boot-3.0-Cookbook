@@ -1,26 +1,24 @@
 package com.packt.football.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import jakarta.persistence.EntityManagerFactory;
-import org.springframework.stereotype.Service;
-
 import com.packt.football.domain.MatchEvent;
 import com.packt.football.domain.Player;
 import com.packt.football.mapper.PlayerMapper;
 import com.packt.football.repo.MatchEventEntity;
 import com.packt.football.repo.PlayerEntity;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DynamicQueriesService {
@@ -83,7 +81,7 @@ public class DynamicQueriesService {
         TypedQuery<MatchEventEntity> query = em.createQuery(command, MatchEventEntity.class);
         query.setParameter("matchId", matchId);
         if (minTime.isPresent()) {
-            query.setParameter("minTime", minTime.get());
+            query.setParameter( "minTime", minTime.get());
         }
         if (maxTime.isPresent()) {
             query.setParameter("maxTime", maxTime.get());

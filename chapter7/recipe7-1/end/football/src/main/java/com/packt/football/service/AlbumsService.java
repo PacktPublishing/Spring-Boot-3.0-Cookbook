@@ -102,6 +102,9 @@ public class AlbumsService {
             return Optional.empty();
         } else {
             CardEntity card = cardsRepository.findById(cardId).orElseThrow();
+            if (card.getOwner()==null) {
+                throw new RuntimeException("New owner not found");
+            }
             return Optional.of(new Card(card.getId(), card.getOwner().getId(),
                     card.getAlbum() == null ? Optional.empty() : Optional.of(card.getAlbum().getId()),
                     playerMapper.map(card.getPlayer())));

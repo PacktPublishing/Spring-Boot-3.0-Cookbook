@@ -15,13 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -105,7 +101,6 @@ class AlbumsServiceTest {
             assertThat(card.albumId(), notNullValue());
         }
     }
-
     @Test
     void transferCard() {
         User user1 = usersService.createUser("Test");
@@ -135,7 +130,7 @@ class AlbumsServiceTest {
         List<Card> cards = albumsService.buyCards(user1.id(), 5);
 
         // ACT & ASSERT
-        assertThrows(RuntimeException.class, () -> albumsService.transferCard(cards.getFirst().id(), new Random().nextInt()));
+        assertThrows(RuntimeException.class, ()-> albumsService.transferCard(cards.getFirst().id(), new Random().nextInt()));
         Optional<TradingUser> userCards = albumsService.getUserWithCardsAndAlbums(user1.id());
         assertTrue(userCards.get().cards().stream().anyMatch(c -> c.id().equals(cards.getFirst().id()) && c.ownerId().equals(user1.id())));
     }

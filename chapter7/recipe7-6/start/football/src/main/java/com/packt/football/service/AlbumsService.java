@@ -64,7 +64,6 @@ public class AlbumsService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public Card addCardToAlbum(Integer cardId, Integer albumId) {
         CardEntity card = cardsRepository.findById(cardId).orElseThrow();
         AlbumEntity album = albumsRepository.findById(albumId).orElseThrow();
@@ -96,6 +95,7 @@ public class AlbumsService {
 
     }
 
+    @Transactional
     @Transactional
     public Optional<Card> transferCard(Integer cardId, Integer userId) {
         Integer count = cardsRepository.transferCard(cardId, userId);

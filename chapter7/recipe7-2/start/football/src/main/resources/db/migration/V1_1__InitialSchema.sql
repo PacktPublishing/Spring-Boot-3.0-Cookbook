@@ -56,8 +56,6 @@ CREATE TABLE albums (
     owner_id INTEGER REFERENCES users(id)
 );
 
-CREATE INDEX idx_albums_on_owner_id ON albums(owner_id);
-
 CREATE TABLE cards (
     id SERIAL PRIMARY KEY,
     album_id INTEGER REFERENCES albums(id),
@@ -65,7 +63,3 @@ CREATE TABLE cards (
     owner_id INTEGER REFERENCES users(id),
     UNIQUE (album_id, player_id)
 );
-
-CREATE INDEX idx_cards_on_owner_id ON cards(owner_id);
-CREATE INDEX idx_cards_on_album_id ON cards(album_id);
-CREATE INDEX idx_cards_on_player_id ON cards(player_id);

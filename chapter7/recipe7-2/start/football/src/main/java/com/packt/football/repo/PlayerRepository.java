@@ -28,6 +28,6 @@ public interface PlayerRepository extends JpaRepository<PlayerEntity, Integer> {
     @Procedure("FIND_PLAYERS_WITH_MORE_THAN_N_MATCHES")
     int getTotalPlayersWithMoreThanNMatches(int num_matches);
 
-    @Query("SELECT p FROM PlayerEntity p JOIN FETCH p.team WHERE p.id = ?1")
+     @Query("SELECT p FROM PlayerEntity p JOIN FETCH p.team WHERE p.id = ?1")
     Optional<PlayerEntity> findByIdWithTeam(Integer teamId);
 }

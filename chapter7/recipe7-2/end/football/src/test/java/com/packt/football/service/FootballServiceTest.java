@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.test.context.ContextConfiguration;
-import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 

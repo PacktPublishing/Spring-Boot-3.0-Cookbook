@@ -28,7 +28,7 @@ public class AlbumsService {
     private final PlayerMapper playerMapper;
 
     public AlbumsService(AlbumRepository albumsRepository, UserRepository usersRepository,
-                         PlayerRepository playersRepository, CardRepository cardsRepository, PlayerMapper playerMapper) {
+            PlayerRepository playersRepository, CardRepository cardsRepository, PlayerMapper playerMapper) {
         this.albumsRepository = albumsRepository;
         this.usersRepository = usersRepository;
         this.playersRepository = playersRepository;
@@ -75,7 +75,7 @@ public class AlbumsService {
     }
 
     /*
-     * Take all non-used cards of the user and assign to the albums of the user
+     * Take all non used cards of the user and assign to the albums of the user
      */
     @Transactional
     public List<Card> useAllCardAvailable(Integer userId) {
