@@ -23,3 +23,5 @@ spring:
         url: jdbc:postgresql://localhost:5432/football
         username: packt
         password: packt
+        hikari:
+            maximum-pool-size: 10
