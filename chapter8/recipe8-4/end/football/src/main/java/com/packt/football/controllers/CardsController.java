@@ -25,7 +25,7 @@ public class CardsController {
     }
 
     @GetMapping("/{cardId}")
-    public Mono<Card> getCard(@PathVariable String cardId) {
+    public Mono<Card> getCard(@PathVariable Long cardId) {
         return cardsService.getCard(cardId);
     }
 }

@@ -1,15 +1,11 @@
 package com.packt.football.mapper;
 
-import com.packt.football.domain.TradingUser;
-import com.packt.football.domain.User;
-import com.packt.football.repo.UserEntity;
-import com.packt.football.repo.UserMapper;
-
 public class TradingUserMapper {
-    public static TradingUser map(UserEntity userEntity) {
-        return new TradingUser(UserMapper.map(userEntity),
-                userEntity.getOwnedCards().stream().map(CardMapper::map).toList(),
-                userEntity.getOwnedAlbums().stream().map(AlbumMapper::map).toList());
-
-    }
+//    public static TradingUser map(UserEntity userEntity, Stream<CardEntity> cards, Stream<AlbumEntity> albums) {
+//        Map<Long, AlbumEntity> albumMap = albums.collect(Collectors.toMap(AlbumEntity::getId, a -> a));
+//        return new TradingUser(UserMapper.map(userEntity),
+//                cards.map(c -> CardMapper.map(c, Optional.of(albumMap.get(c.getAlbumId())))).toList(),
+//                albums.map(AlbumMapper::map).toList());
+//
+//    }
 }

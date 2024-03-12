@@ -1,63 +1,51 @@
 package com.packt.football.repo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
-@Table(name = "cards", uniqueConstraints = { @UniqueConstraint(columnNames = { "album_id", "player_id" }) })
-@Entity
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+import java.util.Optional;
+
+@Table(name = "cards")
 public class CardEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_id")
-    private AlbumEntity album;
+    private Optional<Long> albumId;
 
-    @ManyToOne
-    @JoinColumn(name = "player_id")
-    private PlayerEntity player;
+    private Long playerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    private UserEntity owner;
+    private Long ownerId;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public AlbumEntity getAlbum() {
-        return album;
+    public Optional<Long> getAlbumId() {
+        return albumId;
     }
 
-    public void setAlbum(AlbumEntity album) {
-        this.album = album;
+    public void setAlbumId(Optional<Long> albumId) {
+        this.albumId = albumId;
     }
 
-    public PlayerEntity getPlayer() {
-        return player;
+    public Long getPlayerId() {
+        return playerId;
     }
 
-    public void setPlayer(PlayerEntity player) {
-        this.player = player;
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 
-    public UserEntity getOwner() {
-        return owner;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(UserEntity owner) {
-        this.owner = owner;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }
