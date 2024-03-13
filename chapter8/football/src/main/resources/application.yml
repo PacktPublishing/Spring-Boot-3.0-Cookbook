@@ -15,13 +15,18 @@ management:
 spring:
     application:
         name: football
-    jpa:
-        database-platform: org.hibernate.dialect.PostgreSQLDialect
-        open-in-view: false
-        # show-sql: true
-    datasource:
-        url: jdbc:postgresql://localhost:5432/football
+    r2dbc:
+        url: r2dbc:postgresql://localhost:5432/football
         username: packt
         password: packt
-        hikari:
-            maximum-pool-size: 4
+    flyway:
+        url: jdbc:postgresql://localhost:5432/football
+        user: packt
+        password: packt
+
+#    datasource:
+#        url: jdbc:postgresql://localhost:5432/football
+#        username: packt
+#        password: packt
+#        hikari:
+#            maximum-pool-size: 4
