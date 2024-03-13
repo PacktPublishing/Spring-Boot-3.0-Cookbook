@@ -1,0 +1,32 @@
+management:
+    endpoint:
+        health:
+            probes:
+                enabled: true
+        prometheus:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: health,env,metrics,beans,loggers,prometheus
+    tracing:
+        sampling:
+            probability: 0.01 
+spring:
+    application:
+        name: football
+    r2dbc:
+        url: r2dbc:postgresql://localhost:5432/football
+        username: packt
+        password: packt
+    flyway:
+        url: jdbc:postgresql://localhost:5432/football
+        user: packt
+        password: packt
+
+#    datasource:
+#        url: jdbc:postgresql://localhost:5432/football
+#        username: packt
+#        password: packt
+#        hikari:
+#            maximum-pool-size: 4
