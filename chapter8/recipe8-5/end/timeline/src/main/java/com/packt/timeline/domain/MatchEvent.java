@@ -1,4 +1,4 @@
-package com.packt.matches.domain;
+package com.packt.timeline.domain;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -68,3 +68,4 @@ public class MatchEvent {
         this.player2 = player2;
     }
 }
+

@@ -1,0 +1,22 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bindings, health, info, metrics, env, beans, loggers
+
+spring:
+  rabbitmq:
+    host: localhost
+    username: packt
+    password: packt
+    port: 5672
+  cloud:
+    stream:
+      bindings:
+        matchEvents:
+          destination: match-events-topic
+      rabbit:
+        bindings:
+          matchEvents:
+            producer:
+              exchangeType: direct

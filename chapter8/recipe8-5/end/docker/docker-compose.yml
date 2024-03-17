@@ -1,0 +1,21 @@
+version: "3.0"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: football-rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "packt"
+      RABBITMQ_DEFAULT_PASS: "packt"
+  
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "packt"
+      POSTGRES_PASSWORD: "packt"
+      POSTGRES_DB: "football"
