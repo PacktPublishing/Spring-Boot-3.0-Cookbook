@@ -1,39 +1,38 @@
 package com.packt.matches.service;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.packt.matches.config.RabbitConfig;
 import com.packt.matches.domain.MatchEvent;
-
-import reactor.core.publisher.Mono;
 
 @Service
 public class MatchService {
 
-    private StreamBridge streamBridge;
-    private final String bindingName;
+    private final RabbitTemplate rabbitTemplate;
+    private final ObjectMapper objectMapper;
+    private String topicExchangeName;
 
-    public MatchService(StreamBridge streamBridge,
-            @Value("${spring.cloud.stream.bindings.matchEvents.destination}") String bindingName) {
-        this.streamBridge = streamBridge;
-        this.bindingName = bindingName;
+    public MatchService(RabbitTemplate rabbitTemplate,
+            @Value("${rabbitmq.exchange.name:match-events}") String topicExchangeName) {
+        this.rabbitTemplate = rabbitTemplate;
+        this.topicExchangeName = topicExchangeName;
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
-    public Mono<MatchEvent> createEvent(MatchEvent matchEvent) {
-        MessageBuilder<MatchEvent> messageBuilder = MessageBuilder.withPayload(matchEvent);
-        messageBuilder.setHeader("eventType", matchEvent.getType());
+    public void createEvent(MatchEvent matchEvent) throws JsonProcessingException {
+
+        String serializedMatchEvent = objectMapper.writeValueAsString(matchEvent);
         if (matchEvent.getType() == 2) {
-            messageBuilder.setHeader("bindingRoutingKey", "'goals.#'");
-        }
-        Message<MatchEvent> message = messageBuilder.build();
-        if (streamBridge.send(bindingName, message)) {
-            // if (streamBridge.send("matchevents", matchEvent)) {
-            return Mono.just(matchEvent);
+            rabbitTemplate.convertAndSend(topicExchangeName, "football.goals.sample", serializedMatchEvent);
         } else {
-            return Mono.empty();
+            rabbitTemplate.convertAndSend(topicExchangeName, "football", serializedMatchEvent);
         }
     }
+
 }
