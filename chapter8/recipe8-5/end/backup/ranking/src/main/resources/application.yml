@@ -1,0 +1,41 @@
+server:
+  port: 8082
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bindings, health, info, metrics, env, beans, loggers
+spring:
+  application:
+    name: ranking
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/football
+    username: packt
+    password: packt
+
+  rabbitmq:
+    host: localhost
+    username: packt
+    password: packt
+    port: 5672
+
+  cloud:
+    stream:
+      rabbit:
+        bindings:
+          input:
+            consumer:
+              autoBindDlq: true
+              bindingRoutingKey: 'goals'
+      function:
+        routing: enabled
+        bindings:
+          processGoals-in-0: input
+      bindings:
+        input:
+          destination: match-events-topic
+          group: ranking
+          bindingRoutingKey: goals
+          exchangeType: direct
+          binder: rabbit
+
