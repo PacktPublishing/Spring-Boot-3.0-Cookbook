@@ -9,8 +9,8 @@ public class MatchEvent {
     private LocalDateTime eventTime;
     private int type;
     private String description;
-    private Optional<Long> player1;
-    private Optional<Long> player2;
+    private Long player1;
+    private Long player2;
 
     public Long getId() {
         return id;
@@ -52,19 +52,19 @@ public class MatchEvent {
         this.description = description;
     }
 
-    public Optional<Long> getPlayer1() {
+    public Long getPlayer1() {
         return player1;
     }
 
-    public void setPlayer1(Optional<Long> player1) {
+    public void setPlayer1(Long player1) {
         this.player1 = player1;
     }
 
-    public Optional<Long> getPlayer2() {
+    public Long getPlayer2() {
         return player2;
     }
 
-    public void setPlayer2(Optional<Long> player2) {
+    public void setPlayer2(Long player2) {
         this.player2 = player2;
     }
 }

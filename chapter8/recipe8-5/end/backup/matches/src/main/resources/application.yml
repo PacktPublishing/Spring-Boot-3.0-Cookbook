@@ -1,3 +1,8 @@
+logging:
+  level:
+    org:
+      springframework:
+        amqp: DEBUG
 management:
   endpoints:
     web:
@@ -13,10 +18,10 @@ spring:
   cloud:
     stream:
       bindings:
-        matchEvents:
+        matchEvents-out-0:
           destination: match-events-topic
       rabbit:
         bindings:
-          matchEvents:
+          matchEvents-out-0:
             producer:
-              exchangeType: direct
+              routing-key-expression: headers.eventType

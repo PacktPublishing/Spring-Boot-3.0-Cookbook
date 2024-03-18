@@ -17,20 +17,22 @@ public class MatchService {
     private final String bindingName;
 
     public MatchService(StreamBridge streamBridge,
-            @Value("${spring.cloud.stream.bindings.matchEvents.destination}") String bindingName) {
+            @Value("${spring.cloud.stream.bindings.matchEvents-out-0.destination}") String bindingName) {
         this.streamBridge = streamBridge;
         this.bindingName = bindingName;
     }
 
     public Mono<MatchEvent> createEvent(MatchEvent matchEvent) {
         MessageBuilder<MatchEvent> messageBuilder = MessageBuilder.withPayload(matchEvent);
-        messageBuilder.setHeader("eventType", matchEvent.getType());
+        
         if (matchEvent.getType() == 2) {
-            messageBuilder.setHeader("bindingRoutingKey", "'goals.#'");
+            messageBuilder.setHeader("eventType", "football.goals.sample");
+        } else {
+            messageBuilder.setHeader("eventType", "football.event");
         }
+
         Message<MatchEvent> message = messageBuilder.build();
         if (streamBridge.send(bindingName, message)) {
-            // if (streamBridge.send("matchevents", matchEvent)) {
             return Mono.just(matchEvent);
         } else {
             return Mono.empty();

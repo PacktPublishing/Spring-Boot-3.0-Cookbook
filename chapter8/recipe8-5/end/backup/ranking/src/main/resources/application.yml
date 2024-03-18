@@ -26,16 +26,17 @@ spring:
           input:
             consumer:
               autoBindDlq: true
-              bindingRoutingKey: 'goals'
+              bindingRoutingKey: football.goals.#
       function:
         routing: enabled
         bindings:
           processGoals-in-0: input
+        routing-expression: headers['eventType']
       bindings:
         input:
           destination: match-events-topic
           group: ranking
-          bindingRoutingKey: goals
+          bindingRoutingKey: football.goals.#
           exchangeType: direct
           binder: rabbit
 
