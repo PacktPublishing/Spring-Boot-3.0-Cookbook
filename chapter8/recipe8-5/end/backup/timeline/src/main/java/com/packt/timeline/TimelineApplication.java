@@ -19,7 +19,7 @@ public class TimelineApplication {
 	@Bean
 	public Consumer<MatchEvent> processMatchEvent() {
 		return value -> {
-			System.out.println("Processing MatchEvent: " + value.getType());
+			System.out.println("Processing MatchEvent: " + value.type());
 		};
 	}
 

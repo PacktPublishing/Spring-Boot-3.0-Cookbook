@@ -25,7 +25,7 @@ public class MatchService {
     public Mono<MatchEvent> createEvent(MatchEvent matchEvent) {
         MessageBuilder<MatchEvent> messageBuilder = MessageBuilder.withPayload(matchEvent);
         
-        if (matchEvent.getType() == 2) {
+        if (matchEvent.type() == 2) {
             messageBuilder.setHeader("eventType", "football.goals.sample");
         } else {
             messageBuilder.setHeader("eventType", "football.event");

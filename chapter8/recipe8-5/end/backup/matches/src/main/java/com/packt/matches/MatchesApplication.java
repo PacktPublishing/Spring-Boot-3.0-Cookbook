@@ -23,17 +23,18 @@ public class MatchesApplication {
 	public Supplier<Message<MatchEvent>> matchEvents() {
 		Random random = new Random();
 		return () -> {
-			MatchEvent matchEvent = new MatchEvent();
-			matchEvent.setMatchId(1L);
-			matchEvent.setType(random.nextInt(0, 10));
-			matchEvent.setEventTime(LocalDateTime.now());
-			matchEvent.setDescription("random event");
-			matchEvent.setPlayer1(null);
-			matchEvent.setPlayer2(null);
+			MatchEvent matchEvent = MatchEvent.builder()
+					.withMatchId(1L)
+					.withType(random.nextInt(0, 10))
+					.withEventTime(LocalDateTime.now())
+					.withDescription("random event")
+					.withPlayer1(null)
+					.withPlayer2(null)
+					.build();
 
 			MessageBuilder<MatchEvent> messageBuilder = MessageBuilder.withPayload(matchEvent);
-			if (matchEvent.getType() == 2) {
-				messageBuilder.setHeader("eventType", "football.goals.sample");
+			if (matchEvent.type() == 2) {
+				messageBuilder.setHeader("eventType", "football.goal");
 			} else {
 				messageBuilder.setHeader("eventType", "football.event");
 			}

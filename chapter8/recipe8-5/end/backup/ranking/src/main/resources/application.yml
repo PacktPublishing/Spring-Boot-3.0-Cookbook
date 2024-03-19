@@ -26,7 +26,7 @@ spring:
           input:
             consumer:
               autoBindDlq: true
-              bindingRoutingKey: football.goals.#
+              bindingRoutingKey: football.goal.#
       function:
         routing: enabled
         bindings:
@@ -36,7 +36,7 @@ spring:
         input:
           destination: match-events-topic
           group: ranking
-          bindingRoutingKey: football.goals.#
+          bindingRoutingKey: football.goal.#
           exchangeType: direct
           binder: rabbit
 

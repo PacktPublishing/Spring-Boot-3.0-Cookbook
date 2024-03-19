@@ -1,70 +1,60 @@
 package com.packt.matches.domain;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
-public class MatchEvent {
-    private Long id;
-    private Long matchId;
-    private LocalDateTime eventTime;
-    private int type;
-    private String description;
-    private Long player1;
-    private Long player2;
+public record MatchEvent(Long id, Long matchId, LocalDateTime eventTime, int type, String description, Long player1,
+        Long player2) {
 
-    public Long getId() {
-        return id;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public static class Builder {
+        private Long id;
+        private Long matchId;
+        private LocalDateTime eventTime;
+        private int type;
+        private String description;
+        private Long player1;
+        private Long player2;
 
-    public Long getMatchId() {
-        return matchId;
-    }
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
+        }
 
-    public void setMatchId(Long matchId) {
-        this.matchId = matchId;
-    }
+        public Builder withMatchId(Long matchId) {
+            this.matchId = matchId;
+            return this;
+        }
 
-    public LocalDateTime getEventTime() {
-        return eventTime;
-    }
+        public Builder withEventTime(LocalDateTime eventTime) {
+            this.eventTime = eventTime;
+            return this;
+        }
 
-    public void setEventTime(LocalDateTime eventTime) {
-        this.eventTime = eventTime;
-    }
+        public Builder withType(int type) {
+            this.type = type;
+            return this;
+        }
 
-    public int getType() {
-        return type;
-    }
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
 
-    public void setType(int type) {
-        this.type = type;
-    }
+        public Builder withPlayer1(Long player1) {
+            this.player1 = player1;
+            return this;
+        }
 
-    public String getDescription() {
-        return description;
-    }
+        public Builder withPlayer2(Long player2) {
+            this.player2 = player2;
+            return this;
+        }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getPlayer1() {
-        return player1;
-    }
-
-    public void setPlayer1(Long player1) {
-        this.player1 = player1;
-    }
-
-    public Long getPlayer2() {
-        return player2;
-    }
-
-    public void setPlayer2(Long player2) {
-        this.player2 = player2;
+        public MatchEvent build() {
+            return new MatchEvent(id, matchId, eventTime, type, description, player1, player2);
+        }
     }
 }

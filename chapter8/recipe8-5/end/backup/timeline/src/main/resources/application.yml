@@ -8,11 +8,7 @@ management:
 spring:
   application:
     name: timeline
-  r2dbc:
-    url: r2dbc:postgresql://localhost:5432/football
-    username: packt
-    password: packt
-
+    
   rabbitmq:
     host: localhost
     username: packt
@@ -21,11 +17,11 @@ spring:
 
   cloud:
     stream:
-      rabbit:
-        bindings:
-          input:
-            consumer:
-              autoBindDlq: true
+      # rabbit:
+      #   bindings:
+      #     input:
+      #       consumer:
+      #         autoBindDlq: true
       function:
         bindings:
           processMatchEvent-in-0: input
