@@ -7,11 +7,7 @@ management:
         include: bindings, health, info, metrics, env, beans, loggers
 spring:
   application:
-    name: ranking
-  r2dbc:
-    url: r2dbc:postgresql://localhost:5432/football
-    username: packt
-    password: packt
+    name: score
 
   rabbitmq:
     host: localhost
@@ -25,18 +21,17 @@ spring:
         bindings:
           input:
             consumer:
-              autoBindDlq: true
               bindingRoutingKey: football.goal.#
       function:
-        routing: enabled
+        # routing: enabled
         bindings:
           processGoals-in-0: input
-        routing-expression: headers['eventType']
+        # routing-expression: headers['eventType']
       bindings:
         input:
           destination: match-events-topic
-          group: ranking
-          bindingRoutingKey: football.goal.#
-          exchangeType: direct
-          binder: rabbit
+          group: score
+          # bindingRoutingKey: football.goal.#
+          # exchangeType: direct
+          # binder: rabbit
 

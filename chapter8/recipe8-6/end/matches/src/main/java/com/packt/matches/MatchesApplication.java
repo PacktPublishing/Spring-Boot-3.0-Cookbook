@@ -28,8 +28,8 @@ public class MatchesApplication {
 					.withType(random.nextInt(0, 10))
 					.withEventTime(LocalDateTime.now())
 					.withDescription("random event")
-					.withPlayer1(null)
-					.withPlayer2(null)
+					.withPlayer1(random.nextLong(1000, 2000))
+					.withPlayer2(random.nextLong(1000, 2000))
 					.build();
 
 			MessageBuilder<MatchEvent> messageBuilder = MessageBuilder.withPayload(matchEvent);
