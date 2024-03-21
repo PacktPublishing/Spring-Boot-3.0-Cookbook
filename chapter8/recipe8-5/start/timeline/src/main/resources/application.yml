@@ -1,0 +1,31 @@
+server:
+  port: 8081
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bindings, health, info, metrics, env, beans, loggers
+spring:
+  application:
+    name: timeline
+    
+  rabbitmq:
+    host: localhost
+    username: packt
+    password: packt
+    port: 5672
+
+  cloud:
+    stream:
+      # rabbit:
+      #   bindings:
+      #     input:
+      #       consumer:
+      #         autoBindDlq: true
+      function:
+        bindings:
+          processMatchEvent-in-0: input
+      bindings:
+        input:
+          destination: match-events-topic
+          group: timeline
