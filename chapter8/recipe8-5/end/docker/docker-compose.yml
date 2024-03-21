@@ -10,12 +10,3 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: "packt"
       RABBITMQ_DEFAULT_PASS: "packt"
-  
-  postgres:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: "packt"
-      POSTGRES_PASSWORD: "packt"
-      POSTGRES_DB: "football"
