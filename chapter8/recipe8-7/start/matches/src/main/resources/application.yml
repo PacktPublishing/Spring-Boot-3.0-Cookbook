@@ -1,0 +1,27 @@
+logging:
+  level:
+    org:
+      springframework:
+        amqp: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bindings, health, info, metrics, env, beans, loggers
+
+spring:
+  rabbitmq:
+    host: localhost
+    username: packt
+    password: packt
+    port: 5672
+  cloud:
+    stream:
+      bindings:
+        matchEvents-out-0:
+          destination: match-events-topic
+      rabbit:
+        bindings:
+          matchEvents-out-0:
+            producer:
+              routing-key-expression: headers.eventType
