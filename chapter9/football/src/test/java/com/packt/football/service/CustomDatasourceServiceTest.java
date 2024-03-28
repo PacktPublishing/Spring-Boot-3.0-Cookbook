@@ -1,5 +1,9 @@
 package com.packt.football.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +15,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import java.sql.Date;
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Testcontainers

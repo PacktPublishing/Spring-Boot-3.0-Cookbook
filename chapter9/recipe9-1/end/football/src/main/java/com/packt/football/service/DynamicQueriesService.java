@@ -115,6 +115,7 @@ public class DynamicQueriesService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<PlayerEntity> searchUserMissingPlayers(Integer userId) {
         Query query = em.createNativeQuery(
                 "SELECT p1.* FROM players p1 WHERE p1.id NOT IN (SELECT c1.player_id FROM cards c1 WHERE c1.owner_id=?1)",
