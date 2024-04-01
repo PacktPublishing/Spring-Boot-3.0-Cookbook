@@ -1,10 +1,10 @@
 package com.packt.football.service;
 
-// import com.packt.football.domain.MatchEvent;
+
 
 import com.packt.football.domain.Player;
 import com.packt.football.mapper.PlayerMapper;
-// import com.packt.football.repo.MatchEventEntity;
+
 import com.packt.football.repo.PlayerEntity;
 
 import javax.persistence.EntityManager;
@@ -72,34 +72,7 @@ public class DynamicQueriesService {
                 .collect(Collectors.toList());
     }
 
-    // public List<MatchEventEntity> searchMatchEventsRange(Integer matchId, Optional<LocalDateTime> minTime,
-    //         Optional<LocalDateTime> maxTime) {
-    //     String command = "SELECT e FROM MatchEventEntity e WHERE e.match.id=:matchId ";
-    //     if (minTime.isPresent() && maxTime.isPresent()) {
-    //         command += " AND e.time BETWEEN :minTime AND :maxTime";
-    //     } else if (minTime.isPresent()) {
-    //         command += " AND e.time >= :minTime";
-    //     } else if (maxTime.isPresent()) {
-    //         command += " AND e.time <= :maxTime";
-    //     }
-    //     TypedQuery<MatchEventEntity> query = em.createQuery(command, MatchEventEntity.class);
-    //     query.setParameter("matchId", matchId);
-    //     if (minTime.isPresent()) {
-    //         query.setParameter( "minTime", minTime.get());
-    //     }
-    //     if (maxTime.isPresent()) {
-    //         query.setParameter("maxTime", maxTime.get());
-    //     }
-    //     return query.getResultList();
-    // }
-
-    // public List<MatchEvent> searchMatchEventsRangeAndMap(Integer matchId, Optional<LocalDateTime> minMinute,
-    //         Optional<LocalDateTime> maxMinute) {
-    //     return searchMatchEventsRange(matchId, minMinute, maxMinute)
-    //             .stream()
-    //             .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
-    //             .collect(Collectors.toList());
-    // }
+    
 
     public void deleteEventRange(Integer matchId, LocalDateTime start, LocalDateTime end) {
         try {
@@ -132,5 +105,10 @@ public class DynamicQueriesService {
                 .stream()
                 .map(playerMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    public Integer countPlayers() {
+        Query query = em.createQuery("SELECT COUNT(p) FROM PlayerEntity p");
+        return ((Number) query.getSingleResult()).intValue();
     }
 }

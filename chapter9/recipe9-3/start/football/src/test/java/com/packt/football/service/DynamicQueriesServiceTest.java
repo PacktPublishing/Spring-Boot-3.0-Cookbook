@@ -114,83 +114,6 @@ class DynamicQueriesServiceTest {
         assertThat(players, empty());
     }
 
-//     @Test
-//     public void searchMatchEventsRangeTest() {
-//         List<MatchEventEntity> events = dynamicQueriesService.searchMatchEventsRange(400222854, Optional.empty(),
-//                 Optional.empty());
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(227));
-
-//         events = dynamicQueriesService.searchMatchEventsRange(400222854,
-//                 Optional.of(LocalDateTime.of(2023, 7, 21, 5, 8, 0)), Optional.empty());
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(201));
-
-//         events = dynamicQueriesService.searchMatchEventsRange(400222854,
-//                 Optional.empty(), Optional.of(LocalDateTime.of(2023, 7, 21, 5, 8, 0)));
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(26));
-
-//         events = dynamicQueriesService.searchMatchEventsRange(400222854,
-//                 Optional.of(LocalDateTime.of(2023, 7, 21, 5, 8, 0)),
-//                         Optional.of(LocalDateTime.of(2023, 7, 21, 5, 10, 0)));
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(2));
-
-//         events = dynamicQueriesService.searchMatchEventsRange(400222854,
-//                 Optional.of(LocalDateTime.of(2024, 8, 16, 10, 2, 0)),
-//                 Optional.of(LocalDateTime.of(2024, 8, 16, 10, 4, 0)));
-//         assertThat(events, empty());
-//     }
-
-//     @Test
-//     void searchMatchEventsRangeAndMap(){
-//         List<MatchEvent> events = dynamicQueriesService.searchMatchEventsRangeAndMap(400222854, Optional.empty(),
-//                 Optional.empty());
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(227));
-
-//         events = dynamicQueriesService.searchMatchEventsRangeAndMap(400222854,
-//                 Optional.of(LocalDateTime.of(2023, 7, 21, 5, 8, 0)), Optional.empty());
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(201));
-
-//         events = dynamicQueriesService.searchMatchEventsRangeAndMap(400222854,
-//                 Optional.empty(), Optional.of(LocalDateTime.of(2023, 7, 21, 5, 8, 0)));
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(26));
-
-//         events = dynamicQueriesService.searchMatchEventsRangeAndMap(400222854,
-//                 Optional.of(LocalDateTime.of(2023, 7, 21, 5, 8, 0)),
-//                 Optional.of(LocalDateTime.of(2023, 7, 21, 5, 10, 0)));
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(2));
-
-//         events = dynamicQueriesService.searchMatchEventsRangeAndMap(400222854,
-//                 Optional.of(LocalDateTime.of(2024, 8, 16, 10, 2, 0)),
-//                 Optional.of(LocalDateTime.of(2024, 8, 16, 10, 4, 0)));
-//         assertThat(events, empty());
-
-//     }
-
-
-//     @Test
-//     void deleteEventRangeTest() {
-//         List<MatchEventEntity> events = dynamicQueriesService.searchMatchEventsRange(400258556, Optional.empty(),
-//                 Optional.empty());
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(258));
-
-//         dynamicQueriesService.deleteEventRange(400258556, LocalDateTime.of(2023, 8, 16, 10, 2, 0),
-//                 LocalDateTime.of(2023, 8, 16, 10, 4, 0));
-
-//         events = dynamicQueriesService.searchMatchEventsRange(400258556, Optional.empty(),
-//                 Optional.empty());
-//         assertThat(events, not(empty()));
-//         assertThat(events, hasSize(252));
-
-//     }
-
     @Test
     void searchUserMissingPlayers() {
         User user1 = this.usersService.createUser("user1");
@@ -221,6 +144,12 @@ class DynamicQueriesServiceTest {
         albumsService.useAllCardAvailable(user1.getId());
         players = dynamicQueriesService.searchUserMissingPlayersAndMap(user1.getId());
         assertThat(players, hasSize(735));
+    }
+
+    @Test
+    void countPlayers() {
+        Integer count = dynamicQueriesService.countPlayers();
+        assertThat(count, not(0));
     }
 
 
