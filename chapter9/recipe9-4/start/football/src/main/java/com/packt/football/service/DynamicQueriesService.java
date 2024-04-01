@@ -7,14 +7,14 @@ import com.packt.football.mapper.PlayerMapper;
 
 import com.packt.football.repo.PlayerEntity;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Service;
 
@@ -110,5 +110,11 @@ public class DynamicQueriesService {
     public Integer countPlayers() {
         Query query = em.createQuery("SELECT COUNT(p) FROM PlayerEntity p");
         return ((Number) query.getSingleResult()).intValue();
+    }
+
+    public Player findPlayerById(Integer id) {
+        Query query = em.createQuery("SELECT p FROM PlayerEntity p WHERE p.id=?0", PlayerEntity.class);
+        query.setParameter(0, id);
+        return playerMapper.map((PlayerEntity) query.getSingleResult());
     }
 }

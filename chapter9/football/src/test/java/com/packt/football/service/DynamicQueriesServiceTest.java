@@ -152,5 +152,11 @@ class DynamicQueriesServiceTest {
         assertThat(count, not(0));
     }
 
+    @Test
+    void findPlayerById(){
+        Player player = dynamicQueriesService.findPlayerById(325636);
+        assertNotNull(player);
+    }
+
 
 }

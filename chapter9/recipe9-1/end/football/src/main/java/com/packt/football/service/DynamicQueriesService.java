@@ -111,4 +111,10 @@ public class DynamicQueriesService {
         Query query = em.createQuery("SELECT COUNT(p) FROM PlayerEntity p");
         return ((Number) query.getSingleResult()).intValue();
     }
+
+    public Player findPlayerById(Integer id) {
+        Query query = em.createQuery("SELECT p FROM PlayerEntity p WHERE p.id=?0", PlayerEntity.class);
+        query.setParameter(0, id);
+        return playerMapper.map((PlayerEntity) query.getSingleResult());
+    }
 }
