@@ -16,8 +16,9 @@ spring:
     application:
         name: football
     jpa:
-        database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
         open-in-view: false
+        show-sql: true
     datasource:
         url: jdbc:postgresql://localhost:5432/football
         username: packt

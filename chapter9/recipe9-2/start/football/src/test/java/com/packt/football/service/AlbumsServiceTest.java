@@ -1,9 +1,19 @@
 package com.packt.football.service;
 
-import com.packt.football.domain.Album;
-import com.packt.football.domain.Card;
-import com.packt.football.domain.TradingUser;
-import com.packt.football.domain.User;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +25,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
+import com.packt.football.domain.Album;
+import com.packt.football.domain.Card;
+import com.packt.football.domain.TradingUser;
+import com.packt.football.domain.User;
 
 @Testcontainers
 @SpringBootTest
@@ -173,5 +178,19 @@ class AlbumsServiceTest {
         assertThat(userCards, notNullValue());
         assertThat(userCards.get().getCards(), hasSize(5));
         assertThat(userCards.get().getAlbums(), hasSize(1));
+    }
+
+    @Test
+    void getUserSimple() {
+        User user1 = usersService.createUser("Test");
+        Album album1 = albumsService.buyAlbum(user1.getId(), "sample album");
+        List<Card> cards = albumsService.buyCards(user1.getId(), 5);
+        Card card = albumsService.addCardToAlbum(cards.get(0).getId(), album1.getId());
+        assertThat(card, notNullValue());
+
+        Optional<TradingUser> userCards = albumsService.getUserSimple(user1.getId());
+        assertThat(userCards, notNullValue());
+        assertThat(userCards.get().getCards(), notNullValue());
+        assertThat(userCards.get().getAlbums(), notNullValue());
     }
 }

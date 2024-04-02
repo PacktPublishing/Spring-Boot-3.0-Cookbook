@@ -3,8 +3,8 @@ package com.packt.football.service;
 import com.packt.football.domain.Album;
 import com.packt.football.domain.Card;
 import com.packt.football.domain.TradingUser;
-import com.packt.football.domain.User;
 import com.packt.football.mapper.CardMapper;
+import com.packt.football.mapper.UserMappper;
 import com.packt.football.repo.*;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -25,15 +25,18 @@ public class AlbumsService {
     private final UserRepository usersRepository;
     private final PlayerRepository playersRepository;
     private final CardRepository cardsRepository;
-    private CardMapper cardMapper;
+    private final CardMapper cardMapper;
+    private final UserMappper userMappper;
 
     public AlbumsService(AlbumRepository albumsRepository, UserRepository usersRepository,
-            PlayerRepository playersRepository, CardRepository cardsRepository, CardMapper cardMapper) {
+            PlayerRepository playersRepository, CardRepository cardsRepository, CardMapper cardMapper,
+            UserMappper userMappper) {
         this.albumsRepository = albumsRepository;
         this.usersRepository = usersRepository;
         this.playersRepository = playersRepository;
         this.cardsRepository = cardsRepository;
         this.cardMapper = cardMapper;
+        this.userMappper = userMappper;
     }
 
     @Transactional
@@ -124,20 +127,13 @@ public class AlbumsService {
 
     @Transactional(readOnly = true)
     public Optional<TradingUser> getUserWithCardsAndAlbums(Integer userId) {
-        Optional<UserEntity> user = usersRepository.findByIdWithCardsAndAlbums(userId);
-        if (user.isPresent()) {
-            UserEntity u = user.get();
-            return Optional.of(new TradingUser(new User(u.getId(), u.getUsername()),
-                    u.getOwnedCards()
-                            .stream()
-                            .map(c -> cardMapper.map(c))
-                            .collect(Collectors.toList()),
-                    u.getOwnedAlbums()
-                            .stream()
-                            .map(a -> new Album(a.getId(), a.getTitle(), u.getId()))
-                            .collect(Collectors.toList())));
-        } else {
-            return Optional.empty();
-        }
+        return usersRepository.findByIdWithCardsAndAlbums(userId)
+                .map(u -> userMappper.map(u));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<TradingUser> getUserSimple(Integer userId) {
+        return usersRepository.findById(userId)
+                .map(u -> userMappper.map(u));
     }
 }

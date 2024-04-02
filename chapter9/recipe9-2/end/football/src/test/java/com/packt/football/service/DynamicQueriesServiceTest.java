@@ -16,8 +16,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.List;
 import java.util.Optional;
 
+import java.math.BigInteger;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertNotNull;
@@ -148,7 +151,7 @@ class DynamicQueriesServiceTest {
 
     @Test
     void countPlayers() {
-        Integer count = dynamicQueriesService.countPlayers();
+        BigInteger count = dynamicQueriesService.countPlayers();
         assertThat(count, not(0));
     }
 
@@ -156,6 +159,22 @@ class DynamicQueriesServiceTest {
     void findPlayerById(){
         Player player = dynamicQueriesService.findPlayerById(325636);
         assertNotNull(player);
+    }
+
+    @Test
+    void findUserById() {
+        User user1 = usersService.createUser("Test");
+        Album album1 = albumsService.buyAlbum(user1.getId(), "sample album");
+        List<Card> cards = albumsService.buyCards(user1.getId(), 5);
+        Card card = albumsService.addCardToAlbum(cards.get(0).getId(), album1.getId());
+        assertThat(card, notNullValue());
+        
+        TradingUser user = dynamicQueriesService.findUserById(user1.getId());
+        assertNotNull(user);
+        assertNotNull(user.getAlbums());
+        assertThat(user.getAlbums(), hasSize(1));
+        assertNotNull(user.getCards());
+        assertThat(user.getCards(), hasSize(5));
     }
 
 
