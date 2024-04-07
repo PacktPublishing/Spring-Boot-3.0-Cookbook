@@ -3,6 +3,8 @@ package com.packt.football.repo;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +26,11 @@ public interface PlayerRepository extends JpaRepository<PlayerEntity, Integer> {
 
     List<PlayerEntity> findByNameLike(String name);
 
-    // @Procedure(procedureName = "FIND_PLAYERS_WITH_MORE_THAN_N_MATCHES")
-    // int getTotalPlayersWithMoreThanNMatches(@Param("num_matches") int num_matches);
+    // @Procedure(procedureName = "call FIND_PLAYERS_WITH_MORE_THAN_N_MATCHES",
+    // outputParameterName = "count_out")
+    @Query(nativeQuery = true, value = "call FIND_PLAYERS_WITH_MORE_THAN_N_MATCHES( ?1, 0 )")
+    Integer getTotalPlayersWithMoreThanNMatches(int num_matches);
 
-     @Query("SELECT p FROM PlayerEntity p JOIN FETCH p.team WHERE p.id = ?1")
+    @Query("SELECT p FROM PlayerEntity p JOIN FETCH p.team WHERE p.id = ?1")
     Optional<PlayerEntity> findByIdWithTeam(Integer teamId);
 }

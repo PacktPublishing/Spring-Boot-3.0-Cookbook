@@ -1,7 +1,10 @@
 package com.packt.football.service;
 
+import com.packt.football.domain.Match;
+import com.packt.football.domain.MatchEvent;
 import com.packt.football.domain.Player;
 import com.packt.football.domain.Team;
+import com.packt.football.mapper.MatchMapper;
 import com.packt.football.mapper.PlayerMapper;
 import com.packt.football.repo.*;
 import org.springframework.data.domain.Page;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -21,15 +25,24 @@ public class FootballService {
     private final TeamRepository teamRepository;
     private final AlbumRepository albumRepository;
     private final PlayerMapper playerMapper;
+    private final MatchRepository matchRepository;
+    private final MatchEventRepository matchEventRepository;
+    private final MatchMapper matchMapper;
 
     public FootballService(PlayerRepository playerRepository,
             TeamRepository teamRepository,
             AlbumRepository albumRepository,
-            PlayerMapper playerMapper) {
+            PlayerMapper playerMapper,
+            MatchMapper matchMapper,
+            MatchRepository matchRepository,
+            MatchEventRepository matchEventRepository) {
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;
         this.albumRepository = albumRepository;
         this.playerMapper = playerMapper;
+        this.matchMapper = matchMapper;
+        this.matchRepository = matchRepository;
+        this.matchEventRepository = matchEventRepository;
     }
 
     @Transactional(readOnly = true)
@@ -86,12 +99,12 @@ public class FootballService {
         }
     }
 
-    // public List<Player> getPlayersByMatch(Integer id) {
-    //     return matchRepository.findPlayersByMatchId(id)
-    //             .stream()
-    //             .map(player -> playerMapper.map(player))
-    //             .collect(Collectors.toList());
-    // }
+    public List<Player> getPlayersByMatch(Integer id) {
+        return matchRepository.findPlayersByMatchId(id)
+                .stream()
+                .map(player -> playerMapper.map(player))
+                .collect(Collectors.toList());
+    }
 
     public List<Player> getAlbumMissingPlayers(Integer id) {
         return albumRepository.findByIdMissingPlayers(id)
@@ -146,46 +159,36 @@ public class FootballService {
         return teamRepository.getNumberOfPlayersByPosition(position);
     }
 
-    // public Match getMatchWithTimeline(Integer matchId) {
-    //     MatchEntity match = matchRepository.findByIdWithTimeline(matchId).orElse(null);
-    //     if (match != null) {
-    //         return new Match(match.getId(), match.getTeam1().getName(), match.getTeam2().getName(),
-    //                 match.getTeam1Goals(), match.getTeam2Goals(), match.getMatchDate(),
-    //                 match.getEvents()
-    //                         .stream()
-    //                         .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
-    //                         .collect(Collectors.toList()));
-    //     } else {
-    //         return null;
-    //     }
-    // }
+    public Optional<Match> getMatchWithTimeline(Integer matchId) {
+        return matchRepository.findByIdWithTimeline(matchId).map(m -> matchMapper.map(m));
+    }
 
-    // public List<MatchEvent> getMatchWithPlayerEvents(Integer matchId, Integer playerId) {
-    //     List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayer(matchId, playerId);
+    public List<MatchEvent> getMatchWithPlayerEvents(Integer matchId, Integer playerId) {
+        List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayer(matchId, playerId);
 
-    //     return matchEvents.stream()
-    //             .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
-    //             .collect(Collectors.toList());
-    // }
+        return matchEvents.stream()
+                .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
+                .collect(Collectors.toList());
+    }
 
-    // public List<MatchEvent> getMatchEventsOfType(Integer matchId, Integer eventType) {
-    //     return matchEventRepository.findByIdIncludeEventsOfType(matchId, eventType).stream()
-    //             .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
-    //             .collect(Collectors.toList());
-    // }
+    public List<MatchEvent> getMatchEventsOfType(Integer matchId, Integer eventType) {
+        return matchEventRepository.findByIdIncludeEventsOfType(matchId, eventType).stream()
+                .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
+                .collect(Collectors.toList());
+    }
 
-//    public Integer getTotalPlayersWithMoreThanNMatches(int num_matches) {
-//        return playerRepository.getTotalPlayersWithMoreThanNMatches(num_matches);
-//    }
+    public Integer getTotalPlayersWithMoreThanNMatches(int num_matches) {
+        return playerRepository.getTotalPlayersWithMoreThanNMatches(num_matches);
+    }
 
-    // public List<MatchEvent> getMatchWithPlayerEventsError(Integer matchId, Integer playerId) {
-    //     List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayerError(matchId,
-    //             playerId);
+    public List<MatchEvent> getMatchWithPlayerEventsError(Integer matchId, Integer playerId) {
+        List<MatchEventEntity> matchEvents = matchEventRepository.findByMatchIdAndPlayerError(matchId,
+                playerId);
 
-    //     return matchEvents.stream()
-    //             .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
-    //             .collect(Collectors.toList());
-    // }
+        return matchEvents.stream()
+                .map(e -> new MatchEvent(e.getTime(), e.getDetails()))
+                .collect(Collectors.toList());
+    }
 
     public List<Team> getTeams() {
         return StreamSupport.stream(teamRepository.findAll().spliterator(), false)

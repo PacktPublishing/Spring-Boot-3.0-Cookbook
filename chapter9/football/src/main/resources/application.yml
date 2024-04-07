@@ -6,19 +6,22 @@ management:
         prometheus:
             enabled: true
     endpoints:
+        # jmx:
+        #     exposure:
+                # include: env,health,metrics,beans,loggers
         web:
             exposure:
-                include: health,env,metrics,beans,loggers,prometheus
-    tracing:
-        sampling:
-            probability: 0.01 
+                include: health,env,metrics,beans,loggers,httptrace
+    trace:
+        http:
+            enabled: true
 spring:
     application:
         name: football
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQL82Dialect
         open-in-view: false
-        # show-sql: true
+        show-sql: true
     datasource:
         url: jdbc:postgresql://localhost:5432/football
         username: packt
@@ -26,3 +29,11 @@ spring:
         initialization-mode: embedded
         hikari:
             maximum-pool-size: 4
+    data:
+        cassandra:
+            keyspace-name: footballKeyspace
+            schema-action: CREATE_IF_NOT_EXISTS
+            contact-points: localhost
+            local-datacenter: datacenter1
+            session-name: cassandraSession
+            port: 9042

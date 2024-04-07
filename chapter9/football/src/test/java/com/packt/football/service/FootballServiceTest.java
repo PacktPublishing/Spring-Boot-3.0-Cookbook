@@ -2,6 +2,8 @@ package com.packt.football.service;
 
 import com.packt.football.domain.*;
 import com.packt.football.repo.TeamPlayers;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,43 +11,63 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
 @Testcontainers
-@ContextConfiguration(initializers = FootballServiceTest.Initializer.class)
 class FootballServiceTest {
 
+    @SuppressWarnings("resource")
     static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("football")
             .withUsername("football")
-            .withPassword("football");
+            .withPassword("football")
+            .withReuse(false);
 
-    static class Initializer
-            implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues.of(
-                            "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                            "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                            "spring.datasource.password=" + postgreSQLContainer.getPassword())
-                    .applyTo(configurableApplicationContext.getEnvironment());
-        }
+    @SuppressWarnings({"rawtypes", "resource"})
+    static CassandraContainer cassandraContainer = (CassandraContainer) new CassandraContainer("cassandra")
+            .withInitScript("createKeyspace.cql")
+            .withExposedPorts(9042)
+            .withReuse(false);
+
+    @DynamicPropertySource
+    static void setCassandraProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.cassandra.keyspace-name", () -> "footballKeyspace");
+        registry.add("spring.data.cassandra.contact-points", () -> cassandraContainer.getContactPoint().getAddress());
+        registry.add("spring.data.cassandra.port", () -> cassandraContainer.getMappedPort(9042));
+        registry.add("spring.data.cassandra.local-datacenter", () -> cassandraContainer.getLocalDatacenter());
+        registry.add("spring.datasource.url", () -> postgreSQLContainer.getJdbcUrl());
+        registry.add("spring.datasource.username", () -> postgreSQLContainer.getUsername());
+        registry.add("spring.datasource.password", () -> postgreSQLContainer.getPassword());
     }
 
     @BeforeAll
     public static void startContainer() {
+        cassandraContainer.start();
         postgreSQLContainer.start();
+    }
+
+    @AfterAll
+    public static void stopContainer() {
+        cassandraContainer.stop();
+        postgreSQLContainer.stop();
     }
 
     @Autowired
@@ -62,6 +84,31 @@ class FootballServiceTest {
         assertThat(team, notNullValue());
         assertThat(team.getPlayers(), not(empty()));
         assertThat(team.getPlayers(), hasSize(23));
+    }
+
+    @Test
+    public void createTeamTest() {
+        // ACT
+        Team team = footballService.createTeam("Jamaica");
+        // ASSERT
+        assertThat(team, notNullValue());
+    }
+
+    @Test
+    public void getTeamsTest() {
+        // ARRANGE. As the teams are already create, use the id of any of them
+        int teamId = 1884823;
+
+        // ACT&ASSERT: Get the team
+        Team team = footballService.getTeam(teamId);
+        assertThat(team, notNullValue());
+        assertThat(team.getPlayers(), notNullValue());
+    }
+
+    @Test
+    public void getTeam_notFound() {
+        // ACT&ASSERT: Get a team that does not exist
+        assertThat(footballService.getTeam(9999999), nullValue());
     }
 
     @Test
@@ -104,12 +151,17 @@ class FootballServiceTest {
         assertThat(afterPlayer.getPosition(), is("Midfielder"));
     }
 
-    // @Test
-    // void getPlayersByMatch() {
-    //     List<Player> players = footballService.getPlayersByMatch(400258554);
-    //     assertThat(players, not(empty()));
-    //     assertThat(players, hasSize(46));
-    // }
+    @Test
+    public void getPlayersByMatch() {
+        List<Player> players = footballService.getPlayersByMatch(400222852);
+        assertThat(players, not(empty()));
+    }
+
+    @Test
+    public void getPlayersByMatch_notFound() {
+        List<Player> players = footballService.getPlayersByMatch(9999999);
+        assertThat(players, empty());
+    }
 
     @Test
     void getAlbumMissingPlayers() {
@@ -188,6 +240,12 @@ class FootballServiceTest {
     }
 
     @Test
+    public void getTeamPlayers_notFound() {
+        List<Player> players = footballService.getTeamPlayers(9999999);
+        assertThat(players, empty());
+    }
+
+    @Test
     void getAllPlayersPaged() {
         List<Player> players = footballService.getAllPlayersPaged(0, 10);
         assertThat(players, not(empty()));
@@ -207,39 +265,41 @@ class FootballServiceTest {
         assertThat(positionCounts, hasSize(32));
     }
 
-    // @Test
-    // void getMatchWithTimeline() {
-    //     Match match = footballService.getMatchWithTimeline(400258554);
-    //     assertThat(match, notNullValue());
-    //     assertThat(match.getEvents(), not(empty()));
-    //     assertThat(match.getEvents(), hasSize(269));
-    // }
+    @Test
+    void getMatchWithTimeline() {
+        Optional<Match> match = footballService.getMatchWithTimeline(400258554);
+        assertThat(match.isPresent(), is(true));
+        Match theMatch = match.orElse(null);
+        assertThat(theMatch, notNullValue());
+        assertThat(theMatch.getEvents(), not(empty()));
+        assertThat(theMatch.getEvents(), hasSize(269));
+    }
 
-    // @Test
-    // void getMatchWithPlayerEvents() {
-    //     List<MatchEvent> matchEvents = footballService.getMatchWithPlayerEvents(400258554, 413016);
-    //     assertThat(matchEvents, not(empty()));
-    //     assertThat(matchEvents, hasSize(40));
-    // }
+    @Test
+    void getMatchWithPlayerEvents() {
+        List<MatchEvent> matchEvents = footballService.getMatchWithPlayerEvents(400258554, 413016);
+        assertThat(matchEvents, not(empty()));
+        assertThat(matchEvents, hasSize(40));
+    }
 
-    // @Test
-    // void getMatchEventsOfType() {
-    //     List<MatchEvent> matchEvents = footballService.getMatchEventsOfType(400258554, 0);
-    //     assertThat(matchEvents, not(empty()));
-    //     assertThat(matchEvents, hasSize(1));
-    // }
+    @Test
+    void getMatchEventsOfType() {
+        List<MatchEvent> matchEvents = footballService.getMatchEventsOfType(400258554, 0);
+        assertThat(matchEvents, not(empty()));
+        assertThat(matchEvents, hasSize(1));
+    }
 
-    // @Test
-    // void getTotalPlayersWithMoreThanNMatches() {
-    //     Integer total = footballService.getTotalPlayersWithMoreThanNMatches(6);
-    //     assertThat(total, notNullValue());
-    //     assertThat(total, is(92));
-    // }
+    @Test
+    void getTotalPlayersWithMoreThanNMatches() {
+        Integer total = footballService.getTotalPlayersWithMoreThanNMatches(6);
+        assertThat(total, notNullValue());
+        assertThat(total, is(92));
+    }
 
-    // @Test
-    // void getMatchWithPlayerEventsError() {
-    //     assertThrows(InvalidDataAccessResourceUsageException.class, () -> footballService.getMatchWithPlayerEventsError(400258554, 413016));
-    // }
+    @Test
+    void getMatchWithPlayerEventsError() {
+        assertThrows(InvalidDataAccessResourceUsageException.class, () -> footballService.getMatchWithPlayerEventsError(400258554, 413016));
+    }
 
     @Test
     void getTeams() {
