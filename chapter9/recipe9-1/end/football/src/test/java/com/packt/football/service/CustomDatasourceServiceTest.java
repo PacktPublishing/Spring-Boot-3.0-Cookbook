@@ -8,7 +8,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.DataSourceInitializationMode;
+import org.springframework.boot.sql.init.DatabaseInitializationMode;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -67,7 +67,7 @@ class CustomDatasourceServiceTest {
 
     @Test
     void getInitializationMode() throws SQLException {
-        DataSourceInitializationMode initializationMode = customDatasourceService.getInitializationMode();
-        assertEquals(DataSourceInitializationMode.EMBEDDED, initializationMode);
+        DatabaseInitializationMode initializationMode = customDatasourceService.getInitializationMode();
+        assertEquals(DatabaseInitializationMode.EMBEDDED, initializationMode);
     }
 }
