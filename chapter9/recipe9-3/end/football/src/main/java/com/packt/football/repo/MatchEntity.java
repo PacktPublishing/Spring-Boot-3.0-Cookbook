@@ -1,15 +1,18 @@
 package com.packt.football.repo;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "matches")
@@ -33,8 +36,8 @@ public class MatchEntity {
     @Column(name = "team2_goals", columnDefinition = "integer default 0")
     private Integer team2Goals;
 
-    // @OneToMany(mappedBy = "match", fetch = FetchType.LAZY)
-    // private List<MatchEventEntity> events;
+    @OneToMany(mappedBy = "match", fetch = FetchType.LAZY)
+    private List<MatchEventEntity> events;
 
     public Integer getId() {
         return id;
@@ -84,12 +87,12 @@ public class MatchEntity {
         this.team2Goals = team2Goals;
     }
 
-    // public List<MatchEventEntity> getEvents() {
-    //     return events;
-    // }
+    public List<MatchEventEntity> getEvents() {
+        return events;
+    }
 
-    // public void setEvents(List<MatchEventEntity> events) {
-    //     this.events = events;
-    // }
+    public void setEvents(List<MatchEventEntity> events) {
+        this.events = events;
+    }
 
 }
