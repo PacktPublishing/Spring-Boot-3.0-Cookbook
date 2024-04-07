@@ -20,7 +20,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -37,8 +36,6 @@ import com.packt.football.domain.Team;
 import com.packt.football.domain.User;
 import com.packt.football.repo.TeamPlayers;
 
-import javax.management.MBeanServer;
-
 @SpringBootTest
 @Testcontainers
 class FootballServiceTest {
@@ -50,7 +47,7 @@ class FootballServiceTest {
             .withPassword("football")
             .withReuse(false);
 
-    @SuppressWarnings({"rawtypes", "resource"})
+    @SuppressWarnings({ "rawtypes", "resource" })
     static CassandraContainer cassandraContainer = (CassandraContainer) new CassandraContainer("cassandra")
             .withInitScript("createKeyspace.cql")
             .withExposedPorts(9042)
@@ -78,9 +75,6 @@ class FootballServiceTest {
         cassandraContainer.stop();
         postgreSQLContainer.stop();
     }
-
-    @MockBean
-    MBeanServer mbeanServer;
 
     @Autowired
     FootballService footballService;
@@ -211,7 +205,6 @@ class FootballServiceTest {
         User user1 = this.usersService.createUser("user1");
         Album album = albumsService.buyAlbum(user1.getId(), "album1");
 
-
         List<Card> cards = albumsService.buyCards(user1.getId(), 1);
         cards = albumsService.useAllCardAvailable(user1.getId());
         Team team = footballService.getPlayerTeam(cards.get(0).getPlayer().getId());
@@ -310,7 +303,8 @@ class FootballServiceTest {
 
     @Test
     void getMatchWithPlayerEventsError() {
-        assertThrows(InvalidDataAccessResourceUsageException.class, () -> footballService.getMatchWithPlayerEventsError(400258554, 413016));
+        assertThrows(InvalidDataAccessResourceUsageException.class,
+                () -> footballService.getMatchWithPlayerEventsError(400258554, 413016));
     }
 
     @Test

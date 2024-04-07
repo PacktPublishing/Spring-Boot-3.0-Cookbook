@@ -37,7 +37,7 @@ import com.packt.football.domain.Team;
 import com.packt.football.domain.User;
 import com.packt.football.repo.TeamPlayers;
 
-import javax.management.MBeanServer;
+
 
 @SpringBootTest
 @Testcontainers
@@ -79,8 +79,7 @@ class FootballServiceTest {
         postgreSQLContainer.stop();
     }
 
-    @MockBean
-    MBeanServer mbeanServer;
+    
 
     @Autowired
     FootballService footballService;

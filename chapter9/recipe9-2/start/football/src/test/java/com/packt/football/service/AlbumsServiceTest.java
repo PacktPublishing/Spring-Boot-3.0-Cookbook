@@ -31,11 +31,11 @@ import com.packt.football.domain.Card;
 import com.packt.football.domain.TradingUser;
 import com.packt.football.domain.User;
 
-import javax.management.MBeanServer;
+
 
 @Testcontainers
 @SpringBootTest
-//@ContextConfiguration(initializers = AlbumsServiceTest.Initializer.class)
+
 class AlbumsServiceTest {
 
     @SuppressWarnings("resource")
@@ -74,8 +74,7 @@ class AlbumsServiceTest {
         postgreSQLContainer.stop();
     }
 
-    @MockBean
-    MBeanServer mbeanServer;
+    
 
     @Autowired
     AlbumsService albumsService;

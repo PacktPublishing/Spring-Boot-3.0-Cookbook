@@ -17,7 +17,7 @@ import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import javax.management.MBeanServer;
+
 
 @SpringBootTest
 @Testcontainers
@@ -59,8 +59,7 @@ class CustomDatasourceServiceTest {
         postgreSQLContainer.stop();
     }
 
-    @MockBean
-    MBeanServer mbeanServer;
+    
 
     @Autowired
     CustomDatasourceService customDatasourceService;

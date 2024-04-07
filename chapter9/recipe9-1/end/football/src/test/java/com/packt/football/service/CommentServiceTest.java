@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
-import javax.management.MBeanServer;
+
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -68,8 +68,7 @@ class CommentServiceTest {
         postgreSQLContainer.stop();
     }
 
-    @MockBean
-    MBeanServer mbeanServer;
+    
 
     @Autowired
     CommentService commentService;

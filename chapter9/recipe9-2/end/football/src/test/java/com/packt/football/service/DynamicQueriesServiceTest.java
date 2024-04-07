@@ -30,7 +30,7 @@ import com.packt.football.domain.TradingUser;
 import com.packt.football.domain.User;
 import com.packt.football.repo.PlayerEntity;
 
-import javax.management.MBeanServer;
+
 
 @SpringBootTest
 @Testcontainers
@@ -72,8 +72,7 @@ class DynamicQueriesServiceTest {
         postgreSQLContainer.stop();
     }
 
-    @MockBean
-    MBeanServer mbeanServer;
+    
 
     @Autowired
     DynamicQueriesService dynamicQueriesService;

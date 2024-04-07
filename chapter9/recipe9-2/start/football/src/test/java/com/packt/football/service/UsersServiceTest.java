@@ -23,7 +23,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.packt.football.domain.User;
 
-import javax.management.MBeanServer;
+
 
 @SpringBootTest
 @Testcontainers
@@ -65,8 +65,7 @@ class UsersServiceTest {
         postgreSQLContainer.stop();
     }
 
-    @MockBean
-    MBeanServer mbeanServer;
+    
 
     @Autowired
     UsersService usersService;

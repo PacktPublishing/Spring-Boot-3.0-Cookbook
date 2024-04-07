@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.Set;
 
-import javax.management.MBeanServer;
+
 import javax.management.ObjectInstance;
 
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 class MBeansControllerTest {
 
-    @MockBean
-    MBeanServer mbeanServer;
+    
 
     @Autowired
     MockMvc mvc;
