@@ -14,14 +14,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -30,31 +31,51 @@ import com.packt.football.domain.Card;
 import com.packt.football.domain.TradingUser;
 import com.packt.football.domain.User;
 
+import javax.management.MBeanServer;
+
 @Testcontainers
 @SpringBootTest
-@ContextConfiguration(initializers = AlbumsServiceTest.Initializer.class)
+//@ContextConfiguration(initializers = AlbumsServiceTest.Initializer.class)
 class AlbumsServiceTest {
 
+    @SuppressWarnings("resource")
     static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("football")
             .withUsername("football")
-            .withPassword("football");
+            .withPassword("football")
+            .withReuse(false);
 
-    static class Initializer
-            implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues.of(
-                            "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                            "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                            "spring.datasource.password=" + postgreSQLContainer.getPassword())
-                    .applyTo(configurableApplicationContext.getEnvironment());
-        }
+    @SuppressWarnings({"rawtypes", "resource"})
+    static CassandraContainer cassandraContainer = (CassandraContainer) new CassandraContainer("cassandra")
+            .withInitScript("createKeyspace.cql")
+            .withExposedPorts(9042)
+            .withReuse(false);
+
+    @DynamicPropertySource
+    static void setCassandraProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.cassandra.keyspace-name", () -> "footballKeyspace");
+        registry.add("spring.data.cassandra.contact-points", () -> cassandraContainer.getContactPoint().getAddress());
+        registry.add("spring.data.cassandra.port", () -> cassandraContainer.getMappedPort(9042));
+        registry.add("spring.data.cassandra.local-datacenter", () -> cassandraContainer.getLocalDatacenter());
+        registry.add("spring.datasource.url", () -> postgreSQLContainer.getJdbcUrl());
+        registry.add("spring.datasource.username", () -> postgreSQLContainer.getUsername());
+        registry.add("spring.datasource.password", () -> postgreSQLContainer.getPassword());
     }
 
     @BeforeAll
     public static void startContainer() {
+        cassandraContainer.start();
         postgreSQLContainer.start();
     }
+
+    @AfterAll
+    public static void stopContainer() {
+        cassandraContainer.stop();
+        postgreSQLContainer.stop();
+    }
+
+    @MockBean
+    MBeanServer mbeanServer;
 
     @Autowired
     AlbumsService albumsService;
@@ -97,7 +118,7 @@ class AlbumsServiceTest {
         // ARRANGE
         User user = usersService.createUser("Test");
         Album album1 = albumsService.buyAlbum(user.getId(), "sample album");
-        
+
         List<Card> cards = albumsService.buyCards(user.getId(), 2);
 
         // ACT & ASSERT
@@ -108,8 +129,9 @@ class AlbumsServiceTest {
         for (Card card : usedCards) {
             assertThat(card.getAlbumId(), notNullValue());
         }
-        
+
     }
+
     @Test
     void transferCard() {
         User user1 = usersService.createUser("Test");
@@ -141,7 +163,7 @@ class AlbumsServiceTest {
         List<Card> cards = albumsService.buyCards(user1.getId(), 5);
 
         // ACT & ASSERT
-        assertThrows(RuntimeException.class, ()-> albumsService.transferCard(cards.get(0).getId(), new Random().nextInt()));
+        assertThrows(RuntimeException.class, () -> albumsService.transferCard(cards.get(0).getId(), new Random().nextInt()));
         Optional<TradingUser> userCards = albumsService.getUserWithCardsAndAlbums(user1.getId());
         assertTrue(userCards.get().getCards().stream().anyMatch(c -> c.getId().equals(cards.get(0).getId()) && c.getOwnerId().equals(user1.getId())));
     }
