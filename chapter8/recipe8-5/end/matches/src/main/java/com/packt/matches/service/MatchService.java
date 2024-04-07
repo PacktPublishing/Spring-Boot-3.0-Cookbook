@@ -2,13 +2,9 @@ package com.packt.matches.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.packt.matches.domain.MatchEvent;
-
-import reactor.core.publisher.Mono;
 
 @Service
 public class MatchService {
