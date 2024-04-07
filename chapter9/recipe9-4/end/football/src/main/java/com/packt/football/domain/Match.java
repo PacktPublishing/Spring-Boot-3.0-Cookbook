@@ -1,6 +1,7 @@
 package com.packt.football.domain;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Match {
     private Integer id;
@@ -9,16 +10,16 @@ public class Match {
     private Integer team1Goals;
     private Integer team2Goals;
     private LocalDate matchDate;
-    // private List<MatchEvent> events;
+    private List<MatchEvent> events;
 
-    public Match(Integer id, String team1, String team2, Integer team1Goals2, Integer team2Goals2, LocalDate matchDate /* , List<MatchEvent> events*/) {
+    public Match(Integer id, String team1, String team2, Integer team1Goals2, Integer team2Goals2, LocalDate matchDate, List<MatchEvent> events) {
         this.id = id;
         this.team1 = team1;
         this.team2 = team2;
         this.team1Goals = team1Goals2;
         this.team2Goals = team2Goals2;
         this.matchDate = matchDate;
-        // this.events = events;
+        this.events = events;
     }
 
     public Integer getId() {
@@ -69,12 +70,12 @@ public class Match {
         this.matchDate = matchDate;
     }
 
-    // public List<MatchEvent> getEvents() {
-    //     return events;
-    // }
+    public List<MatchEvent> getEvents() {
+        return events;
+    }
 
-    // public void setEvents(List<MatchEvent> events) {
-    //     this.events = events;
-    // }
+    public void setEvents(List<MatchEvent> events) {
+        this.events = events;
+    }
 
 }
