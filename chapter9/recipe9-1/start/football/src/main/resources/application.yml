@@ -1,20 +1,20 @@
-management:
-    endpoint:
-        health:
-            probes:
-                enabled: true
-        prometheus:
-            enabled: true
-    endpoints:
+# management:
+    # endpoint:
+    #     health:
+    #         probes:
+    #             enabled: true
+    #     prometheus:
+    #         enabled: true
+    # endpoints:        
         # jmx:
-        #     exposure:
+            # exposure:
                 # include: env,health,metrics,beans,loggers
-        web:
-            exposure:
-                include: health,env,metrics,beans,loggers,httptrace
-    trace:
-        http:
-            enabled: true
+        # web:
+            # exposure:
+                # include: health,env,metrics,beans,loggers,httptrace
+    # trace:
+    #     http:
+    #         enabled: true
 spring:
     application:
         name: football
