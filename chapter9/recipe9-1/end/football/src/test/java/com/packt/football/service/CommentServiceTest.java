@@ -7,10 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+
+import javax.management.MBeanServer;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,8 +27,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.packt.football.domain.CommentPost;
 import com.packt.football.repo.Comment;
-
-import javax.management.MBeanServer;
 
 @Testcontainers
 @SpringBootTest
