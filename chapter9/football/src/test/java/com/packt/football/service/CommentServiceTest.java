@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.CassandraContainer;
@@ -25,6 +26,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.packt.football.domain.CommentPost;
 import com.packt.football.repo.Comment;
+
+import javax.management.MBeanServer;
 
 @Testcontainers
 @SpringBootTest
@@ -65,6 +68,9 @@ class CommentServiceTest {
         cassandraContainer.stop();
         postgreSQLContainer.stop();
     }
+
+    @MockBean
+    MBeanServer mbeanServer;
 
     @Autowired
     CommentService commentService;
@@ -200,7 +206,6 @@ class CommentServiceTest {
     @Test
     void upvoteCommentTest() {
         // ARRANGE
-        LocalDateTime now = LocalDateTime.now();
         String playerId = "player" + random.nextInt(100000);
         CommentPost comment = new CommentPost("user1", "player", playerId, "The best!", Set.of("label1", "label2"));
         Comment resultUser1 = commentService.postComment(comment);

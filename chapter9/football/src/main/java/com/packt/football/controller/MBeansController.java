@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequestMapping("/mbeans")
 @RestController
@@ -19,13 +21,12 @@ public class MBeansController {
     }
 
     @GetMapping()
-    public String listMBeans() {
+    public List<String> listMBeans() {
         Set<ObjectInstance> instances = mbeanServer.queryMBeans(null, null);
-        StringBuilder sb = new StringBuilder();
-        for (ObjectInstance instance : instances) {
-            sb.append(instance.getObjectName().toString()).append("\n");
-        }
-        return sb.toString();
+        return instances
+                .stream()
+                .map(instance -> instance.getObjectName().toString())
+                .collect(Collectors.toList());
     }
 
 }

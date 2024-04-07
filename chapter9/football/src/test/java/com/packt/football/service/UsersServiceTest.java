@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.CassandraContainer;
@@ -21,6 +22,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.packt.football.domain.User;
+
+import javax.management.MBeanServer;
 
 @SpringBootTest
 @Testcontainers
@@ -61,6 +64,9 @@ class UsersServiceTest {
         cassandraContainer.stop();
         postgreSQLContainer.stop();
     }
+
+    @MockBean
+    MBeanServer mbeanServer;
 
     @Autowired
     UsersService usersService;

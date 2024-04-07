@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.CassandraContainer;
@@ -28,6 +29,8 @@ import com.packt.football.domain.Player;
 import com.packt.football.domain.TradingUser;
 import com.packt.football.domain.User;
 import com.packt.football.repo.PlayerEntity;
+
+import javax.management.MBeanServer;
 
 @SpringBootTest
 @Testcontainers
@@ -69,6 +72,9 @@ class DynamicQueriesServiceTest {
         postgreSQLContainer.stop();
     }
 
+    @MockBean
+    MBeanServer mbeanServer;
+
     @Autowired
     DynamicQueriesService dynamicQueriesService;
 
@@ -77,6 +83,8 @@ class DynamicQueriesServiceTest {
 
     @Autowired
     AlbumsService albumsService;
+
+
 
     @Test
     public void searchTeamPlayersTest() {

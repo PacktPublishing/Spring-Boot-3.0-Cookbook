@@ -10,15 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceInitializationMode;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import javax.management.MBeanServer;
 
 @SpringBootTest
 @Testcontainers
@@ -59,6 +58,9 @@ class CustomDatasourceServiceTest {
         cassandraContainer.stop();
         postgreSQLContainer.stop();
     }
+
+    @MockBean
+    MBeanServer mbeanServer;
 
     @Autowired
     CustomDatasourceService customDatasourceService;

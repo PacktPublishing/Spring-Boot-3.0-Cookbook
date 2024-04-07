@@ -1,34 +1,43 @@
 package com.packt.football.service;
 
-import com.packt.football.domain.*;
-import com.packt.football.repo.TeamPlayers;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import com.packt.football.domain.Album;
+import com.packt.football.domain.Card;
+import com.packt.football.domain.Match;
+import com.packt.football.domain.MatchEvent;
+import com.packt.football.domain.Player;
+import com.packt.football.domain.Team;
+import com.packt.football.domain.User;
+import com.packt.football.repo.TeamPlayers;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.collection.IsEmptyCollection.empty;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import javax.management.MBeanServer;
 
 @SpringBootTest
 @Testcontainers
@@ -69,6 +78,9 @@ class FootballServiceTest {
         cassandraContainer.stop();
         postgreSQLContainer.stop();
     }
+
+    @MockBean
+    MBeanServer mbeanServer;
 
     @Autowired
     FootballService footballService;
