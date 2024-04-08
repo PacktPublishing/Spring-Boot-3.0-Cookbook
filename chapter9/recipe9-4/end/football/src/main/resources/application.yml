@@ -13,7 +13,7 @@ spring:
     application:
         name: football
     jpa:
-        database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
         open-in-view: false
         show-sql: true
     datasource:
@@ -22,14 +22,14 @@ spring:
         password: packt
         hikari:
             maximum-pool-size: 4
-    data:
-        cassandra:
-            keyspace-name: footballKeyspace
-            schema-action: CREATE_IF_NOT_EXISTS
-            contact-points: localhost
-            local-datacenter: datacenter1
-            session-name: cassandraSession
-            port: 9042
+    
+    cassandra:
+        keyspace-name: footballKeyspace
+        schema-action: CREATE_IF_NOT_EXISTS
+        contact-points: localhost
+        local-datacenter: datacenter1
+        session-name: cassandraSession
+        port: 9042
     sql:
         init:
             mode: embedded
