@@ -12,6 +12,8 @@ management:
 spring:
     application:
         name: football
+    jmx:
+        enabled: true
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         open-in-view: false

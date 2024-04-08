@@ -10,6 +10,8 @@ management:
         http:
             enabled: true
 spring:
+    jmx:
+        enabled: true
     application:
         name: football
     jpa:
