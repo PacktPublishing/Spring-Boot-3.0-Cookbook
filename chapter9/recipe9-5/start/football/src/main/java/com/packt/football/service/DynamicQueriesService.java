@@ -112,9 +112,9 @@ public class DynamicQueriesService {
                 .collect(Collectors.toList());
     }
 
-    public BigInteger countPlayers() {
+    public Long countPlayers() {
         Query query = em.createNativeQuery("SELECT COUNT(1) FROM players");
-        return (BigInteger) query.getSingleResult();
+        return (Long) query.getSingleResult();
     }
 
     public Player findPlayerById(Integer id) {

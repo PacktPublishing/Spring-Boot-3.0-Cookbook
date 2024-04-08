@@ -2,10 +2,8 @@ package com.packt.football.repo;
 
 import java.time.LocalDateTime;
 
-// import org.hibernate.annotations.JdbcTypeCode;
-// import org.hibernate.type.SqlTypes;
-
-// import io.hypersistence.utils.hibernate.type.json.JsonType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,8 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import org.hibernate.annotations.Type;
 
 @Table(name = "match_events")
 @Entity
@@ -28,7 +24,7 @@ public class MatchEventEntity {
     @Column(name = "event_time")
     private LocalDateTime time;
 
-    @Type(type = "io.hypersistence.utils.hibernate.type.json.JsonType")
+    @JdbcTypeCode(SqlTypes.JSON)
     private MatchEventDetails details;
 
     @ManyToOne(fetch = FetchType.LAZY)
