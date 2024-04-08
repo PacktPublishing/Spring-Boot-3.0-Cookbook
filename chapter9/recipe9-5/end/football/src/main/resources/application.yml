@@ -1,13 +1,13 @@
 management:
     endpoints:        
-        # jmx:
-        #     exposure:
-        #         include: env,health,metrics,beans,loggers
+        jmx:
+            exposure: 
+                include: '*'
         web:
             exposure:
-                include: health,env,metrics,beans,loggers,httptrace
-    trace:
-        http:
+                include: health,env,metrics,beans,loggers,httpexchanges
+    httpexchanges:
+        recording:
             enabled: true
 spring:
     jmx:
