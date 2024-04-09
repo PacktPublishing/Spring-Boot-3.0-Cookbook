@@ -1,0 +1,37 @@
+management:
+    endpoints:        
+        jmx:
+            exposure: 
+                include: '*'
+        web:
+            exposure:
+                include: health,env,metrics,beans,loggers,httpexchanges
+    httpexchanges:
+        recording:
+            enabled: true
+spring:
+    jmx:
+        enabled: true
+    application:
+        name: football
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        open-in-view: false
+        show-sql: true
+    datasource:
+        url: jdbc:postgresql://localhost:5432/football
+        username: packt
+        password: packt
+        hikari:
+            maximum-pool-size: 4
+    
+    cassandra:
+        keyspace-name: footballKeyspace
+        schema-action: CREATE_IF_NOT_EXISTS
+        contact-points: localhost
+        local-datacenter: datacenter1
+        session-name: cassandraSession
+        port: 9042
+    sql:
+        init:
+            mode: embedded
