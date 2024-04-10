@@ -1,0 +1,30 @@
+server:
+  port: 9080
+spring:
+  
+  cloud:
+    azure:
+      profile:
+        tenant-id: sb3cookbook.onmicrosoft.com
+      active-directory:
+        b2c:
+          profile:
+            tenant-id: sb3cookbook.onmicrosoft.com
+          enabled: true
+          base-uri: https://sb3cookbook.b2clogin.com/sb3cookbook.onmicrosoft.com/
+          credential:
+            client-id: aa71b816-3d6e-4ee1-876b-83d5a60c4d84
+            client-secret: '<put your secret from b2c here>'
+          login-flow: sign-up-or-sign-in
+          logout-success-url: http://localhost:9080
+          user-flows:
+            sign-up-or-sign-in: B2C_1_SUSI
+          user-name-attribute-name: given_name
+          authorization-clients:
+            football-api:
+              scopes: https://sb3cookbook.onmicrosoft.com/footballapp/.default
+              authorization-grant-type: client_credentials
+  data:
+    redis:
+      host: localhost
+      port: 6379
