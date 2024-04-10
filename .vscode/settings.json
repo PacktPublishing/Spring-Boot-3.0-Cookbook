@@ -1,4 +1,17 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable",
+    "graalvm.installations": [
+        "/home/bili/.sdkman/candidates/java/21-graalce"
+    ],
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "/home/bili/.sdkman/candidates/java/21-graalce"
+        }
+    ],
+    "graalvm.home": "/home/bili/.sdkman/candidates/java/21-graalce",
+    "terminal.integrated.env.linux": {
+        "GRAALVM_HOME": "/home/bili/.sdkman/candidates/java/21-graalce"
+    }
 }
