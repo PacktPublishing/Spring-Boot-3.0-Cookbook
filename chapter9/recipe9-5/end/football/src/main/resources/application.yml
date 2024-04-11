@@ -1,19 +1,19 @@
 management:
     endpoints:        
-        jmx:
-            exposure: 
-                include: '*'
+        # jmx:
+        #     exposure:
+        #         include: env,health,metrics,beans,loggers
         web:
             exposure:
-                include: health,env,metrics,beans,loggers,httpexchanges
-    httpexchanges:
-        recording:
+                include: health,env,metrics,beans,loggers,httptrace
+    trace:
+        http:
             enabled: true
 spring:
-    jmx:
-        enabled: true
     application:
         name: football
+    jmx:
+        enabled: true
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         open-in-view: false

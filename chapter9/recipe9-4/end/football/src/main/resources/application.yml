@@ -15,7 +15,7 @@ spring:
     jmx:
         enabled: true
     jpa:
-        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        database-platform: org.hibernate.dialect.PostgreSQL82Dialect
         open-in-view: false
         show-sql: true
     datasource:
@@ -24,14 +24,14 @@ spring:
         password: packt
         hikari:
             maximum-pool-size: 4
-    
-    cassandra:
-        keyspace-name: footballKeyspace
-        schema-action: CREATE_IF_NOT_EXISTS
-        contact-points: localhost
-        local-datacenter: datacenter1
-        session-name: cassandraSession
-        port: 9042
+    data:
+        cassandra:
+            keyspace-name: footballKeyspace
+            schema-action: CREATE_IF_NOT_EXISTS
+            contact-points: localhost
+            local-datacenter: datacenter1
+            session-name: cassandraSession
+            port: 9042
     sql:
         init:
             mode: embedded
