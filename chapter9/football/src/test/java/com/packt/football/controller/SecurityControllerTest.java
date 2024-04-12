@@ -35,7 +35,7 @@ class SecurityControllerTest {
     void getPrivate_forbidden() {
         ResponseEntity<String> responseEntity = restTemplate.withBasicAuth("user1", "user1")
                 .getForEntity("/security/private", String.class);
-        assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
     }
 
     @Test
