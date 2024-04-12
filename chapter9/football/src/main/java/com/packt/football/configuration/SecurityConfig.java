@@ -9,16 +9,21 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetails user = User.withDefaultPasswordEncoder()
+        UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("packt")
                 .password("packt")
                 .roles("ADMIN")
                 .build();
-        auth.inMemoryAuthentication().withUser(user);
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user1")
+                .password("user1")
+                .roles("USER")
+                .build();
+        auth.inMemoryAuthentication().withUser(admin);
     }
 
     @Override
@@ -32,8 +37,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/security/private/**").hasRole("ADMIN")
                 .and()
-                .formLogin()
-                .and()
-                .logout();
+                .httpBasic();
     }
 }

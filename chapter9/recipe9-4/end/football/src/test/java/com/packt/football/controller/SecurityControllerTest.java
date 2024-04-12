@@ -32,13 +32,13 @@ class SecurityControllerTest {
     }
 
     @Test
-    void getPrivate_notAuthorized1() throws Exception {
+    void getPrivate_forbidden() throws Exception {
         mvc.perform(get("/security/private").with(user("user1").roles("USER")))
                 .andExpect(status().is(403));
     }
 
     @Test
-    void getPrivate_notAuthorized2() throws Exception {
+    void getPrivate_notAuthorized() throws Exception {
         mvc.perform(get("/security/private"))
                 .andExpect(status().is3xxRedirection());
     }
