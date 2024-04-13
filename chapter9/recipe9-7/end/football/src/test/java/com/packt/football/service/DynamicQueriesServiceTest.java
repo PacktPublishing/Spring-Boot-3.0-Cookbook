@@ -50,7 +50,7 @@ class DynamicQueriesServiceTest {
             .withReuse(false);
 
     @DynamicPropertySource
-    static void setCassandraProperties(DynamicPropertyRegistry registry) {
+    static void setDynamicProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.cassandra.keyspace-name", () -> "footballKeyspace");
         registry.add("spring.cassandra.contact-points", () -> cassandraContainer.getContactPoint().getAddress());
         registry.add("spring.cassandra.port", () -> cassandraContainer.getMappedPort(9042));
