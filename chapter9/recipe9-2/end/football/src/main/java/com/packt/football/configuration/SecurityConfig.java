@@ -1,7 +1,5 @@
 package com.packt.football.configuration;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,10 +38,16 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .antMatchers("/security/private/**").hasRole("ADMIN")
-                        .anyRequest().permitAll())
-                .httpBasic(withDefaults())
-                .build();
+                .authorizeRequests(authorizeRequests -> {
+                    try {
+                        authorizeRequests
+                                .antMatchers("/").permitAll()
+                                .antMatchers("/security/private/**").hasRole("ADMIN")
+                                .and()
+                                .httpBasic();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).build();
     }
 }
