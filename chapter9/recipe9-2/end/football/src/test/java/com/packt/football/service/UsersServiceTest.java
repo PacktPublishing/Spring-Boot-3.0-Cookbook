@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.CassandraContainer;
@@ -43,7 +42,7 @@ class UsersServiceTest {
             .withReuse(false);
 
     @DynamicPropertySource
-    static void setCassandraProperties(DynamicPropertyRegistry registry) {
+    static void setDynamicProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.cassandra.keyspace-name", () -> "footballKeyspace");
         registry.add("spring.data.cassandra.contact-points", () -> cassandraContainer.getContactPoint().getAddress());
         registry.add("spring.data.cassandra.port", () -> cassandraContainer.getMappedPort(9042));

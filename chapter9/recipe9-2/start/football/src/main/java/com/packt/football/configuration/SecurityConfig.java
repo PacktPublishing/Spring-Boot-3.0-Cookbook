@@ -13,12 +13,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetails user = User.withDefaultPasswordEncoder()
+        UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("packt")
                 .password("packt")
                 .roles("ADMIN")
                 .build();
-        auth.inMemoryAuthentication().withUser(user);
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user1")
+                .password("user1")
+                .roles("USER")
+                .build();
+        auth.inMemoryAuthentication()
+                .withUser(admin)
+                .withUser(user);
     }
 
     @Override
@@ -31,8 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/security/private/**").hasRole("ADMIN")
-                .and()
-                .formLogin()
                 .and()
                 .httpBasic();
     }
