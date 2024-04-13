@@ -1,17 +1,20 @@
 package com.packt.football.controller;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.packt.football.configuration.SecurityConfig;
+
 @WebMvcTest(SecurityController.class)
+@Import(SecurityConfig.class)
 class SecurityControllerTest {
 
     @Autowired
@@ -40,6 +43,18 @@ class SecurityControllerTest {
     @Test
     void getPrivate_notAuthorized() throws Exception {
         mvc.perform(get("/security/private"))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is(401));
+    }
+
+    @Test
+    void getPublic_invaliduser() throws Exception {
+        mvc.perform(get("/security/public").with(user("unknownuser").roles("USER")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getPrivate_unauthorized_nouser() throws Exception {
+        mvc.perform(get("/security/private"))
+                .andExpect(status().is(401));
     }
 }
