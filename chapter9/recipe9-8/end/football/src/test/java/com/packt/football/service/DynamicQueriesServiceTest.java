@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -28,7 +28,6 @@ import com.packt.football.domain.Player;
 import com.packt.football.domain.TradingUser;
 import com.packt.football.domain.User;
 import com.packt.football.repo.PlayerEntity;
-
 
 
 @SpringBootTest

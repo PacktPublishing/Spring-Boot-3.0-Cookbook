@@ -9,7 +9,7 @@ public class CustomDatasourceService {
 
     private DataSourceInitializationMode dataSourceInitializationMode;
 
-    public CustomDatasourceService(@Value("${spring.datasource.initialization-mode}") DataSourceInitializationMode dataSourceInitializationMode) {
+    public CustomDatasourceService(@Value("${spring.sql.init.mode}") DataSourceInitializationMode dataSourceInitializationMode) {
         this.dataSourceInitializationMode = dataSourceInitializationMode;
     }
 

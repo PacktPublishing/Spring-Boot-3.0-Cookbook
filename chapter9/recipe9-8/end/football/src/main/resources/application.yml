@@ -22,7 +22,6 @@ spring:
         url: jdbc:postgresql://localhost:5432/football
         username: packt
         password: packt
-        initialization-mode: embedded
         hikari:
             maximum-pool-size: 4
     data:
@@ -33,3 +32,4 @@ spring:
             local-datacenter: datacenter1
             session-name: cassandraSession
             port: 9042
+    sql.init.mode: embedded

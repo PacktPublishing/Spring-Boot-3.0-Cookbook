@@ -8,8 +8,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,7 +35,6 @@ import com.packt.football.domain.Player;
 import com.packt.football.domain.Team;
 import com.packt.football.domain.User;
 import com.packt.football.repo.TeamPlayers;
-
 
 
 @SpringBootTest
