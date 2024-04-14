@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -32,22 +34,18 @@ public class SecurityConfig {
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .antMatchers("/security/public/**");
+                .requestMatchers("/security/public/**");
     }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeRequests(authorizeRequests -> {
-                    try {
+                .authorizeHttpRequests(authorizeRequests -> {
                         authorizeRequests
-                                .antMatchers("/").permitAll()
-                                .antMatchers("/security/private/**").hasRole("ADMIN")
-                                .and()
-                                .httpBasic();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }).build();
+                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/security/private/**").hasRole("ADMIN");
+                })
+                .httpBasic(withDefaults())
+                .build();
     }
 }
