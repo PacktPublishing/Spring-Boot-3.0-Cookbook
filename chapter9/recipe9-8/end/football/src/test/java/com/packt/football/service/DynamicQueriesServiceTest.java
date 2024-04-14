@@ -49,10 +49,10 @@ class DynamicQueriesServiceTest {
 
     @DynamicPropertySource
     static void setDynamicProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.cassandra.keyspace-name", () -> "footballKeyspace");
-        registry.add("spring.data.cassandra.contact-points", () -> cassandraContainer.getContactPoint().getAddress());
-        registry.add("spring.data.cassandra.port", () -> cassandraContainer.getMappedPort(9042));
-        registry.add("spring.data.cassandra.local-datacenter", () -> cassandraContainer.getLocalDatacenter());
+        registry.add("spring.cassandra.keyspace-name", () -> "footballKeyspace");
+        registry.add("spring.cassandra.contact-points", () -> cassandraContainer.getContactPoint().getAddress());
+        registry.add("spring.cassandra.port", () -> cassandraContainer.getMappedPort(9042));
+        registry.add("spring.cassandra.local-datacenter", () -> cassandraContainer.getLocalDatacenter());
         registry.add("spring.datasource.url", () -> postgreSQLContainer.getJdbcUrl());
         registry.add("spring.datasource.username", () -> postgreSQLContainer.getUsername());
         registry.add("spring.datasource.password", () -> postgreSQLContainer.getPassword());
@@ -174,7 +174,7 @@ class DynamicQueriesServiceTest {
 
     @Test
     void countPlayers() {
-        BigInteger count = dynamicQueriesService.countPlayers();
+        Long count = dynamicQueriesService.countPlayers();
         assertThat(count, not(0));
     }
 

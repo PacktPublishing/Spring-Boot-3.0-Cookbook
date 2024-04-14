@@ -1,18 +1,24 @@
 package com.packt.football.configuration;
 
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
+@Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Bean
+    InMemoryUserDetailsManager inMemoryAuthManager() throws Exception {
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("packt")
                 .password("packt")
@@ -23,22 +29,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password("user1")
                 .roles("USER")
                 .build();
-        auth.inMemoryAuthentication()
-                .withUser(admin)
-                .withUser(user);
+        return new InMemoryUserDetailsManager(user);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/security/public/**");
+    @Bean
+    WebSecurityCustomizer webSecurityCustomizer() throws Exception {
+        return (web) -> {
+            web.ignoring().requestMatchers("/security/public/**");
+        };
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/security/private/**").hasRole("ADMIN")
-                .and()
-                .httpBasic();
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(requests -> requests
+                .requestMatchers("/security/private/**").hasRole("ADMIN")
+                .requestMatchers("/**").permitAll())                
+                .httpBasic(withDefaults());
+        return http.build();
     }
 }

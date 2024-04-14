@@ -6,9 +6,7 @@ management:
         web:
             exposure:
                 include: health,env,metrics,beans,loggers,httptrace
-    trace:
-        http:
-            enabled: true
+    httpexchanges.recording.enabled: true
 spring:
     application:
         name: football
@@ -24,12 +22,10 @@ spring:
         password: packt
         hikari:
             maximum-pool-size: 4
-    data:
-        cassandra:
-            keyspace-name: footballKeyspace
-            schema-action: CREATE_IF_NOT_EXISTS
-            contact-points: localhost
-            local-datacenter: datacenter1
-            session-name: cassandraSession
-            port: 9042
     sql.init.mode: embedded
+    cassandra.contact-points: localhost
+    cassandra.keyspace-name: footballKeyspace
+    cassandra.local-datacenter: datacenter1
+    cassandra.port: 9042
+    cassandra.schema-action: CREATE_IF_NOT_EXISTS
+    cassandra.session-name: cassandraSession
