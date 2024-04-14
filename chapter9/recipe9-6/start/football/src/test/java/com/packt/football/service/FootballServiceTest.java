@@ -36,6 +36,8 @@ import com.packt.football.domain.Team;
 import com.packt.football.domain.User;
 import com.packt.football.repo.TeamPlayers;
 
+
+
 @SpringBootTest
 @Testcontainers
 class FootballServiceTest {
@@ -47,7 +49,7 @@ class FootballServiceTest {
             .withPassword("football")
             .withReuse(false);
 
-    @SuppressWarnings({ "rawtypes", "resource" })
+    @SuppressWarnings({"rawtypes", "resource"})
     static CassandraContainer cassandraContainer = (CassandraContainer) new CassandraContainer("cassandra")
             .withInitScript("createKeyspace.cql")
             .withExposedPorts(9042)
@@ -75,6 +77,8 @@ class FootballServiceTest {
         cassandraContainer.stop();
         postgreSQLContainer.stop();
     }
+
+    
 
     @Autowired
     FootballService footballService;
@@ -205,6 +209,7 @@ class FootballServiceTest {
         User user1 = this.usersService.createUser("user1");
         Album album = albumsService.buyAlbum(user1.getId(), "album1");
 
+
         List<Card> cards = albumsService.buyCards(user1.getId(), 1);
         cards = albumsService.useAllCardAvailable(user1.getId());
         Team team = footballService.getPlayerTeam(cards.get(0).getPlayer().getId());
@@ -303,8 +308,7 @@ class FootballServiceTest {
 
     @Test
     void getMatchWithPlayerEventsError() {
-        assertThrows(InvalidDataAccessResourceUsageException.class,
-                () -> footballService.getMatchWithPlayerEventsError(400258554, 413016));
+        assertThrows(InvalidDataAccessResourceUsageException.class, () -> footballService.getMatchWithPlayerEventsError(400258554, 413016));
     }
 
     @Test
