@@ -24,7 +24,6 @@ spring:
         password: packt
         hikari:
             maximum-pool-size: 4
-    
     cassandra:
         keyspace-name: footballKeyspace
         schema-action: CREATE_IF_NOT_EXISTS

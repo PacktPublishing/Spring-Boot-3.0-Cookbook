@@ -118,8 +118,8 @@ public class DynamicQueriesService {
     }
 
     public Player findPlayerById(Integer id) {
-        Query query = em.createQuery("SELECT p FROM PlayerEntity p WHERE p.id=?1", PlayerEntity.class);
-        query.setParameter(1, id);
+        Query query = em.createQuery("SELECT p FROM PlayerEntity p WHERE p.id=?0", PlayerEntity.class);
+        query.setParameter(0    , id);
         return playerMapper.map((PlayerEntity) query.getSingleResult());
     }
 
