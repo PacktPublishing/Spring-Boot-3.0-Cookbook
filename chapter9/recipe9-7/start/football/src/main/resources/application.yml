@@ -1,7 +1,7 @@
 management:
     endpoints:        
         jmx:
-            exposure: 
+            exposure:
                 include: '*'
         web:
             exposure:
@@ -10,10 +10,10 @@ management:
         recording:
             enabled: true
 spring:
-    jmx:
-        enabled: true
     application:
         name: football
+    jmx:
+        enabled: true
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         open-in-view: false
@@ -24,7 +24,6 @@ spring:
         password: packt
         hikari:
             maximum-pool-size: 4
-    
     cassandra:
         keyspace-name: footballKeyspace
         schema-action: CREATE_IF_NOT_EXISTS
