@@ -24,7 +24,6 @@ public class FootballHealthIndicator implements HealthIndicator {
         } catch (DataAccessException e) {
             return Health.down().withDetail("Cannot connect to database", e).build();
         }
-
     }
 
 }
