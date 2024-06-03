@@ -16,7 +16,8 @@ public class TradingService {
     private CardRepository cardRepository;
     private UserRepository userRepository;
 
-    public TradingService(CardRepository cardRepository, UserRepository userRepository) {
+    public TradingService(CardRepository cardRepository,
+                          UserRepository userRepository) {
         this.cardRepository = cardRepository;
         this.userRepository = userRepository;
     }

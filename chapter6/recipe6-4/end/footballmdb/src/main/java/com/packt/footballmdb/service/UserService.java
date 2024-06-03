@@ -29,8 +29,10 @@ public class UserService {
     private CardRepository cardsRepository;
     private MongoTemplate mongoTemplate;
 
-    public UserService(UserRepository userRepository, PlayerRepository playersRepository,
-            CardRepository cardsRepository, MongoTemplate mongoTemplate) {
+    public UserService(UserRepository userRepository,
+                       PlayerRepository playersRepository,
+                       CardRepository cardsRepository,
+                       MongoTemplate mongoTemplate) {
         this.userRepository = userRepository;
         this.playersRepository = playersRepository;
         this.cardsRepository = cardsRepository;
@@ -60,7 +62,9 @@ public class UserService {
             List<Card> cards = Stream.generate(() -> {
                 Card card = new Card();
                 card.setOwner(user);
-                card.setPlayer(availablePlayers.get(random.nextInt(0, availablePlayers.size())));
+                card.setPlayer(availablePlayers.get(
+                        random.nextInt(0,
+                                availablePlayers.size())));
                 return card;
             }).limit(count).toList();
             List<Card> savedCards = cardsRepository.saveAll(cards);

@@ -1,7 +1,6 @@
 package com.packt.football.service;
 
 
-
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -77,7 +76,6 @@ public class DynamicQueriesService {
                 .collect(Collectors.toList());
     }
 
-    
 
     public void deleteEventRange(Integer matchId, LocalDateTime start, LocalDateTime end) {
         try {
@@ -118,12 +116,15 @@ public class DynamicQueriesService {
     }
 
     public Player findPlayerById(Integer id) {
-        Query query = em.createQuery("SELECT p FROM PlayerEntity p WHERE p.id=?1", PlayerEntity.class);
+        Query query = em.createQuery(
+                "SELECT p FROM PlayerEntity p WHERE p.id=?1",
+                PlayerEntity.class);
         query.setParameter(1, id);
-        return playerMapper.map((PlayerEntity) query.getSingleResult());
+        return playerMapper
+                .map((PlayerEntity) query.getSingleResult());
     }
 
-    public TradingUser findUserById(Integer id) {        
+    public TradingUser findUserById(Integer id) {
         UserEntity userEntity = em.find(UserEntity.class, id);
         return userMappper.map(userEntity);
     }
